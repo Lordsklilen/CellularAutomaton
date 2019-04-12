@@ -12,8 +12,8 @@ namespace EngineProject
     {
         private IEngine _engine;
 
-        public void Create1DCellularAutomation() {
-            _engine = new CellularAutomation1D();
+        public void Create1DCellularAutomation(int width, int height) {
+            _engine = new CellularAutomation1D(width, height);
         }
 
         public Board GetNextIteration() {

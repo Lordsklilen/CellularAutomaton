@@ -11,8 +11,8 @@ namespace EngineProject.Engines
     {
         public Board board { get; private set; }
 
-        public CellularAutomation1D() {
-            board = new Board();
+        public CellularAutomation1D(int width, int height) {
+            board = new Board(width, height);
         }
 
         public Board GetBoard()

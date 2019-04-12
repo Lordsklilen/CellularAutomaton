@@ -22,12 +22,16 @@ namespace CellularAutomaton
     public partial class MainWindow : Window
     {
         EngineFacade _engineFacade;
+        int width;
+        int height;
         public MainWindow()
         {
             InitializeComponent();
             // initialization
+            width = 50;
+            height = 100;
             _engineFacade = new EngineFacade();
-            _engineFacade.Create1DCellularAutomation();
+            _engineFacade.Create1DCellularAutomation(width, height);
         }
 
 
@@ -35,23 +39,11 @@ namespace CellularAutomaton
         // Event Handling
         private void bt_CLick(object sender, RoutedEventArgs e)
         {
-            DrawingHelper drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black)); 
-
-
-
+            DrawingHelper drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), width, height); 
             var result = _engineFacade.GetNextIteration();
             drawingHelper.DrawBoard(result);
 
-            MessageBox.Show(result.board[0].ToString());
-            //Rectangle rect;
-            //rect = new System.Windows.Shapes.Rectangle();
-            //rect.Stroke = new SolidColorBrush(Colors.Black);
-            //rect.Fill = new SolidColorBrush(Colors.Black);
-            //rect.Width = 5;
-            //rect.Height = 5;
-            //Canvas.SetLeft(rect, 0);
-            //Canvas.SetTop(rect, 0);
-            //superCanvas.Children.Add(rect);
+          
         }
     }
 }

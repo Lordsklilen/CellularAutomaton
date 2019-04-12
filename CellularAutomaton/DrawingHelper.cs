@@ -16,21 +16,36 @@ namespace CellularAutomaton
         Brush solidColorBrush;
         int x;
         int y;
-        public DrawingHelper(Canvas _canvas, Brush _solidColorBrush) {
+        int elHeight;
+        int elWidth;
+        int numHeightCells;
+        int numWidthCells;
+        public DrawingHelper(Canvas _canvas, Brush _solidColorBrush,int numX, int numY) {
             canvas = _canvas;
             solidColorBrush = _solidColorBrush;
+            x = (int)canvas.ActualHeight;
+            y = (int)canvas.ActualWidth;
+            numHeightCells = numX;
+            numWidthCells = numY;
+            elHeight = x / (numX + 1);
+            elWidth = y / (numY + 1);
         }
 
         public void DrawBoard(Board board){
-            // TODO
+            foreach (var row in board.board) {
+                foreach (var el in row) {
+                    DrawRectangle(el.x*(elWidth + 1), el.y*(elHeight+1));
+                }
+            }
+
         }
         private void DrawRectangle(int x, int y) {
             Rectangle rect;
             rect = new Rectangle();
             rect.Stroke = new SolidColorBrush(Colors.Black);
             rect.Fill = new SolidColorBrush(Colors.Black);
-            rect.Width = 5;
-            rect.Height = 5;
+            rect.Width = elWidth;
+            rect.Height = elHeight;
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
             canvas.Children.Add(rect);
