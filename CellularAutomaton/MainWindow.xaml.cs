@@ -51,5 +51,18 @@ namespace CellularAutomaton
             var result = _engineFacade.GetNextIteration();
             drawingHelper.DrawBoard(result);
         }
+        // change 
+        private void SuperCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var mousePosition = e.GetPosition(sender as Canvas);
+            var x = (int)mousePosition.X;
+            var y = (int)mousePosition.Y;
+            var position = drawingHelper.GetPosition(x, y);
+            _engineFacade.SetCellState((int)position.X, (int)position.Y, true);
+            var result = _engineFacade.GetBoard();
+            drawingHelper.DrawFirstRow(result);
+
+        }
+
     }
 }

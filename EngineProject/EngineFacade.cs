@@ -12,17 +12,30 @@ namespace EngineProject
     {
         private IEngine _engine;
 
-        public void Create1DCellularAutomation(int width, int height) {
+        public void Create1DCellularAutomation(int width, int height)
+        {
             _engine = new CellularAutomation1D(width, height);
         }
 
-        public Board GetNextIteration() {
+        public Board GetNextIteration()
+        {
             _engine.NextIteration();
             return _engine.GetBoard();
         }
         public Board GetBoard()
         {
             return _engine.GetBoard();
+        }
+        public void SetCellState(int x, int y, bool state)
+        {
+            _engine.GetBoard().SetCellState(x, y, state);
+
+        }
+        public void ChangeCellState(int x, int y, bool state)
+        {
+            //var board = _engine.GetBoard()
+            //var list = board.board[x];
+            //SetCellState(x, y, state);
         }
     }
 }

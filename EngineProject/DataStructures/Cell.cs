@@ -21,5 +21,9 @@ namespace EngineProject.DataStructures
             y = _y;
             state = false;
         }
+        public void SetState(bool _state)
+        {
+            state = _state;
+        }
     }
 }

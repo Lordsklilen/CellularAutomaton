@@ -24,5 +24,10 @@ namespace EngineProject.Engines
         {
 
         }
+
+        public void SetCellState(int x, int y, bool state)
+        {
+            board.SetCellState(x,y,state);
+        }
     }
 }

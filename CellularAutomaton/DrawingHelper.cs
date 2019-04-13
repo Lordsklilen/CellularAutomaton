@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -24,7 +25,7 @@ namespace CellularAutomaton
         public DrawingHelper(Canvas _canvas, Brush _mainBrush, Brush _deadBrush, int numX, int numY)
         {
             canvas = _canvas;
-            colorBrush = _deadBrush;
+            colorBrush = _mainBrush;
             deadBrush = _deadBrush;
             y = (int)canvas.ActualHeight;
             x = (int)canvas.ActualWidth;
@@ -40,7 +41,7 @@ namespace CellularAutomaton
 
         public void DrawFirstRow(Board board)
         {
-            foreach (var el in board.board.FirstOrDefault())
+            foreach (var el in board.board[0])
             {
                 DrawRectangle(el, el.y * (elWidth + 1), el.x * (elHeight + 1));
             }
@@ -77,6 +78,14 @@ namespace CellularAutomaton
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
             canvas.Children.Add(rect);
+        }
+
+        public Point GetPosition(int x, int y)
+        {
+            var result = new Point();
+            result.Y = x / (numWidthCells);
+            result.X = y / (numHeightCells);
+            return result;
         }
     }
 }
