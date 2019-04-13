@@ -28,15 +28,18 @@ namespace CellularAutomaton
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += Initializevariables;
-            //Initializevariables();
+            Initializevariables();
+            Loaded += DrawInitialRow;
         }
-        void Initializevariables(object sender, RoutedEventArgs e) {
-
-            width = 10;
-            height = 20;
+        void Initializevariables()
+        {
+            width = 50;
+            height = 25;
             _engineFacade = new EngineFacade();
             _engineFacade.Create1DCellularAutomation(width, height);
+        }
+        void DrawInitialRow(object sender, RoutedEventArgs e)
+        {
             drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), width, height);
             var result = _engineFacade.GetNextIteration();
             drawingHelper.DrawFirstRow(result);
@@ -46,7 +49,7 @@ namespace CellularAutomaton
         private void bt_CLick(object sender, RoutedEventArgs e)
         {
             var result = _engineFacade.GetNextIteration();
-            drawingHelper.DrawBoard(result);          
+            drawingHelper.DrawBoard(result);
         }
     }
 }

@@ -48,6 +48,7 @@ namespace CellularAutomaton
 
         public void DrawBoard(Board board)
         {
+            canvas.Children.Clear();
             foreach (var row in board.board)
             {
                 foreach (var el in row)
