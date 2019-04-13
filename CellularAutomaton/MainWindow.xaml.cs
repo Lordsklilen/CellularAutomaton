@@ -24,26 +24,29 @@ namespace CellularAutomaton
         EngineFacade _engineFacade;
         int width;
         int height;
+        DrawingHelper drawingHelper;
         public MainWindow()
         {
             InitializeComponent();
-            // initialization
+            Loaded += Initializevariables;
+            //Initializevariables();
+        }
+        void Initializevariables(object sender, RoutedEventArgs e) {
+
             width = 10;
-            height = 1;
+            height = 20;
             _engineFacade = new EngineFacade();
             _engineFacade.Create1DCellularAutomation(width, height);
+            drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), width, height);
+            var result = _engineFacade.GetNextIteration();
+            drawingHelper.DrawFirstRow(result);
         }
-
-
 
         // Event Handling
         private void bt_CLick(object sender, RoutedEventArgs e)
         {
-            DrawingHelper drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), width,height); 
             var result = _engineFacade.GetNextIteration();
-            drawingHelper.DrawBoard(result);
-
-          
+            drawingHelper.DrawBoard(result);          
         }
     }
 }

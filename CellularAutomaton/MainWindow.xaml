@@ -8,7 +8,7 @@
         Title="MainWindow" Height="720" Width="1280">
     <Grid Margin="0,0,0
           ,0">
-        <Canvas x:Name="superCanvas" Margin="45,45,45, 45" RenderTransformOrigin="0.5,0.5"/>
+        <Canvas x:Name="superCanvas" Margin="45,45,45, 45" RenderTransformOrigin="0.5,0.5" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
         <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="45,10,0,0" VerticalAlignment="Top" Width="75" Click="bt_CLick"/>
     </Grid>
 

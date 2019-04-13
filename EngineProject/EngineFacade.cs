@@ -20,5 +20,9 @@ namespace EngineProject
             _engine.NextIteration();
             return _engine.GetBoard();
         }
+        public Board GetBoard()
+        {
+            return _engine.GetBoard();
+        }
     }
 }
