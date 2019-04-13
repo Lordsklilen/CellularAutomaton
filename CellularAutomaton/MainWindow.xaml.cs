@@ -28,8 +28,8 @@ namespace CellularAutomaton
         {
             InitializeComponent();
             // initialization
-            width = 50;
-            height = 100;
+            width = 10;
+            height = 1;
             _engineFacade = new EngineFacade();
             _engineFacade.Create1DCellularAutomation(width, height);
         }
@@ -39,7 +39,7 @@ namespace CellularAutomaton
         // Event Handling
         private void bt_CLick(object sender, RoutedEventArgs e)
         {
-            DrawingHelper drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), width, height); 
+            DrawingHelper drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), width,height); 
             var result = _engineFacade.GetNextIteration();
             drawingHelper.DrawBoard(result);
 

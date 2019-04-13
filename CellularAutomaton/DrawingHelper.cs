@@ -23,18 +23,18 @@ namespace CellularAutomaton
         public DrawingHelper(Canvas _canvas, Brush _solidColorBrush,int numX, int numY) {
             canvas = _canvas;
             solidColorBrush = _solidColorBrush;
-            x = (int)canvas.ActualHeight;
-            y = (int)canvas.ActualWidth;
-            numHeightCells = numX;
-            numWidthCells = numY;
-            elHeight = x / (numX + 1);
-            elWidth = y / (numY + 1);
+            y = (int)canvas.ActualHeight;
+            x = (int)canvas.ActualWidth;
+            numHeightCells = numY;
+            numWidthCells = numX;
+            elHeight = y / (numY);
+            elWidth = x / (numX);
         }
 
         public void DrawBoard(Board board){
             foreach (var row in board.board) {
                 foreach (var el in row) {
-                    DrawRectangle(el.x*(elWidth + 1), el.y*(elHeight+1));
+                    DrawRectangle(el.y*(elWidth + 1), el.x*(elHeight+1));
                 }
             }
 
