@@ -9,7 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
+//using System.Windows.Media;
+using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -40,7 +41,7 @@ namespace CellularAutomaton
         }
         void DrawInitialRow(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(superCanvas, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), width, height);
+            drawingHelper = new DrawingHelper(img, new SolidBrush(Color.Black), new SolidBrush(Color.White), width, height);
             var result = _engineFacade.GetNextIteration();
             drawingHelper.DrawFirstRow(result);
         }
@@ -52,17 +53,15 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(result);
         }
         // change 
-        private void SuperCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var mousePosition = e.GetPosition(sender as Canvas);
+            var mousePosition = e.GetPosition(img);
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.SetCellState((int)position.X, (int)position.Y, true);
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawFirstRow(result);
-
         }
-
     }
 }

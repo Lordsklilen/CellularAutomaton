@@ -4,16 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+//using System.Windows;
 using System.Windows.Shapes;
+using System.Drawing;
+using System.IO;
 
 namespace CellularAutomaton
 {
     public class DrawingHelper
     {
-        Canvas canvas;
+        Image winFormsImage;
+        Graphics g;
+        System.Windows.Controls.Image wpfImage;
+        Bitmap bitmap;
         Brush colorBrush;
         Brush deadBrush;
         int x;
@@ -22,13 +25,13 @@ namespace CellularAutomaton
         int elWidth;
         int numHeightCells;
         int numWidthCells;
-        public DrawingHelper(Canvas _canvas, Brush _mainBrush, Brush _deadBrush, int numX, int numY)
+        public DrawingHelper(System.Windows.Controls.Image _img, Brush _mainBrush, Brush _deadBrush, int numX, int numY)
         {
-            canvas = _canvas;
+            wpfImage = _img;
             colorBrush = _mainBrush;
             deadBrush = _deadBrush;
-            y = (int)canvas.ActualHeight;
-            x = (int)canvas.ActualWidth;
+            y = (int)wpfImage.Height;
+            x = (int)wpfImage.Width;
             PrepareToDraw(numX, numY);
         }
         void PrepareToDraw(int numX, int numY)
@@ -41,15 +44,19 @@ namespace CellularAutomaton
 
         public void DrawFirstRow(Board board)
         {
+            bitmap = new Bitmap(x, y);
+            g = Graphics.FromImage(bitmap);
             foreach (var el in board.board[0])
             {
                 DrawRectangle(el, el.y * (elWidth + 1), el.x * (elHeight + 1));
             }
+            wpfImage.Source = Convert(bitmap);
         }
 
         public void DrawBoard(Board board)
         {
-            canvas.Children.Clear();
+            bitmap = new Bitmap(x, y);
+            g = Graphics.FromImage(bitmap);
             foreach (var row in board.board)
             {
                 foreach (var el in row)
@@ -57,27 +64,38 @@ namespace CellularAutomaton
                     DrawRectangle(el, el.y * (elWidth + 1), el.x * (elHeight + 1));
                 }
             }
-
+            wpfImage.Source = Convert(bitmap);
         }
         private void DrawRectangle(Cell element, int x, int y)
         {
-            Rectangle rect;
-            rect = new Rectangle();
             if (element.state)
-            {
-                rect.Stroke = colorBrush;
-                rect.Fill = colorBrush;
-            }
+                g.FillRectangle(
+                    colorBrush,
+                    x,
+                    y,
+                    elWidth,
+                    elHeight
+                );
             else
-            {
-                rect.Stroke = deadBrush;
-                rect.Fill = deadBrush;
-            }
-            rect.Width = elWidth;
-            rect.Height = elHeight;
-            Canvas.SetLeft(rect, x);
-            Canvas.SetTop(rect, y);
-            canvas.Children.Add(rect);
+                g.FillRectangle(
+                    deadBrush,
+                    x,
+                    y,
+                    elWidth,
+                    elHeight
+                );
+        }
+
+        public System.Windows.Media.Imaging.BitmapImage Convert(Bitmap src)
+        {
+            MemoryStream ms = new MemoryStream();
+            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            System.Windows.Media.Imaging.BitmapImage image = new System.Windows.Media.Imaging.BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+            return image;
         }
 
         public Point GetPosition(int x, int y)
