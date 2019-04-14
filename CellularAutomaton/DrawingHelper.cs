@@ -1,6 +1,7 @@
 ﻿using EngineProject.DataStructures;
 using System.Drawing;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace CellularAutomaton
 {
@@ -78,7 +79,7 @@ namespace CellularAutomaton
                 );
         }
 
-        public System.Windows.Media.Imaging.BitmapImage Convert(Bitmap src)
+        public BitmapImage Convert(Bitmap src)
         {
             MemoryStream ms = new MemoryStream();
             ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -90,11 +91,11 @@ namespace CellularAutomaton
             return image;
         }
 
-        public Point GetPosition(int x, int y)
+        public Point GetPosition(int width, int height)
         {
             var result = new Point();
-            result.Y = x / (numWidthCells);
-            result.X = y / (numHeightCells);
+            result.X = height / (elHeight + 1) ;
+            result.Y = width / (elWidth + 1);
             return result;
         }
     }

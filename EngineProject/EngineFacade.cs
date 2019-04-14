@@ -28,14 +28,11 @@ namespace EngineProject
         }
         public void SetCellState(int x, int y, bool state)
         {
-            _engine.GetBoard().SetCellState(x, y, state);
+            _engine.SetCellState(x, y, state);
 
         }
         public void ChangeCellState(int x, int y, bool state)
         {
-            //var board = _engine.GetBoard()
-            //var list = board.board[x];
-            //SetCellState(x, y, state);
         }
     }
 }

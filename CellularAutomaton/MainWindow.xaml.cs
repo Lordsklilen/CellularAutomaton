@@ -24,7 +24,7 @@ namespace CellularAutomaton
         void Initializevariables()
         {
             width = 50;
-            height = 25;
+            height = 15;
             _engineFacade = new EngineFacade();
             _engineFacade.Create1DCellularAutomation(width, height);
         }
@@ -51,7 +51,7 @@ namespace CellularAutomaton
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.SetCellState((int)position.X, (int)position.Y, true);
             var result = _engineFacade.GetBoard();
-            drawingHelper.DrawBoard(result);
+            drawingHelper.DrawFirstRow(result);
         }
     }
 }
