@@ -1,19 +1,7 @@
 ﻿using EngineProject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-//using System.Windows.Media;
 using System.Drawing;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CellularAutomaton
 {
@@ -26,6 +14,7 @@ namespace CellularAutomaton
         int width;
         int height;
         DrawingHelper drawingHelper;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -52,6 +41,7 @@ namespace CellularAutomaton
             var result = _engineFacade.GetNextIteration();
             drawingHelper.DrawBoard(result);
         }
+
         // change 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -61,7 +51,7 @@ namespace CellularAutomaton
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.SetCellState((int)position.X, (int)position.Y, true);
             var result = _engineFacade.GetBoard();
-            drawingHelper.DrawFirstRow(result);
+            drawingHelper.DrawBoard(result);
         }
     }
 }

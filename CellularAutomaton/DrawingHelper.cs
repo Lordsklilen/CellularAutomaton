@@ -1,11 +1,4 @@
 ﻿using EngineProject.DataStructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using System.Windows;
-using System.Windows.Shapes;
 using System.Drawing;
 using System.IO;
 
@@ -13,7 +6,6 @@ namespace CellularAutomaton
 {
     public class DrawingHelper
     {
-        Image winFormsImage;
         Graphics g;
         System.Windows.Controls.Image wpfImage;
         Bitmap bitmap;
