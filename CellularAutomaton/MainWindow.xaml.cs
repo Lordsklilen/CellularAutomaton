@@ -36,7 +36,7 @@ namespace CellularAutomaton
         }
 
         // Event Handling
-        private void bt_CLick(object sender, RoutedEventArgs e)
+        private void Iterate_CLick(object sender, RoutedEventArgs e)
         {
             int rule = (int)ruleNumber.Value;
             _engineFacade.SetRule(rule);
