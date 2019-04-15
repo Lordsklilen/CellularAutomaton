@@ -15,7 +15,7 @@ namespace EngineProject.Engines
         private int _maxRow;
         private int _maxColumn;
         private int _rule;
-
+        private int[] weights;
         public OneDimensionEngine(int width, int height)
         {
             panel = new Board(width, height);
@@ -24,6 +24,8 @@ namespace EngineProject.Engines
             _maxRow = height;
             _maxColumn = width;
             _rule = 90; // TODO
+            weights = new int[8];
+            ComputeWeights(_rule);
         }
 
         public Board GetBoard()
@@ -33,7 +35,7 @@ namespace EngineProject.Engines
 
         public void NextIteration()
         {
-            if (_maxRow <= _createdRows)
+            if (_maxRow <= _createdRows+1)
                 return;
             for (int i = 1; i < _maxColumn - 1; i++)
             {
@@ -56,10 +58,20 @@ namespace EngineProject.Engines
         }
         private void CheckNeighbours(int i)
         {
-            Cell left = panel.board[_createdRows][i - 1];
-            Cell middle = panel.board[_createdRows][i];
-            Cell Right = panel.board[_createdRows][i + 1];
-            //middle.state = true;//TODO
+            int left = panel.board[_createdRows][i - 1].state?4:0;
+            int middle = panel.board[_createdRows][i].state?2:0;
+            int right = panel.board[_createdRows][i + 1].state?1:0;
+            panel.SetCellState(_createdRows+1,i,weights[left+middle+right]==1?true:false);
+        }
+        private void ComputeWeights(int rule)
+        {
+            if (rule > 255)
+                throw new NotSupportedException("rule is to big to be computed");
+            for (int i = 0; i < 8; i++)
+            {
+                weights[i] = rule % 2;
+                rule /= 2;
+            }
         }
     }
 }

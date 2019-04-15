@@ -15,7 +15,6 @@ namespace CellularAutomaton
         int width;
         int height;
         DrawingHelper drawingHelper;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -32,14 +31,18 @@ namespace CellularAutomaton
         void DrawInitialRow(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, new SolidBrush(Color.Black), new SolidBrush(Color.White), width, height);
-            var result = _engineFacade.GetNextIteration();
+            var result = _engineFacade.GetBoard();
             drawingHelper.DrawFirstRow(result);
         }
 
         // Event Handling
         private void bt_CLick(object sender, RoutedEventArgs e)
         {
-            var result = _engineFacade.GetNextIteration();
+            for (int i = 1; i < height; i++)
+            {
+                _engineFacade.GetNextIteration();
+            }
+            var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
         }
 
