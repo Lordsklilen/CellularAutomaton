@@ -23,9 +23,9 @@ namespace EngineProject.Engines
             _createdRows = 0;
             _maxRow = height;
             _maxColumn = width;
-            _rule = 90; // TODO
+            _rule = 90;
             weights = new int[8];
-            ComputeWeights(_rule);
+            SetRule(_rule);
         }
 
         public Board GetBoard()
@@ -35,8 +35,11 @@ namespace EngineProject.Engines
 
         public void NextIteration()
         {
-            if (_maxRow <= _createdRows+1)
+            if (_maxRow <= _createdRows + 1)
+            {
+                _createdRows = 0;
                 return;
+            }
             for (int i = 1; i < _maxColumn - 1; i++)
             {
                 CheckNeighbours(i);
@@ -50,12 +53,22 @@ namespace EngineProject.Engines
                 return;
             panel.SetCellState(x, y, !panel.board[x][y].state);
         }
+
+        public void SetRule(int rule)
+        {
+            if (rule > 255 || rule < 0)
+                throw new NotSupportedException("Rule is cannot be computed. Try number between 0-255");
+            _rule = rule;
+            ComputeWeights(_rule);
+        }
+
         public void SetCellState(int x, int y, bool state)
         {
             if (x > 0)
                 return;
             panel.SetCellState(x, y, state);
         }
+
         private void CheckNeighbours(int i)
         {
             int left = panel.board[_createdRows][i - 1].state?4:0;
@@ -63,10 +76,9 @@ namespace EngineProject.Engines
             int right = panel.board[_createdRows][i + 1].state?1:0;
             panel.SetCellState(_createdRows+1,i,weights[left+middle+right]==1?true:false);
         }
+
         private void ComputeWeights(int rule)
         {
-            if (rule > 255)
-                throw new NotSupportedException("rule is to big to be computed");
             for (int i = 0; i < 8; i++)
             {
                 weights[i] = rule % 2;

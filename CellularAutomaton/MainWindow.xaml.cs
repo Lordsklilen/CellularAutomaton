@@ -38,7 +38,9 @@ namespace CellularAutomaton
         // Event Handling
         private void bt_CLick(object sender, RoutedEventArgs e)
         {
-            for (int i = 1; i < height; i++)
+            int rule = (int)ruleNumber.Value;
+            _engineFacade.SetRule(rule);
+            for (int i = 1; i <= height; i++)
             {
                 _engineFacade.GetNextIteration();
             }

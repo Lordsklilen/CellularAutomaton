@@ -14,5 +14,6 @@ namespace EngineProject
         Board GetBoard();
         void SetCellState(int x, int y, bool state);
         void ChangeCellState(int x, int y);
+        void SetRule(int rule);
     }
 }

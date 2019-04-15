@@ -42,5 +42,10 @@ namespace EngineProject
         {
             _engine.ChangeCellState(x, y);
         }
+
+        public void SetRule(int rule)
+        {
+            _engine.SetRule(rule);
+        }
     }
 }

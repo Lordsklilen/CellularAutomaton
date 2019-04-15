@@ -11,6 +11,7 @@ namespace EngineProject.Engines
     {
         void NextIteration();
         Board GetBoard();
+        void SetRule(int rule);
         void SetCellState(int x, int y, bool state);
         void ChangeCellState(int x, int y);
     }
