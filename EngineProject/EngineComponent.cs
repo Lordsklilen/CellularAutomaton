@@ -8,13 +8,20 @@ using System.Threading.Tasks;
 
 namespace EngineProject
 {
-    public class EngineFacade
+    public class EngineComponent : IEngineComponent
     {
         private IEngine _engine;
 
-        public void Create1DCellularAutomation(int width, int height)
+        public void CreateEngine(EngineType type,int width, int height)
         {
-            _engine = new CellularAutomation1D(width, height);
+            switch (type)
+            {
+                case EngineType.OneDimensionEngine:
+                    _engine = new OneDimensionEngine(width, height);
+                    break;
+                default:
+                    throw new NotSupportedException("Unrecognized Engine type");
+            }
         }
 
         public Board GetNextIteration()
@@ -31,8 +38,9 @@ namespace EngineProject
             _engine.SetCellState(x, y, state);
 
         }
-        public void ChangeCellState(int x, int y, bool state)
+        public void ChangeCellState(int x, int y)
         {
+            _engine.ChangeCellState(x, y);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Drawing;
+using EngineProject.DataStructures;
 
 namespace CellularAutomaton
 {
@@ -10,7 +11,7 @@ namespace CellularAutomaton
     /// </summary>
     public partial class MainWindow : Window
     {
-        EngineFacade _engineFacade;
+        IEngineComponent _engineFacade;
         int width;
         int height;
         DrawingHelper drawingHelper;
@@ -23,10 +24,10 @@ namespace CellularAutomaton
         }
         void Initializevariables()
         {
-            width = 50;
-            height = 15;
-            _engineFacade = new EngineFacade();
-            _engineFacade.Create1DCellularAutomation(width, height);
+            width = 100;
+            height = 50;
+            _engineFacade = new EngineComponent(); // TODO DI
+            _engineFacade.CreateEngine(EngineType.OneDimensionEngine, width, height);
         }
         void DrawInitialRow(object sender, RoutedEventArgs e)
         {
@@ -42,14 +43,13 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(result);
         }
 
-        // change 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var mousePosition = e.GetPosition(img);
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.SetCellState((int)position.X, (int)position.Y, true);
+            _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawFirstRow(result);
         }

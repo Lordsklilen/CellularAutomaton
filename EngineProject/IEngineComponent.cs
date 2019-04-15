@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EngineProject.Engines
+namespace EngineProject
 {
-    public interface IEngine
+    public interface IEngineComponent
     {
-        void NextIteration();
+        void CreateEngine(EngineType type,int width, int height);
+        Board GetNextIteration();
         Board GetBoard();
         void SetCellState(int x, int y, bool state);
         void ChangeCellState(int x, int y);
