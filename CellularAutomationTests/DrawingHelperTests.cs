@@ -18,7 +18,7 @@ namespace WpfVisualisation
         [InlineData(0, 1, 0, 21)]
         [InlineData(1, 0, 11, 0)]
         [InlineData(1, 1, 11, 21)]
-        [InlineData(4, 3, 44, 65)]
+        [InlineData(4, 3, 41, 61)]
         [InlineData(9, 4, 99, 99)]
         public void GetPositionTest(int ResY, int ResX,int Pos1,int Pos2 )
         {

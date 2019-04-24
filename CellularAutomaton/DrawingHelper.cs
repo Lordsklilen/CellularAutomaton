@@ -41,7 +41,7 @@ namespace CellularAutomaton
             g = Graphics.FromImage(bitmap);
             foreach (var el in board.board[0])
             {
-                DrawRectangle(el, el.y * (elWidth + 1), el.x * (elHeight + 1));
+                DrawRectangle(el, el.y * (elWidth), el.x * (elHeight));
             }
             wpfImage.Source = Convert(bitmap);
         }
@@ -54,7 +54,7 @@ namespace CellularAutomaton
             {
                 foreach (var el in row)
                 {
-                    DrawRectangle(el, el.y * (elWidth + 1), el.x * (elHeight + 1));
+                    DrawRectangle(el, el.y * (elWidth), el.x * (elHeight));
                 }
             }
             wpfImage.Source = Convert(bitmap);
@@ -66,16 +66,16 @@ namespace CellularAutomaton
                     colorBrush,
                     x,
                     y,
-                    elWidth,
-                    elHeight
+                    elWidth-1,
+                    elHeight-1
                 );
             else
                 g.FillRectangle(
                     deadBrush,
                     x,
                     y,
-                    elWidth,
-                    elHeight
+                    elWidth-1,
+                    elHeight-1
                 );
         }
 
@@ -94,8 +94,8 @@ namespace CellularAutomaton
         public Point GetPosition(int width, int height)
         {
             var result = new Point();
-            result.X = height / (elHeight + 1) ;
-            result.Y = width / (elWidth + 1);
+            result.X = height / (elHeight) ;
+            result.Y = width / (elWidth);
             return result;
         }
     }

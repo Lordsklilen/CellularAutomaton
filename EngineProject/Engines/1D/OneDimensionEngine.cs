@@ -40,7 +40,7 @@ namespace EngineProject.Engines
                 _createdRows = 0;
                 return;
             }
-            for (int i = 1; i < _maxColumn - 1; i++)
+            for (int i = 0; i < _maxColumn; i++)
             {
                 CheckNeighbours(i);
             }
@@ -71,9 +71,9 @@ namespace EngineProject.Engines
 
         private void CheckNeighbours(int i)
         {
-            int left = panel.board[_createdRows][i - 1].state?4:0;
+            int left = panel.board[_createdRows][(i + _maxColumn - 1)% _maxColumn].state?4:0;
             int middle = panel.board[_createdRows][i].state?2:0;
-            int right = panel.board[_createdRows][i + 1].state?1:0;
+            int right = panel.board[_createdRows][(i + 1 + _maxColumn) % _maxColumn].state?1:0;
             panel.SetCellState(_createdRows+1,i,weights[left+middle+right]==1?true:false);
         }
 
