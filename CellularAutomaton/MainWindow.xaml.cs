@@ -11,52 +11,21 @@ namespace CellularAutomaton
     /// </summary>
     public partial class MainWindow : Window
     {
-        IEngineComponent _engineFacade;
-        int width;
-        int height;
-        DrawingHelper drawingHelper;
+       
         public MainWindow()
         {
             InitializeComponent();
-            Initializevariables();
-            Loaded += DrawInitialRow;
-        }
-        void Initializevariables()
-        {
-            width = 100;
-            height = 50;
-            _engineFacade = new EngineComponent(); // TODO DI
-            _engineFacade.CreateEngine(EngineType.OneDimensionEngine, width, height);
-        }
-        void DrawInitialRow(object sender, RoutedEventArgs e)
-        {
-            drawingHelper = new DrawingHelper(img, new SolidBrush(Color.Black), new SolidBrush(Color.White), width, height);
-            var result = _engineFacade.GetBoard();
-            drawingHelper.DrawFirstRow(result);
+            Frame.Content = new OneDimensionPage();
         }
 
-        // Event Handling
-        private void Iterate_CLick(object sender, RoutedEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            int rule = (int)ruleNumber.Value;
-            _engineFacade.SetRule(rule);
-            for (int i = 1; i <= height; i++)
-            {
-                _engineFacade.GetNextIteration();
-            }
-            var result = _engineFacade.GetBoard();
-            drawingHelper.DrawBoard(result);
+            Frame.Content = new OneDimensionPage();
         }
 
-        private void Img_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            var mousePosition = e.GetPosition(img);
-            var x = (int)mousePosition.X;
-            var y = (int)mousePosition.Y;
-            var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
-            var result = _engineFacade.GetBoard();
-            drawingHelper.DrawFirstRow(result);
+            Frame.Content = new GameOfLifePage();
         }
     }
 }
