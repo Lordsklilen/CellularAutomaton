@@ -19,6 +19,9 @@ namespace EngineProject
                 case EngineType.OneDimensionEngine:
                     _engine = new OneDimensionEngine(width, height);
                     break;
+                case EngineType.GameOfLife:
+                    _engine = new GameOfLifeEngine(width, height);
+                    break;
                 default:
                     throw new NotSupportedException("Unrecognized Engine type");
             }

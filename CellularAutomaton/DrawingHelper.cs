@@ -27,7 +27,7 @@ namespace CellularAutomaton
             x = (int)wpfImage.Width;
             PrepareToDraw(numX, numY);
         }
-        void PrepareToDraw(int numX, int numY)
+        public void PrepareToDraw(int numX, int numY)
         {
             numHeightCells = numY;
             numWidthCells = numX;

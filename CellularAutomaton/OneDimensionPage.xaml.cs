@@ -23,6 +23,7 @@ namespace CellularAutomaton
             Loaded += DrawInitialRow;
             Loaded += InitEvents;
         }
+
         void InitEvents(object sender, RoutedEventArgs e)
         {
             widthNumber.TextChanged += DrawInitialRowAndReload;

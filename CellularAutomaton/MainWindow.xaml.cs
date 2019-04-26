@@ -15,7 +15,7 @@ namespace CellularAutomaton
         public MainWindow()
         {
             InitializeComponent();
-            Frame.Content = new OneDimensionPage();
+            Frame.Content = new GameOfLifePage();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

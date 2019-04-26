@@ -43,6 +43,7 @@
     <Compile Include="DataStructures\Board.cs" />
     <Compile Include="DataStructures\Cell.cs" />
     <Compile Include="Engines\1D\EngineType.cs" />
+    <Compile Include="Engines\1D\GameOfLifeEngine.cs" />
     <Compile Include="Engines\1D\OneDimensionEngine.cs" />
     <Compile Include="EngineComponent.cs" />
     <Compile Include="Engines\IEngine.cs" />

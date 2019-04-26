@@ -9,6 +9,20 @@
       Title="GameOfLifePage" Background="White">
 
     <Grid>
-        
+        <Button x:Name="start_btn" Content="Start" HorizontalAlignment="Left" Margin="45,7,0,0" VerticalAlignment="Top" Width="75" Click="Iterate_CLick"/>
+        <Button x:Name="stopBtn" Content="Stop" HorizontalAlignment="Left" Margin="125,7,0,0" VerticalAlignment="Top" Width="75" Click="Iterate_CLick"/>
+
+        <Label Content="Width" HorizontalAlignment="Left" Margin="342,4,0,0" VerticalAlignment="Top"/>
+        <Label Content="Number Of teration" HorizontalAlignment="Left" Margin="512,4,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="389,7,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="23" Margin="631,7,0,0" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="120"/>
+        <Image x:Name="img" HorizontalAlignment="Left" Width="800" Height="400" Margin="45,40,0,0" VerticalAlignment="Top" MouseDown="Img_MouseDown"/>
+        <ComboBox HorizontalAlignment="Left" Margin="205,5,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBoxItem Content="Clean"></ComboBoxItem>
+            <ComboBoxItem Content="oscilator"></ComboBoxItem>
+            <ComboBoxItem Content="Glider"></ComboBoxItem>
+            <ComboBoxItem Content="Random"></ComboBoxItem>
+        </ComboBox>
+
     </Grid>
 </Page>
