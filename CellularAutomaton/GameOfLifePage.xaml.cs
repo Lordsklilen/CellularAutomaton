@@ -79,13 +79,13 @@ namespace CellularAutomaton
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //var mousePosition = e.GetPosition(img);
-            //var x = (int)mousePosition.X;
-            //var y = (int)mousePosition.Y;
-            //var position = drawingHelper.GetPosition(x, y);
-            //_engineFacade.ChangeCellState((int)position.X, (int)position.Y);
-            //var result = _engineFacade.GetBoard();
-            //drawingHelper.DrawFirstRow(result);
+            var mousePosition = e.GetPosition(img);
+            var x = (int)mousePosition.X;
+            var y = (int)mousePosition.Y;
+            var position = drawingHelper.GetPosition(x, y);
+            _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
+            var result = _engineFacade.GetBoard();
+            drawingHelper.DrawFirstRow(result);
         }
 
         private void IterationNumber_TextChanged(object sender, TextChangedEventArgs e)
