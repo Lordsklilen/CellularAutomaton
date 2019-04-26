@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Drawing;
+using System.Windows.Threading;
 
 namespace CellularAutomaton
 {
@@ -20,6 +21,7 @@ namespace CellularAutomaton
         int width;
         int height;
         DrawingHelper drawingHelper;
+        DispatcherTimer timer;
         public GameOfLifePage()
         {
             InitializeComponent();
@@ -39,6 +41,9 @@ namespace CellularAutomaton
             height = 50;
             _engineFacade = new EngineComponent(); // TODO DI
             _engineFacade.CreateEngine(EngineType.GameOfLife, width, height);
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(250);
+            timer.Tick += Start_Ticking_timer;
         }
         void InitBoard()
         {
@@ -66,15 +71,23 @@ namespace CellularAutomaton
         }
         private void Start_CLick(object sender, RoutedEventArgs e)
         {
-            //TODO Ticktock
+            timer.Start();
+            start_btn.IsEnabled = false;
+            stopBtn.IsEnabled = true;
+        }
+
+        private void Start_Ticking_timer(object sender, EventArgs e)
+        {
             _engineFacade.GetNextIteration();
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
         }
 
-        private void Stop_CLick(object sender, RoutedEventArgs e)
+            private void Stop_CLick(object sender, RoutedEventArgs e)
         {
-            //TODO Ticktock stop
+            start_btn.IsEnabled = true;
+            stopBtn.IsEnabled = false;
+            timer.Stop();
         }
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
