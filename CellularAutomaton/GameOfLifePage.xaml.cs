@@ -64,17 +64,17 @@ namespace CellularAutomaton
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
         }
-        private void Iterate_CLick(object sender, RoutedEventArgs e)
+        private void Start_CLick(object sender, RoutedEventArgs e)
         {
-            //int rule = 90;
-            //int.TryParse(ruleNumber.Text, out rule);
-            //_engineFacade.SetRule(rule);
-            //for (int i = 1; i <= height; i++)
-            //{
-            //    _engineFacade.GetNextIteration();
-            //}
-            //var result = _engineFacade.GetBoard();
-            //drawingHelper.DrawBoard(result);
+            //TODO Ticktock
+            _engineFacade.GetNextIteration();
+            var result = _engineFacade.GetBoard();
+            drawingHelper.DrawBoard(result);
+        }
+
+        private void Stop_CLick(object sender, RoutedEventArgs e)
+        {
+            //TODO Ticktock stop
         }
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
@@ -85,12 +85,7 @@ namespace CellularAutomaton
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
             var result = _engineFacade.GetBoard();
-            drawingHelper.DrawFirstRow(result);
-        }
-
-        private void IterationNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //DrawInitialRow(sender, e);
+            drawingHelper.DrawBoard(result);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

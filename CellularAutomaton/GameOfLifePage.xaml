@@ -9,8 +9,8 @@
       Title="GameOfLifePage" Background="White">
 
     <Grid>
-        <Button x:Name="start_btn" Content="Start" HorizontalAlignment="Left" Margin="45,7,0,0" VerticalAlignment="Top" Width="75" Click="Iterate_CLick"/>
-        <Button x:Name="stopBtn" Content="Stop" HorizontalAlignment="Left" Margin="125,7,0,0" VerticalAlignment="Top" Width="75" Click="Iterate_CLick"/>
+        <Button x:Name="start_btn" Content="Start" HorizontalAlignment="Left" Margin="45,7,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
+        <Button x:Name="stopBtn" Content="Stop" HorizontalAlignment="Left" Margin="125,7,0,0" VerticalAlignment="Top" Width="75" Click="Stop_CLick"/>
 
         <Label Content="Width" HorizontalAlignment="Left" Margin="342,4,0,0" VerticalAlignment="Top"/>
         <Label Content="Number Of teration" HorizontalAlignment="Left" Margin="512,4,0,0" VerticalAlignment="Top"/>
