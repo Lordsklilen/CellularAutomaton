@@ -33,6 +33,10 @@ namespace CellularAutomaton
             numWidthCells = numX;
             elHeight = y / (numY);
             elWidth = x / (numX);
+            if (elHeight > elWidth)
+                elHeight = elWidth;
+            if (elHeight < elWidth)
+                elWidth = elHeight;
         }
 
         public void DrawFirstRow(Board board)

@@ -9,7 +9,12 @@
       Title="OneDimensionPage" Background="White">
     <Grid>
         <Button x:Name="btn1" Content="Draw board" HorizontalAlignment="Left" Margin="45,7,0,0" VerticalAlignment="Top" Width="75" Click="Iterate_CLick"/>
-        <xctk:IntegerUpDown x:Name="ruleNumber" Value="90" Width="75" Height="20" Minimum="0" Maximum="255" Margin="147,0,720,465"/>
+        <TextBox x:Name="ruleNumber"   HorizontalAlignment="Left" Height="23" Margin="196,7,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="80"/>
         <Image x:Name="img" HorizontalAlignment="Left" Width="800" Height="400" Margin="45,40,0,0" VerticalAlignment="Top" MouseDown="Img_MouseDown"/>
+        <Label Content="Rule" HorizontalAlignment="Left" Margin="158,4,0,0" VerticalAlignment="Top"/>
+        <Label Content="Width" HorizontalAlignment="Left" Margin="298,4,0,0" VerticalAlignment="Top"/>
+        <Label Content="Number Of teration" HorizontalAlignment="Left" Margin="512,4,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="345,7,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="23" Margin="631,7,0,0" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Page>
