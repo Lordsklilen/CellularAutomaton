@@ -43,9 +43,24 @@ namespace CellularAutomaton
             _engineFacade = new EngineComponent(); // TODO DI
             _engineFacade.CreateEngine(EngineType.GameOfLife, width, height);
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(250);
+            SetTime();
             timer.Tick += Start_Ticking_timer;
         }
+
+        void SetTime()
+        {
+            var result = 1.0;
+            double.TryParse(FpsCounter.Text, out result);
+            if (result < 1)
+                result = 1;
+            timer.Interval = TimeSpan.FromMilliseconds(1000.0 / result);
+        }
+        private void SetTime_timer(object sender, EventArgs e)
+        {
+            SetTime();
+        }
+
+
         void InitBoard()
         {
             int.TryParse(widthNumber.Text, out width);
@@ -63,6 +78,7 @@ namespace CellularAutomaton
         {
             widthNumber.TextChanged += DrawAndReload;
             iterationNumber.TextChanged += DrawAndReload;
+            FpsCounter.TextChanged += SetTime_timer;
         }
         void DrawAndReload(object sender, RoutedEventArgs e)
         {
@@ -84,7 +100,7 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(result);
         }
 
-            private void Stop_CLick(object sender, RoutedEventArgs e)
+        private void Stop_CLick(object sender, RoutedEventArgs e)
         {
             start_btn.IsEnabled = true;
             stopBtn.IsEnabled = false;
@@ -102,15 +118,10 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(result);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
             string content = ((ComboBoxItem)sender).Content.ToString();
-            var EnumValue = (GOLTemplatesEnum)Enum.Parse(typeof(GOLTemplatesEnum),content);
+            var EnumValue = (GOLTemplatesEnum)Enum.Parse(typeof(GOLTemplatesEnum), content);
             drawingHelper.PrepareTemplate(EnumValue, _engineFacade.GetBoard());
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
