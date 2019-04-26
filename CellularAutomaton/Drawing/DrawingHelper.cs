@@ -1,4 +1,5 @@
-﻿using EngineProject.DataStructures;
+﻿using CellularAutomaton.Drawing;
+using EngineProject.DataStructures;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -12,6 +13,7 @@ namespace CellularAutomaton
         Bitmap bitmap;
         Brush colorBrush;
         Brush deadBrush;
+        BoardTemplateBuilder builder;
         int x;
         int y;
         int elHeight;
@@ -25,6 +27,7 @@ namespace CellularAutomaton
             deadBrush = _deadBrush;
             y = (int)wpfImage.Height;
             x = (int)wpfImage.Width;
+            builder = new BoardTemplateBuilder();
             PrepareToDraw(numX, numY);
         }
         public void PrepareToDraw(int numX, int numY)
@@ -70,16 +73,16 @@ namespace CellularAutomaton
                     colorBrush,
                     x,
                     y,
-                    elWidth-1,
-                    elHeight-1
+                    elWidth - 1,
+                    elHeight - 1
                 );
             else
                 g.FillRectangle(
                     deadBrush,
                     x,
                     y,
-                    elWidth-1,
-                    elHeight-1
+                    elWidth - 1,
+                    elHeight - 1
                 );
         }
 
@@ -98,9 +101,31 @@ namespace CellularAutomaton
         public Point GetPosition(int width, int height)
         {
             var result = new Point();
-            result.X = height / (elHeight) ;
+            result.X = height / (elHeight);
             result.Y = width / (elWidth);
             return result;
         }
+        public void PrepareTemplate(GOLTemplatesEnum type, Board board)
+        {
+            switch (type)
+            {
+                case GOLTemplatesEnum.Clear:
+                    builder.BuildClear(board);
+                    break;
+                case GOLTemplatesEnum.Oscilator:
+                    builder.BuildOscilator(board);
+                    break;
+                case GOLTemplatesEnum.Glider:
+                    builder.BuildGlider(board);
+                    break;
+                case GOLTemplatesEnum.Random:
+                    builder.BuildRandom(board);
+                    break;
+                default:
+                    throw new System.Exception(string.Format(@"Template {0} is not recognized",type.ToString()));
+                    break;
+            }
+        }
+
     }
 }

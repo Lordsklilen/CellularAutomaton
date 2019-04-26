@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Drawing;
 using System.Windows.Threading;
+using CellularAutomaton.Drawing;
 
 namespace CellularAutomaton
 {
@@ -49,10 +50,10 @@ namespace CellularAutomaton
         {
             int.TryParse(widthNumber.Text, out width);
             int.TryParse(iterationNumber.Text, out height);
-            if (width < 1)
-                width = 1;
-            if (height < 2)
-                height = 2;
+            if (width < 3)
+                width = 3;
+            if (height < 3)
+                height = 3;
 
             drawingHelper.PrepareToDraw(width, height);
             _engineFacade.CreateEngine(EngineType.GameOfLife, width, height);
@@ -104,6 +105,15 @@ namespace CellularAutomaton
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+            string content = ((ComboBoxItem)sender).Content.ToString();
+            var EnumValue = (GOLTemplatesEnum)Enum.Parse(typeof(GOLTemplatesEnum),content);
+            drawingHelper.PrepareTemplate(EnumValue, _engineFacade.GetBoard());
+            var result = _engineFacade.GetBoard();
+            drawingHelper.DrawBoard(result);
         }
     }
 }
