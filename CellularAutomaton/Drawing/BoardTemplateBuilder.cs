@@ -22,7 +22,7 @@ namespace CellularAutomaton.Drawing
                 foreach (var cell in row)
                 {
                     if (rand.Next() % 2 == 0) {
-                        cell.state = true;
+                        cell.SetState(true);
                     }
                 }
             }

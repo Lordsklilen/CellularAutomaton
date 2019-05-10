@@ -51,7 +51,7 @@ namespace EngineProject.Engines
         {
             if (x > 0)
                 return;
-            panel.SetCellState(x, y, !panel.board[x][y].state);
+            panel.SetCellState(x, y, !panel.board[x][y].GetState());
         }
 
         public void SetRule(int rule)
@@ -71,10 +71,10 @@ namespace EngineProject.Engines
 
         private void CheckNeighbours(int i)
         {
-            int left = panel.board[_createdRows][(i + _maxColumn - 1)% _maxColumn].state?4:0;
-            int middle = panel.board[_createdRows][i].state?2:0;
-            int right = panel.board[_createdRows][(i + 1 + _maxColumn) % _maxColumn].state?1:0;
-            panel.SetCellState(_createdRows+1,i,weights[left+middle+right]==1?true:false);
+            int left = panel.board[_createdRows][(i + _maxColumn - 1) % _maxColumn].GetState() ? 4 : 0;
+            int middle = panel.board[_createdRows][i].GetState() ? 2 : 0;
+            int right = panel.board[_createdRows][(i + 1 + _maxColumn) % _maxColumn].GetState() ? 1 : 0;
+            panel.SetCellState(_createdRows + 1, i, weights[left + middle + right] == 1 ? true : false);
         }
 
         private void ComputeWeights(int rule)

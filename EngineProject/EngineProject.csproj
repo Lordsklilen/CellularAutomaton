@@ -40,9 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataStructures\Board.cs" />
-    <Compile Include="DataStructures\Cell.cs" />
-    <Compile Include="DataStructures\Grain.cs" />
+    <Compile Include="DataStructures\CellFactory.cs" />
+    <Compile Include="DataStructures\CellType.cs" />
+    <Compile Include="DataStructures\ICellFactory.cs" />
+    <Compile Include="DataStructures\Implementations\Board.cs" />
+    <Compile Include="DataStructures\Implementations\Cell.cs" />
+    <Compile Include="DataStructures\Implementations\Grain.cs" />
+    <Compile Include="DataStructures\interfaces\IBoard.cs" />
+    <Compile Include="DataStructures\interfaces\ICell.cs" />
     <Compile Include="Engines\Engines\GrainGrowthEngine.cs" />
     <Compile Include="Engines\EngineType.cs" />
     <Compile Include="Engines\Engines\GameOfLifeEngine.cs" />

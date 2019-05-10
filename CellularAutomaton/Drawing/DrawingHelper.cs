@@ -1,5 +1,6 @@
 ﻿using CellularAutomaton.Drawing;
 using EngineProject.DataStructures;
+using EngineProject.DataStructures.interfaces;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -48,7 +49,7 @@ namespace CellularAutomaton
             g = Graphics.FromImage(bitmap);
             foreach (var el in board.board[0])
             {
-                DrawRectangle(el, el.y * (elWidth), el.x * (elHeight));
+                DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight));
             }
             wpfImage.Source = Convert(bitmap);
         }
@@ -61,14 +62,14 @@ namespace CellularAutomaton
             {
                 foreach (var el in row)
                 {
-                    DrawRectangle(el, el.y * (elWidth), el.x * (elHeight));
+                    DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight));
                 }
             }
             wpfImage.Source = Convert(bitmap);
         }
-        private void DrawRectangle(Cell element, int x, int y)
+        private void DrawRectangle(ICell element, int x, int y)
         {
-            if (element.state)
+            if (element.GetState())
                 g.FillRectangle(
                     colorBrush,
                     x,
@@ -123,7 +124,6 @@ namespace CellularAutomaton
                     break;
                 default:
                     throw new System.Exception(string.Format(@"Template {0} is not recognized",type.ToString()));
-                    break;
             }
         }
 

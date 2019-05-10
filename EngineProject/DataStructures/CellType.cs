@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EngineProject.DataStructures
 {
-    public class Grain :Cell
+    public enum CellType
     {
-        public int number { get; set; }
-
+        Cell=0,
+        Grain=1
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EngineProject.DataStructures;
+using EngineProject.DataStructures.interfaces;
 
 namespace EngineProject.Engines.Engines
 {
@@ -39,7 +40,7 @@ namespace EngineProject.Engines.Engines
             panel = copyPanel;
         }
 
-        private void ComputeCell(Cell cell, Board copyPanel)
+        private void ComputeCell(ICell cell, Board copyPanel)
         {
             int neighbours = MaxNeighbours(cell);
             //if (cell.state)
@@ -59,7 +60,7 @@ namespace EngineProject.Engines.Engines
         }
         public void ChangeCellState(int x, int y)
         {
-            panel.SetCellState(x, y, !panel.board[x][y].state);
+            panel.SetCellState(x, y, !panel.board[x][y].GetState());
         }
 
         public void SetCellState(int x, int y, bool state)
@@ -67,7 +68,7 @@ namespace EngineProject.Engines.Engines
             panel.SetCellState(x, y, state);
         }
 
-        private int MaxNeighbours(Cell cell)
+        private int MaxNeighbours(ICell cell)
         {
             //int counter = 0;
             //for (int i = -1; i <= 1; i++)

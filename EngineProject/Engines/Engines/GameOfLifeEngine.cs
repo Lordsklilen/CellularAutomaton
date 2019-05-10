@@ -33,7 +33,7 @@ namespace EngineProject.Engines
             {
                 foreach (var cell in row)
                 {
-                    ComputeCell(cell, copyPanel);
+                    ComputeCell(cell as Cell, copyPanel);
                 }
 
             }
@@ -46,21 +46,21 @@ namespace EngineProject.Engines
             if (cell.state)
             {
                 if (neighbours == 2 || neighbours == 3)
-                    copyPanel.board[cell.x][cell.y].state = true;
+                    copyPanel.board[cell.x][cell.y].SetState(true);
                 else
-                    copyPanel.board[cell.x][cell.y].state = false;
+                    copyPanel.board[cell.x][cell.y].SetState(false);
             }
             else
             {
                 if (neighbours == 3)
-                    copyPanel.board[cell.x][cell.y].state = true;
+                    copyPanel.board[cell.x][cell.y].SetState(true);
                 else
-                    copyPanel.board[cell.x][cell.y].state = false;
+                    copyPanel.board[cell.x][cell.y].SetState(false);
             }
         }
         public void ChangeCellState(int x, int y)
         {
-            panel.SetCellState(x, y, !panel.board[x][y].state);
+            panel.SetCellState(x, y, !panel.board[x][y].GetState());
         }
 
         public void SetCellState(int x, int y, bool state)
@@ -79,7 +79,7 @@ namespace EngineProject.Engines
                     int widthId = (i + cell.x) >= 0 ? (i + cell.x) % (_maxRow) : _maxRow - 1;
                     int heightId = (j + cell.y) >= 0 ? (j + cell.y) % (_maxColumn) : _maxColumn - 1;
 
-                    if (panel.board[widthId][heightId].state && !(i == 0 && j == 0))
+                    if (panel.board[widthId][heightId].GetState() && !(i == 0 && j == 0))
                         counter++;
                 }
             }
