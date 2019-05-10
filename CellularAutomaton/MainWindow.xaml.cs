@@ -15,7 +15,7 @@ namespace CellularAutomaton
         public MainWindow()
         {
             InitializeComponent();
-            Frame.Content = new GameOfLifePage();
+            Frame.Content = new GrainGrowthPage();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -26,6 +26,10 @@ namespace CellularAutomaton
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             Frame.Content = new GameOfLifePage();
+        }
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            Frame.Content = new GrainGrowthPage();
         }
     }
 }

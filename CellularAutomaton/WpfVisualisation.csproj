@@ -82,6 +82,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GrainGrowthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,6 +99,9 @@
     <Compile Include="Drawing\GOLTemplatesEnum.cs" />
     <Compile Include="GameOfLifePage.xaml.cs">
       <DependentUpon>GameOfLifePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GrainGrowthPage.xaml.cs">
+      <DependentUpon>GrainGrowthPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

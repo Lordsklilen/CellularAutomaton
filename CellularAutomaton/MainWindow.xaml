@@ -14,6 +14,7 @@
             <Menu IsMainMenu="true">
                 <MenuItem Header="One dimension Automat" Click="MenuItem_Click"/>
                 <MenuItem Header="Game Of Life" Click="MenuItem_Click_1"/>
+                <MenuItem Header="GrainGrowthPage"  Click="MenuItem_Click_2"/>
 
             </Menu>
         </Grid>

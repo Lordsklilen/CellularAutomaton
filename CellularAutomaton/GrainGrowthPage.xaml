@@ -1,16 +1,16 @@
-﻿<Page x:Class="CellularAutomaton.GameOfLifePage"
+﻿<Page x:Class="CellularAutomaton.GrainGrowthPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CellularAutomaton"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"       
       d:DesignHeight="450" d:DesignWidth="1000"
-      Title="GameOfLifePage" Background="White">
+      Title="GrainGrowthPage" Background="White">
 
     <Grid>
-        <Button x:Name="start_btn" Content="Start" HorizontalAlignment="Left" Margin="45,7,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
-        <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="125,7,0,0" VerticalAlignment="Top" Width="75" Click="Stop_CLick"/>
+        <Button x:Name="start_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="45,7,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
+        <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="125,7,0,0" VerticalAlignment="Top" Width="75" Click="Stop_Click"/>
 
         <Label Content="Width" HorizontalAlignment="Left" Margin="342,4,0,0" VerticalAlignment="Top"/>
         <Label Content="Height" HorizontalAlignment="Left" Margin="470,4,0,0" VerticalAlignment="Top"/>
@@ -25,6 +25,7 @@
         </ComboBox>
         <Label Content="Number FPS" HorizontalAlignment="Left" Margin="586,5,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="667,10,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="60"/>
+        <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="732,11,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
 
     </Grid>
 </Page>
