@@ -12,5 +12,6 @@ namespace EngineProject.DataStructures.interfaces
         bool GetState();
         int X();
         int Y();
+        CellType GetCellType();
     }
 }

@@ -12,6 +12,7 @@ namespace EngineProject.Engines.Engines
     {
         public Board panel { get; private set; }
         public EngineType type;
+        private CellType cellType;
         private int _maxRow;
         private int _maxColumn;
 
@@ -19,8 +20,9 @@ namespace EngineProject.Engines.Engines
 
         public GrainGrowthEngine(int width, int height)
         {
-            panel = new Board(width, height);
             type = EngineType.GrainGrowth;
+            cellType = CellType.Grain;
+            panel = new Board(width, height, cellType);
             _maxRow = height;
             _maxColumn = width;
         }

@@ -31,6 +31,10 @@ namespace CellularAutomaton
             builder = new BoardTemplateBuilder();
             PrepareToDraw(numX, numY);
         }
+
+
+
+
         public void PrepareToDraw(int numX, int numY)
         {
             numHeightCells = numY;
@@ -67,8 +71,13 @@ namespace CellularAutomaton
             }
             wpfImage.Source = Convert(bitmap);
         }
+
         private void DrawRectangle(ICell element, int x, int y)
         {
+
+
+
+
             if (element.GetState())
                 g.FillRectangle(
                     colorBrush,
@@ -106,6 +115,7 @@ namespace CellularAutomaton
             result.Y = width / (elWidth);
             return result;
         }
+
         public void PrepareTemplate(GOLTemplatesEnum type, Board board)
         {
             switch (type)

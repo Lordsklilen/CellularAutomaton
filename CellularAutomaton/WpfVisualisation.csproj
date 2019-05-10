@@ -95,6 +95,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Drawing\BoardTemplateBuilder.cs" />
+    <Compile Include="Drawing\BrushFactory.cs" />
+    <Compile Include="Drawing\BrushType.cs" />
+    <Compile Include="Drawing\ColorTool.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
     <Compile Include="Drawing\GOLTemplatesEnum.cs" />
     <Compile Include="GameOfLifePage.xaml.cs">

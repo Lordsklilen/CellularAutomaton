@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EngineProject.DataStructures
 {
-    public class Grain :Cell
+    public class Grain : Cell
     {
         private int grainNumber { get; set; }
 

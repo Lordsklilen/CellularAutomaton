@@ -9,27 +9,28 @@ namespace EngineProject.DataStructures
 {
     public class Cell : ICell
     {
-        public bool state { get; set; }
-        public int x { get; private set; }
-        public int y { get; private set; }
+        public int x;
+        public int y; 
+        public bool state;
+        private CellType type;
+
         public int X() => x;
         public int Y() => y;
         public bool GetState() => state;
 
-        public Cell(bool _state = false) {
-            state = _state;
-        }
-
-        public Cell(int _x, int _y, bool _state = false)
+        public Cell(int _x, int _y, CellType type = CellType.Cell, bool _state = false)
         {
             x = _x;
             y = _y;
             state = false;
+            this.type = type;
         }
 
         public void SetState(bool _state)
         {
             state = _state;
         }
+
+        public CellType GetCellType() => type;
     }
 }
