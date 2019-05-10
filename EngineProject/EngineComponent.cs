@@ -36,15 +36,17 @@ namespace EngineProject
             _engine.NextIteration();
             return _engine.GetBoard();
         }
+
         public Board GetBoard()
         {
             return _engine.GetBoard();
         }
+
         public void SetCellState(int x, int y, bool state)
         {
             _engine.SetCellState(x, y, state);
-
         }
+
         public void ChangeCellState(int x, int y)
         {
             _engine.ChangeCellState(x, y);
@@ -53,6 +55,10 @@ namespace EngineProject
         public void SetRule(int rule)
         {
             _engine.SetRule(rule);
+        }
+        public void SetGrainNumber(int grainNumber, int x, int y)
+        {
+            (_engine as GrainGrowthEngine).SetGrainNumber(grainNumber ,x, y);
         }
     }
 }

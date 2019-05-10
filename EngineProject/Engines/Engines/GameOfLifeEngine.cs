@@ -13,6 +13,7 @@ namespace EngineProject.Engines
         public EngineType type;
         private int _maxRow;
         private int _maxColumn;
+
         public GameOfLifeEngine(int width, int height)
         {
             panel = new Board(width, height);
@@ -70,7 +71,6 @@ namespace EngineProject.Engines
 
         private int CheckNeighbours(Cell cell)
         {
-            //TODO
             int counter = 0;
             for (int i = -1; i <= 1; i++)
             {
@@ -85,7 +85,13 @@ namespace EngineProject.Engines
             }
             return counter;
         }
+
         public void SetRule(int rule)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetGrainNumber(int number, int x, int y)
         {
             throw new NotImplementedException();
         }

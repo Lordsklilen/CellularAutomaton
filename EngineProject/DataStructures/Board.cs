@@ -3,14 +3,17 @@
 
 namespace EngineProject.DataStructures
 {
-    public class Board:IBoard
+    public class Board : IBoard
     {
 
-        public ICell[][] board { get; private set;}
+        public ICell[][] board { get; private set; }
         public CellType cellType { get; set; }
         private ICellFactory cellFactory;
         private int width;
         private int height;
+        private int maxGrainNumber;
+
+        public int MaxNumber() => maxGrainNumber;
 
         public Board(int width, int height, CellType type = CellType.Cell)
         {
@@ -18,6 +21,7 @@ namespace EngineProject.DataStructures
             this.height = height;
             cellType = type;
             cellFactory = new CellFactory();
+            maxGrainNumber = 1;
             Clear();
         }
 
@@ -39,5 +43,10 @@ namespace EngineProject.DataStructures
             }
         }
 
+        public void SetGrainNumber(int number, int x, int y) {
+            if (number > maxGrainNumber)
+                maxGrainNumber = number;
+            (board[x][y] as Grain).SetGrainNumber(number);
+        }
     }
 }

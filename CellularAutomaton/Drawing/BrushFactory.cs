@@ -24,9 +24,12 @@ namespace CellularAutomaton.Drawing
             }
         }
 
-        public Brush CreateColorBrush(int number, int max, int min)
+        public Brush CreateColorBrush(int number, int max)
         {
-            return new SolidBrush(colorTool.GetColor(number,max,min));
+            if(number ==0)
+                return new SolidBrush(Color.White);
+            return new SolidBrush(colorTool.GetColor(number,max,0));
         }
+
     }
 }

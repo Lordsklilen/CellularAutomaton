@@ -85,5 +85,10 @@ namespace EngineProject.Engines
                 rule /= 2;
             }
         }
+
+        public void SetGrainNumber(int number, int x, int y)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

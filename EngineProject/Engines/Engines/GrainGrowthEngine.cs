@@ -27,7 +27,6 @@ namespace EngineProject.Engines.Engines
             _maxColumn = width;
         }
 
-
         public void NextIteration()
         {
             var copyPanel = new Board(_maxColumn, _maxRow);
@@ -37,7 +36,6 @@ namespace EngineProject.Engines.Engines
                 {
                     ComputeCell(cell, copyPanel);
                 }
-
             }
             panel = copyPanel;
         }
@@ -89,6 +87,11 @@ namespace EngineProject.Engines.Engines
         public void SetRule(int rule)
         {
             throw new NotImplementedException();
+        }
+
+        public void SetGrainNumber(int number, int x, int y)
+        {
+            panel.SetGrainNumber(number,x, y);
         }
     }
 }

@@ -4,15 +4,6 @@ namespace CellularAutomaton.Drawing
 {
     public class ColorTool
     {
-        //private double min;
-        //private double max;
-
-        //public ColorTool()
-        //{
-        //    min = 0;
-
-        //}
-
         private Color InterpolateColor(Color a, Color b, double t)
         {
             return Color.FromArgb

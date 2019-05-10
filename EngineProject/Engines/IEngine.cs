@@ -13,6 +13,7 @@ namespace EngineProject.Engines
         Board GetBoard();
         void SetRule(int rule);
         void SetCellState(int x, int y, bool state);
+        void SetGrainNumber(int number, int x, int y);
         void ChangeCellState(int x, int y);
     }
 }

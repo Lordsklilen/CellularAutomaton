@@ -10,7 +10,10 @@ namespace EngineProject.DataStructures
     {
         private int grainNumber { get; set; }
 
-        public Grain(int x, int y) : base(x, y) { }
+        public Grain(int x, int y) : base(x, y) {
+            grainNumber = 0;
+        }
         public int GetGrainNumber() => grainNumber;
+        public void SetGrainNumber(int number) => grainNumber = number;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CellularAutomaton.Drawing;
 using EngineProject.DataStructures;
 using EngineProject.DataStructures.interfaces;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -15,6 +16,7 @@ namespace CellularAutomaton
         Brush colorBrush;
         Brush deadBrush;
         BoardTemplateBuilder builder;
+        BrushFactory brushFactory;
         int x;
         int y;
         int elHeight;
@@ -29,6 +31,7 @@ namespace CellularAutomaton
             y = (int)wpfImage.Height;
             x = (int)wpfImage.Width;
             builder = new BoardTemplateBuilder();
+            brushFactory = new BrushFactory();
             PrepareToDraw(numX, numY);
         }
 
@@ -53,7 +56,7 @@ namespace CellularAutomaton
             g = Graphics.FromImage(bitmap);
             foreach (var el in board.board[0])
             {
-                DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight));
+                DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight),board);
             }
             wpfImage.Source = Convert(bitmap);
         }
@@ -66,34 +69,33 @@ namespace CellularAutomaton
             {
                 foreach (var el in row)
                 {
-                    DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight));
+                    DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight), board);
                 }
             }
             wpfImage.Source = Convert(bitmap);
         }
 
-        private void DrawRectangle(ICell element, int x, int y)
+        private void DrawRectangle(ICell element, int x, int y, Board board)
         {
-
-
-
-
-            if (element.GetState())
-                g.FillRectangle(
-                    colorBrush,
-                    x,
-                    y,
-                    elWidth - 1,
-                    elHeight - 1
-                );
-            else
-                g.FillRectangle(
-                    deadBrush,
-                    x,
-                    y,
-                    elWidth - 1,
-                    elHeight - 1
-                );
+            Brush brush;
+            switch (element.GetCellType())
+            {
+                case CellType.Cell:
+                    brush = brushFactory.CreateBinaryBrush(element.GetState());
+                    break;
+                case CellType.Grain:
+                    brush = brushFactory.CreateColorBrush(((Grain)element).GetGrainNumber(), board.MaxNumber());
+                    break;
+                default:
+                    throw new NotSupportedException("Cannot create brush. Cell type not supproted");
+            }
+            g.FillRectangle(
+                brush,
+                x,
+                y,
+                elWidth - 1,
+                elHeight - 1
+            );
         }
 
         public BitmapImage Convert(Bitmap src)
@@ -133,7 +135,7 @@ namespace CellularAutomaton
                     builder.BuildRandom(board);
                     break;
                 default:
-                    throw new System.Exception(string.Format(@"Template {0} is not recognized",type.ToString()));
+                    throw new System.Exception(string.Format(@"Template {0} is not recognized", type.ToString()));
             }
         }
 

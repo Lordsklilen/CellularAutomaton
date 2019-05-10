@@ -17,6 +17,8 @@ namespace EngineProject.DataStructures
         public int X() => x;
         public int Y() => y;
         public bool GetState() => state;
+        public CellType GetCellType() => type;
+        public void SetState(bool _state) => state = _state;
 
         public Cell(int _x, int _y, CellType type = CellType.Cell, bool _state = false)
         {
@@ -26,11 +28,5 @@ namespace EngineProject.DataStructures
             this.type = type;
         }
 
-        public void SetState(bool _state)
-        {
-            state = _state;
-        }
-
-        public CellType GetCellType() => type;
     }
 }
