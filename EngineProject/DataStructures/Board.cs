@@ -17,8 +17,6 @@ namespace EngineProject.DataStructures
             this.width = width;
             this.height = height;
             Clear();
-
-
         }
         public void SetCellState(int x, int y, bool state) {
             board[x][y].SetState(state);

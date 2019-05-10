@@ -8,6 +8,7 @@ namespace EngineProject.DataStructures
 {
     public class Grain :Cell
     {
+        public int number { get; set; }
 
     }
 }
