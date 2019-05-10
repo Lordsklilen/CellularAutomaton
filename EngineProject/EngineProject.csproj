@@ -42,9 +42,11 @@
   <ItemGroup>
     <Compile Include="DataStructures\Board.cs" />
     <Compile Include="DataStructures\Cell.cs" />
-    <Compile Include="Engines\1D\EngineType.cs" />
-    <Compile Include="Engines\1D\GameOfLifeEngine.cs" />
-    <Compile Include="Engines\1D\OneDimensionEngine.cs" />
+    <Compile Include="DataStructures\Grain.cs" />
+    <Compile Include="Engines\Engines\GrainGrowthEngine.cs" />
+    <Compile Include="Engines\EngineType.cs" />
+    <Compile Include="Engines\Engines\GameOfLifeEngine.cs" />
+    <Compile Include="Engines\Engines\OneDimensionEngine.cs" />
     <Compile Include="EngineComponent.cs" />
     <Compile Include="Engines\IEngine.cs" />
     <Compile Include="IEngineComponent.cs" />

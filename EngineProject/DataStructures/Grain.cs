@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EngineProject.DataStructures
 {
-    public enum EngineType
+    public class Grain :Cell
     {
-        OneDimensionEngine=0,
-        GameOfLife=1
+
     }
 }

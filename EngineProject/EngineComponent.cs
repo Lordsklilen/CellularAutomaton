@@ -1,5 +1,6 @@
 ﻿using EngineProject.DataStructures;
 using EngineProject.Engines;
+using EngineProject.Engines.Engines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace EngineProject
                     break;
                 case EngineType.GameOfLife:
                     _engine = new GameOfLifeEngine(width, height);
+                    break;
+                case EngineType.GrainGrowth:
+                    _engine = new GrainGrowthEngine(width, height);
                     break;
                 default:
                     throw new NotSupportedException("Unrecognized Engine type");

@@ -48,7 +48,7 @@ namespace CellularAutomaton
             width = 100;
             height = 50;
             _engineFacade = new EngineComponent(); // TODO DI
-            _engineFacade.CreateEngine(EngineType.GameOfLife, width, height);
+            _engineFacade.CreateEngine(EngineType.GrainGrowth, width, height);
             timer = new DispatcherTimer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
