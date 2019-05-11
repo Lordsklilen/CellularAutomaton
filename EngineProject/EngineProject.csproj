@@ -54,12 +54,15 @@
     <Compile Include="Engines\Engines\OneDimensionEngine.cs" />
     <Compile Include="EngineComponent.cs" />
     <Compile Include="Engines\IEngine.cs" />
+    <Compile Include="Templates\GrainTemplates\GrainTemplateClean.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateFactory.cs" />
+    <Compile Include="Templates\GrainTemplates\GrainTemplateRadius.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateRandom.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateType.cs" />
     <Compile Include="Templates\GrainTemplates\IGrainTemplateStrategy.cs" />
     <Compile Include="IEngineComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\GrainTemplates\TemplateRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

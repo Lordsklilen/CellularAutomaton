@@ -12,9 +12,11 @@ namespace EngineProject.Templates.GrainTemplates
             switch (type)
             {
                 case GrainTemplateType.Clear:
+                    return new GrainTemplateClean();
                 case GrainTemplateType.Random:
                     return new GrainTemplateRandom();
                 case GrainTemplateType.Radius:
+                    return new GrainTemplateRadius();
                 default:
                     throw new NotSupportedException("this type of template is not supproted");
             }

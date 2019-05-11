@@ -146,26 +146,34 @@ namespace CellularAutomaton
         {
             try
             {
-                if (Clean_RadioBtn.IsChecked ?? false)
-                {
-                    _engineFacade.GenerateGrainTemplate(GrainTemplateType.Clear);
-                }
-                else if (Random_RadioBtn.IsChecked ?? false)
-                {
-                    int numberOfPoints = 1;
-                    int.TryParse(Random_textBox.Text, out numberOfPoints);
-                    _engineFacade.GenerateGrainTemplate(GrainTemplateType.Random, numberOfPoints);
-                }
-                else if (Radius_RadioBtn.IsChecked ?? false)
-                {
-                    _engineFacade.GenerateGrainTemplate(GrainTemplateType.Radius);
-                }
+                var request = BuildTemplateRequest();
+                _engineFacade.GenerateGrainTemplate(request);
                 var result = _engineFacade.GetBoard();
                 drawingHelper.DrawBoard(result);
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private TemplateRequest BuildTemplateRequest() {
+            var request = new TemplateRequest();
+            request.board = _engineFacade.GetBoard();
+            int.TryParse(Random_textBox.Text, out request.numberOfPoints);
+            int.TryParse(Radius_textBox.Text, out request.radius);
+            if (Radius_RadioBtn.IsChecked ?? false)
+            {
+                request.type = GrainTemplateType.Radius;
+            }
+            else if (Random_RadioBtn.IsChecked ?? false)
+            {
+                request.type = GrainTemplateType.Random;
+            }
+            else
+            {
+                request.type = GrainTemplateType.Clear;
+            }
+
+            return request;
         }
     }
 }

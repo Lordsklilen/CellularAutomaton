@@ -66,10 +66,10 @@ namespace EngineProject
         }
         public bool IsFinished() => (_engine as GrainGrowthEngine).IsFinished();
 
-        public void GenerateGrainTemplate(GrainTemplateType type, int parameters =-1)
+        public void GenerateGrainTemplate(TemplateRequest request)
         {
-            var template = templateFactory.CreateTemplate(type);
-            template.GenerateTemplate(GetBoard(), parameters);
+            var template = templateFactory.CreateTemplate(request.type);
+            template.GenerateTemplate(request);
         }
     }
 }

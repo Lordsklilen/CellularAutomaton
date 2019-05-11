@@ -15,11 +15,9 @@ namespace EngineProject.Engines.Engines
         private CellType cellType;
         private int _maxRow;
         private int _maxColumn;
-        private bool finished;
-
-        public bool IsFinished() => finished;        
+    
         public Board GetBoard() => panel;
-
+        public bool IsFinished() => panel.IsFinished();
         public GrainGrowthEngine(int width, int height)
         {
             type = EngineType.GrainGrowth;
@@ -31,8 +29,8 @@ namespace EngineProject.Engines.Engines
 
         public void NextIteration()
         {
-            finished = true;
             var copyPanel = new Board(_maxColumn, _maxRow, cellType);
+            copyPanel.finished = true;
             foreach (var row in panel.board)
             {
                 foreach (var cell in row)
@@ -49,19 +47,19 @@ namespace EngineProject.Engines.Engines
             {
                 int nextGrainNumber = MostCommonNeighbour(cell as Grain);
                 copyPanel.SetGrainNumber(nextGrainNumber, cell.x, cell.y);
-                finished = false;
+                copyPanel.finished = false;
             }
             else
                 copyPanel.SetGrainNumber(cell.GetGrainNumber(), cell.x, cell.y);
         }
         public void ChangeCellState(int x, int y)
         {
-            panel.SetCellState(x, y, !panel.board[x][y].GetState());
+            throw new NotImplementedException();
         }
 
         public void SetCellState(int x, int y, bool state)
         {
-            panel.SetCellState(x, y, state);
+            throw new NotImplementedException();
         }
 
         private int MostCommonNeighbour(Grain cell)

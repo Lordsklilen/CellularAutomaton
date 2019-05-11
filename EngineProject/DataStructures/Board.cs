@@ -14,6 +14,8 @@ namespace EngineProject.DataStructures
         private int maxGrainNumber;
         public int MaxX() => width;
         public int MaxY() => height;
+        public bool finished;
+        public bool IsFinished() => finished;
 
         public int MaxNumber() => maxGrainNumber;
         public int GetGrainNumber(int x, int y) => (board[x][y] as Grain).GetGrainNumber();
@@ -44,6 +46,8 @@ namespace EngineProject.DataStructures
                     board[i][j] = cellFactory.CreateCell(cellType, i, j);
                 }
             }
+            maxGrainNumber = 1;
+            finished = false;
         }
         
         public void SetGrainNumber(int number, int x, int y) {

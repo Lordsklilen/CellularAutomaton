@@ -18,6 +18,6 @@ namespace EngineProject
         void SetRule(int rule);
         void SetGrainNumber(int grainNumber, int x, int y);
         bool IsFinished();
-        void GenerateGrainTemplate(GrainTemplateType type, int parameters = -1);
+        void GenerateGrainTemplate(TemplateRequest request);
     }
 }

@@ -6,11 +6,13 @@ namespace EngineProject.Templates.GrainTemplates
     public class GrainTemplateRandom : IGrainTemplateStrategy
     {
         Random rand = new Random();
-        public void GenerateTemplate(Board panel, int parameter = -1)
+        public void GenerateTemplate(TemplateRequest request)
         {
-            if (parameter < 1)
-                throw new NotImplementedException("Cannot generate template with number of points: " + parameter.ToString());
-            var numberOfPoints = parameter;
+            var numberOfPoints = request.numberOfPoints;
+            var panel = request.board;
+            if (numberOfPoints < 1)
+                throw new NotImplementedException("Cannot generate template with number of points: " + numberOfPoints.ToString());
+
             panel.Clear();
             int NumberOfWrongShots = 0;
             for (int i = 0; i < numberOfPoints; i++)
