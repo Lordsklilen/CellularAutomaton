@@ -29,34 +29,26 @@ namespace EngineProject.Engines.Engines
 
         public void NextIteration()
         {
-            var copyPanel = new Board(_maxColumn, _maxRow);
+            var copyPanel = new Board(_maxColumn, _maxRow, cellType);
             foreach (var row in panel.board)
             {
                 foreach (var cell in row)
                 {
-                    ComputeCell(cell, copyPanel);
+                    ComputeCell((Grain)cell, copyPanel);
                 }
             }
             panel = copyPanel;
         }
 
-        private void ComputeCell(ICell cell, Board copyPanel)
+        private void ComputeCell(Grain cell, Board copyPanel)
         {
-            int neighbours = MaxNeighbours(cell);
-            //if (cell.state)
-            //{
-            //    if (neighbours == 2 || neighbours == 3)
-            //        copyPanel.board[cell.x][cell.y].state = true;
-            //    else
-            //        copyPanel.board[cell.x][cell.y].state = false;
-            //}
-            //else
-            //{
-            //    if (neighbours == 3)
-            //        copyPanel.board[cell.x][cell.y].state = true;
-            //    else
-            //        copyPanel.board[cell.x][cell.y].state = false;
-            //}
+            if (cell.GetGrainNumber() == 0)
+            {
+                int nextGrainNumber = MostCommonNeighbour(cell as Grain);
+                copyPanel.SetGrainNumber(nextGrainNumber, cell.x, cell.y);
+            }
+            else
+                copyPanel.SetGrainNumber(cell.GetGrainNumber(), cell.x, cell.y);
         }
         public void ChangeCellState(int x, int y)
         {
@@ -68,21 +60,28 @@ namespace EngineProject.Engines.Engines
             panel.SetCellState(x, y, state);
         }
 
-        private int MaxNeighbours(ICell cell)
+        private int MostCommonNeighbour(Grain cell)
         {
-            //int counter = 0;
-            //for (int i = -1; i <= 1; i++)
-            //{
-            //    for (int j = -1; j <= 1; j++)
-            //    {
-            //        int widthId = (i + cell.x) >= 0 ? (i + cell.x) % (_maxRow) : _maxRow - 1;
-            //        int heightId = (j + cell.y) >= 0 ? (j + cell.y) % (_maxColumn) : _maxColumn - 1;
+            List<int> neighbours = new List<int>();
+            int[,] pairs = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
-            //        if (panel.board[widthId][heightId].state && !(i == 0 && j == 0))
-            //            counter++;
-            //    }
-            //}
-            return 0;
+            for (int i = 0; i <= 3; i++)
+            {
+                int x = pairs[i, 0];
+                int y = pairs[i, 1];
+                int widthId = (x + cell.x) >= 0 ? (x + cell.x) % (_maxRow) : _maxRow - 1;
+                int heightId = (y + cell.y) >= 0 ? (y + cell.y) % (_maxColumn) : _maxColumn - 1;
+                int number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                if (number > 0)
+                    neighbours.Add(number);
+            }
+            if (neighbours.Count == 0)
+                return 0;
+            else
+            {
+                var groups = neighbours.GroupBy(x => x);
+                return groups.OrderByDescending(x => x.Count()).First().Key;
+            }
         }
         public void SetRule(int rule)
         {
@@ -91,7 +90,7 @@ namespace EngineProject.Engines.Engines
 
         public void SetGrainNumber(int number, int x, int y)
         {
-            panel.SetGrainNumber(number,x, y);
+            panel.SetGrainNumber(number, x, y);
         }
     }
 }

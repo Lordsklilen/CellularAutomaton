@@ -13,8 +13,6 @@ namespace CellularAutomaton
         Graphics g;
         System.Windows.Controls.Image wpfImage;
         Bitmap bitmap;
-        Brush colorBrush;
-        Brush deadBrush;
         BoardTemplateBuilder builder;
         BrushFactory brushFactory;
         int x;
@@ -23,11 +21,9 @@ namespace CellularAutomaton
         int elWidth;
         int numHeightCells;
         int numWidthCells;
-        public DrawingHelper(System.Windows.Controls.Image _img, Brush _mainBrush, Brush _deadBrush, int numX, int numY)
+        public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY)
         {
             wpfImage = _img;
-            colorBrush = _mainBrush;
-            deadBrush = _deadBrush;
             y = (int)wpfImage.Height;
             x = (int)wpfImage.Width;
             builder = new BoardTemplateBuilder();

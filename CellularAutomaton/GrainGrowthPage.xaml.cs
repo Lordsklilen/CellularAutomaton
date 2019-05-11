@@ -30,6 +30,8 @@ namespace CellularAutomaton
         int height;
         DrawingHelper drawingHelper;
         DispatcherTimer timer;
+        EngineType engineType = EngineType.GrainGrowth;
+        int numberOfGrains = 0;
         public GrainGrowthPage()
         {
             InitializeComponent();
@@ -39,7 +41,7 @@ namespace CellularAutomaton
         }
         void DrawInitial(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, new SolidBrush(System.Drawing.Color.Black), new SolidBrush(System.Drawing.Color.White), width, height);
+            drawingHelper = new DrawingHelper(img, width, height);
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
         }
@@ -48,7 +50,7 @@ namespace CellularAutomaton
             width = 100;
             height = 50;
             _engineFacade = new EngineComponent(); // TODO DI
-            _engineFacade.CreateEngine(EngineType.GrainGrowth, width, height);
+            _engineFacade.CreateEngine(engineType, width, height);
             timer = new DispatcherTimer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
@@ -78,7 +80,7 @@ namespace CellularAutomaton
                 height = 3;
 
             drawingHelper.PrepareToDraw(width, height);
-            _engineFacade.CreateEngine(EngineType.GameOfLife, width, height);
+            _engineFacade.CreateEngine(engineType, width, height);
         }
 
         void InitEvents(object sender, RoutedEventArgs e)
@@ -109,9 +111,9 @@ namespace CellularAutomaton
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            start_btn.IsEnabled = true;
-            stopBtn.IsEnabled = false;
-            timer.Stop();
+            //start_btn.IsEnabled = true;
+            //stopBtn.IsEnabled = false;
+            //timer.Stop();
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
@@ -123,11 +125,12 @@ namespace CellularAutomaton
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            ++numberOfGrains;
             var mousePosition = e.GetPosition(img);
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
+            _engineFacade.SetGrainNumber(numberOfGrains,position.X,position.Y);
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
         }

@@ -12,7 +12,7 @@ namespace EngineProject.DataStructures
         public int x;
         public int y; 
         public bool state;
-        private CellType type;
+        protected CellType type;
 
         public int X() => x;
         public int Y() => y;

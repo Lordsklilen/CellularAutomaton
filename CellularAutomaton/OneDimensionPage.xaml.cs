@@ -53,7 +53,7 @@ namespace CellularAutomaton
         }
         void DrawInitialRow(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, new SolidBrush(Color.Black), new SolidBrush(Color.White), width, height);
+            drawingHelper = new DrawingHelper(img, width, height);
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawFirstRow(result);
         }

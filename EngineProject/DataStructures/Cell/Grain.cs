@@ -12,6 +12,7 @@ namespace EngineProject.DataStructures
 
         public Grain(int x, int y) : base(x, y) {
             grainNumber = 0;
+            type = CellType.Grain;
         }
         public int GetGrainNumber() => grainNumber;
         public void SetGrainNumber(int number) => grainNumber = number;
