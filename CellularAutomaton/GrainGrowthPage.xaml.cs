@@ -4,9 +4,11 @@ using EngineProject.DataStructures;
 using EngineProject.Templates.GrainTemplates;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,9 +32,10 @@ namespace CellularAutomaton
         int width;
         int height;
         DrawingHelper drawingHelper;
-        DispatcherTimer timer;
+        static System.Windows.Forms.Timer timer;
         EngineType engineType = EngineType.GrainGrowth;
         int numberOfGrains = 0;
+
         public GrainGrowthPage()
         {
             InitializeComponent();
@@ -52,7 +55,7 @@ namespace CellularAutomaton
             height = 75;
             _engineFacade = new EngineComponent(); // TODO DI
             _engineFacade.CreateEngine(engineType, width, height);
-            timer = new DispatcherTimer();
+            timer = new System.Windows.Forms.Timer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
         }
@@ -63,7 +66,7 @@ namespace CellularAutomaton
             double.TryParse(FpsCounter.Text, out result);
             if (result < 1)
                 result = 1;
-            timer.Interval = TimeSpan.FromMilliseconds(1000.0 / result);
+            timer.Interval = (int)(1000.0 / result);
         }
         private void SetTime_timer(object sender, EventArgs e)
         {
@@ -105,7 +108,6 @@ namespace CellularAutomaton
 
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
-
             _engineFacade.GetNextIteration();
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
