@@ -12,8 +12,11 @@ namespace EngineProject.DataStructures
         private int width;
         private int height;
         private int maxGrainNumber;
+        public int MaxX() => width;
+        public int MaxY() => height;
 
         public int MaxNumber() => maxGrainNumber;
+        public int GetGrainNumber(int x, int y) => (board[x][y] as Grain).GetGrainNumber();
 
         public Board(int width, int height, CellType type = CellType.Cell)
         {
@@ -42,7 +45,7 @@ namespace EngineProject.DataStructures
                 }
             }
         }
-
+        
         public void SetGrainNumber(int number, int x, int y) {
             if (number > maxGrainNumber)
                 maxGrainNumber = number;

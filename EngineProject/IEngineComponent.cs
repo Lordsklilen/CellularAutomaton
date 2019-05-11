@@ -1,4 +1,5 @@
 ﻿using EngineProject.DataStructures;
+using EngineProject.Templates.GrainTemplates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace EngineProject
         void ChangeCellState(int x, int y);
         void SetRule(int rule);
         void SetGrainNumber(int grainNumber, int x, int y);
+        bool IsFinished();
+        void GenerateGrainTemplate(GrainTemplateType type, int parameters = -1);
     }
 }

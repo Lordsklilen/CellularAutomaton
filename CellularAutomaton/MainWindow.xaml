@@ -8,7 +8,7 @@
 
         xmlns:local="clr-namespace:CellularAutomaton"
         mc:Ignorable="d"
-        Title="MainWindow" Height="560" Width="960" ResizeMode="NoResize">
+        Title="MainWindow" Height="760" Width="1400" ResizeMode="NoResize">
     <Grid Margin="0,0,0,0">
         <Grid>
             <Menu IsMainMenu="true">

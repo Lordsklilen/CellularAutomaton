@@ -19,9 +19,9 @@ namespace CellularAutomaton.Drawing
         {
             var percentage = (elNumber - min) / (max - min);
             if (percentage < 0.25)
-                return InterpolateColor(Color.Blue, Color.Green, percentage * 4.0);
+                return InterpolateColor(Color.Purple, Color.Blue, percentage * 4.0);
             else if (percentage < 0.5)
-                return InterpolateColor(Color.Green, Color.Yellow, (percentage - 0.25) * 4.0);
+                return InterpolateColor(Color.Blue, Color.Yellow, (percentage - 0.25) * 4.0);
             else if (percentage < 0.75)
                 return InterpolateColor(Color.Yellow, Color.Orange, (percentage - 0.5) * 4.0);
             else

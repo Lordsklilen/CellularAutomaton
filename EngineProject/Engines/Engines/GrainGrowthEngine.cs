@@ -15,7 +15,9 @@ namespace EngineProject.Engines.Engines
         private CellType cellType;
         private int _maxRow;
         private int _maxColumn;
+        private bool finished;
 
+        public bool IsFinished() => finished;        
         public Board GetBoard() => panel;
 
         public GrainGrowthEngine(int width, int height)
@@ -29,6 +31,7 @@ namespace EngineProject.Engines.Engines
 
         public void NextIteration()
         {
+            finished = true;
             var copyPanel = new Board(_maxColumn, _maxRow, cellType);
             foreach (var row in panel.board)
             {
@@ -46,6 +49,7 @@ namespace EngineProject.Engines.Engines
             {
                 int nextGrainNumber = MostCommonNeighbour(cell as Grain);
                 copyPanel.SetGrainNumber(nextGrainNumber, cell.x, cell.y);
+                finished = false;
             }
             else
                 copyPanel.SetGrainNumber(cell.GetGrainNumber(), cell.x, cell.y);

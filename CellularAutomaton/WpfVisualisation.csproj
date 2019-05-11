@@ -94,12 +94,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Drawing\BoardTemplateBuilder.cs" />
-    <Compile Include="Drawing\BrushFactory.cs" />
-    <Compile Include="Drawing\BrushType.cs" />
-    <Compile Include="Drawing\ColorTool.cs" />
+    <Compile Include="Drawing\Templates\GolTemplates\BoardTemplateBuilder.cs" />
+    <Compile Include="Drawing\Colors Management\BrushFactory.cs" />
+    <Compile Include="Drawing\Colors Management\BrushType.cs" />
+    <Compile Include="Drawing\Colors Management\ColorTool.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
-    <Compile Include="Drawing\GOLTemplatesEnum.cs" />
+    <Compile Include="Drawing\Templates\GolTemplates\GOLTemplatesEnum.cs" />
     <Compile Include="GameOfLifePage.xaml.cs">
       <DependentUpon>GameOfLifePage.xaml</DependentUpon>
     </Compile>

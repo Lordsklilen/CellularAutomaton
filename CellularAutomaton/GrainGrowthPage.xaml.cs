@@ -1,6 +1,7 @@
 ﻿using CellularAutomaton.Drawing;
 using EngineProject;
 using EngineProject.DataStructures;
+using EngineProject.Templates.GrainTemplates;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -48,7 +49,7 @@ namespace CellularAutomaton
         void Initializevariables()
         {
             width = 100;
-            height = 50;
+            height = 75;
             _engineFacade = new EngineComponent(); // TODO DI
             _engineFacade.CreateEngine(engineType, width, height);
             timer = new DispatcherTimer();
@@ -104,16 +105,22 @@ namespace CellularAutomaton
 
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
+
             _engineFacade.GetNextIteration();
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
+            if (_engineFacade.IsFinished())
+                Stop_Click(null, null);
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            //start_btn.IsEnabled = true;
-            //stopBtn.IsEnabled = false;
-            //timer.Stop();
+            while (!_engineFacade.IsFinished())
+            {
+                _engineFacade.GetNextIteration();
+            }
+            var result = _engineFacade.GetBoard();
+            drawingHelper.DrawBoard(result);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
@@ -130,18 +137,35 @@ namespace CellularAutomaton
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.SetGrainNumber(numberOfGrains,position.X,position.Y);
+            _engineFacade.SetGrainNumber(numberOfGrains, position.X, position.Y);
             var result = _engineFacade.GetBoard();
             drawingHelper.DrawBoard(result);
         }
 
-        private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
+        private void Generate_Template(object sender, RoutedEventArgs e)
         {
-            //string content = ((ComboBoxItem)sender).Content.ToString();
-            //var EnumValue = (GOLTemplatesEnum)Enum.Parse(typeof(GOLTemplatesEnum), content);
-            //drawingHelper.PrepareTemplate(EnumValue, _engineFacade.GetBoard());
-            //var result = _engineFacade.GetBoard();
-            //drawingHelper.DrawBoard(result);
+            try
+            {
+                if (Clean_RadioBtn.IsChecked ?? false)
+                {
+                    _engineFacade.GenerateGrainTemplate(GrainTemplateType.Clear);
+                }
+                else if (Random_RadioBtn.IsChecked ?? false)
+                {
+                    int numberOfPoints = 1;
+                    int.TryParse(Random_textBox.Text, out numberOfPoints);
+                    _engineFacade.GenerateGrainTemplate(GrainTemplateType.Random, numberOfPoints);
+                }
+                else if (Radius_RadioBtn.IsChecked ?? false)
+                {
+                    _engineFacade.GenerateGrainTemplate(GrainTemplateType.Radius);
+                }
+                var result = _engineFacade.GetBoard();
+                drawingHelper.DrawBoard(result);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

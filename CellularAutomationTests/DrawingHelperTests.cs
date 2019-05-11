@@ -26,7 +26,7 @@ namespace WpfVisualisation
             var img = Substitute.For<Image>();
             img.Width = 100;
             img.Height = 100;
-            DrawingHelper dh = new DrawingHelper(img, null, null, 10, 5);
+            DrawingHelper dh = new DrawingHelper(img, 10, 5);
             var result = new System.Drawing.Point(ResX,ResY);
             //Act
             var pos = dh.GetPosition(Pos1, Pos2);

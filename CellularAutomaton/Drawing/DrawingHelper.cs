@@ -21,6 +21,7 @@ namespace CellularAutomaton
         int elWidth;
         int numHeightCells;
         int numWidthCells;
+
         public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY)
         {
             wpfImage = _img;
@@ -30,9 +31,6 @@ namespace CellularAutomaton
             brushFactory = new BrushFactory();
             PrepareToDraw(numX, numY);
         }
-
-
-
 
         public void PrepareToDraw(int numX, int numY)
         {

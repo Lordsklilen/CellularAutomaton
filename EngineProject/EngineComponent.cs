@@ -1,6 +1,7 @@
 ﻿using EngineProject.DataStructures;
 using EngineProject.Engines;
 using EngineProject.Engines.Engines;
+using EngineProject.Templates.GrainTemplates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace EngineProject
     public class EngineComponent : IEngineComponent
     {
         private IEngine _engine;
+        private GrainTemplateFactory templateFactory;
 
-        public void CreateEngine(EngineType type,int width, int height)
+        public void CreateEngine(EngineType type, int width, int height)
         {
             switch (type)
             {
@@ -29,6 +31,8 @@ namespace EngineProject
                 default:
                     throw new NotSupportedException("Unrecognized Engine type");
             }
+            templateFactory = new GrainTemplateFactory();
+
         }
 
         public Board GetNextIteration()
@@ -58,7 +62,14 @@ namespace EngineProject
         }
         public void SetGrainNumber(int grainNumber, int x, int y)
         {
-            (_engine as GrainGrowthEngine).SetGrainNumber(grainNumber ,x, y);
+            (_engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
+        }
+        public bool IsFinished() => (_engine as GrainGrowthEngine).IsFinished();
+
+        public void GenerateGrainTemplate(GrainTemplateType type, int parameters =-1)
+        {
+            var template = templateFactory.CreateTemplate(type);
+            template.GenerateTemplate(GetBoard(), parameters);
         }
     }
 }
