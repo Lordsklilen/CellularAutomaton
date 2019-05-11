@@ -33,8 +33,8 @@ namespace EngineProject.Templates.GrainTemplates
             }
         }
         private bool FreeSpaceInRadius(TemplateRequest request, int x, int y) {
-            var _maxRow = request.board.MaxX();
-            var _maxColumn = request.board.MaxY();
+            var _maxRow = request.board.MaxY();
+            var _maxColumn = request.board.MaxX();
             var r = request.radius;
             var panel = request.board;
             for (int i = -r; i <= r; i++)
@@ -46,7 +46,7 @@ namespace EngineProject.Templates.GrainTemplates
                     int widthId = (i + x) >= 0 ? (i + x) % (_maxRow) : _maxRow - 1;
                     int heightId = (j + y) >= 0 ? (j + y) % (_maxColumn) : _maxColumn - 1;
 
-                    if (panel.GetGrainNumber(widthId, heightId) !=0)
+                    if (panel.GetGrainNumber(widthId, heightId) != 0)
                         return false;
                 }
             }
