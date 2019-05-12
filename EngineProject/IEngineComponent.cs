@@ -19,5 +19,6 @@ namespace EngineProject
         void SetGrainNumber(int grainNumber, int x, int y);
         bool IsFinished();
         void GenerateGrainTemplate(TemplateRequest request);
+        void ChangeBorderConditions(bool state);
     }
 }

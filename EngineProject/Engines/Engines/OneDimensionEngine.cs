@@ -90,5 +90,10 @@ namespace EngineProject.Engines
         {
             throw new NotImplementedException();
         }
+
+        public void ChangeBorderConditions(bool state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

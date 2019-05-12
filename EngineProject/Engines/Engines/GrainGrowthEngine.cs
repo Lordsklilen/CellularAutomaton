@@ -15,6 +15,7 @@ namespace EngineProject.Engines.Engines
         private CellType cellType;
         private int _maxRow;
         private int _maxColumn;
+        private bool OpenBorderCondition = true;
     
         public Board GetBoard() => panel;
         public bool IsFinished() => panel.IsFinished();
@@ -71,9 +72,25 @@ namespace EngineProject.Engines.Engines
             {
                 int x = pairs[i, 0];
                 int y = pairs[i, 1];
-                int widthId = (x + cell.x) >= 0 ? (x + cell.x) % (_maxRow) : _maxRow - 1;
-                int heightId = (y + cell.y) >= 0 ? (y + cell.y) % (_maxColumn) : _maxColumn - 1;
-                int number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                int widthId = 0;
+                int heightId = 0;
+                int number = 0;
+                if (OpenBorderCondition)
+                {
+                    widthId = (x + cell.x) >= 0 ? (x + cell.x) % (_maxRow) : _maxRow - 1;
+                    heightId = (y + cell.y) >= 0 ? (y + cell.y) % (_maxColumn) : _maxColumn - 1;
+                    number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                }
+                else {
+                    widthId = (x + cell.x);// >= 0 ? (x + cell.x) % (_maxRow) : _maxRow - 1;
+                    heightId = (y + cell.y);// >= 0 ? (y + cell.y) % (_maxColumn) : _maxColumn - 1;
+
+                    if (widthId < 0 || heightId < 0 || widthId >= _maxRow || heightId >= _maxColumn)
+                        number = 0;
+                    else 
+                        number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                }
+
                 if (number > 0)
                     neighbours.Add(number);
             }
@@ -93,6 +110,11 @@ namespace EngineProject.Engines.Engines
         public void SetGrainNumber(int number, int x, int y)
         {
             panel.SetGrainNumber(number, x, y);
+        }
+
+        public void ChangeBorderConditions(bool state)
+        {
+            OpenBorderCondition = state;
         }
     }
 }

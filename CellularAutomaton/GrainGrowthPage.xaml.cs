@@ -163,19 +163,18 @@ namespace CellularAutomaton
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
             int.TryParse(Radius_textBox.Text, out request.radius);
             if (Radius_RadioBtn.IsChecked ?? false)
-            {
                 request.type = GrainTemplateType.Radius;
-            }
             else if (Random_RadioBtn.IsChecked ?? false)
-            {
                 request.type = GrainTemplateType.Random;
-            }
             else
-            {
                 request.type = GrainTemplateType.Clear;
-            }
-
             return request;
         }
+        private void SetBorderCondition(object sender, RoutedEventArgs e)
+        {
+            bool OpenBorderCondition  = Open_Radiobtn.IsChecked ?? false;
+            _engineFacade.ChangeBorderConditions(OpenBorderCondition);
+        }
+        
     }
 }

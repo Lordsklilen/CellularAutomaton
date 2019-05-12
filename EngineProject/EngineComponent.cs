@@ -71,5 +71,10 @@ namespace EngineProject
             var template = templateFactory.CreateTemplate(request.type);
             template.GenerateTemplate(request);
         }
+
+        public void ChangeBorderConditions(bool state)
+        {
+            _engine.ChangeBorderConditions(state);
+        }
     }
 }

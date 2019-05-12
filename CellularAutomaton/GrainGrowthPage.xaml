@@ -23,12 +23,15 @@
             <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="997,145,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
             <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="887,66,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
             <Label Content="Main Options" HorizontalAlignment="Left" Margin="937,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="887,166,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
+            <RadioButton  x:Name="Closed_RadioBtn" Click="SetBorderCondition" Content="Closed" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="888,193,0,0" VerticalAlignment="Top" Width="62"/>
+            <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="997,193,0,0" VerticalAlignment="Top" Width="62"/>
         </Grid>
 
         <Grid x:Name="TemplatesGrid">
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="105" Margin="880,239,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Button x:Name="generateTemplate" Content="Generate Template" HorizontalAlignment="Left" Margin="923,246,0,0" VerticalAlignment="Top" Width="120" Click="Generate_Template"/>
-            <RadioButton  x:Name="Clean_RadioBtn" Content="Clean" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,271,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsChecked="True" x:Name="Clean_RadioBtn" Content="Clean" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,271,0,0" VerticalAlignment="Top"/>
             <RadioButton  x:Name="Random_RadioBtn" Content="Random" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,291,0,0" VerticalAlignment="Top"/>
             <RadioButton  x:Name="Radius_RadioBtn" Content="With Radius" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,311,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="1001,291,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="60"/>
