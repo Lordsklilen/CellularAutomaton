@@ -14,7 +14,7 @@
         </Border>
 
         <Grid x:Name="MainControlsGrid">
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="214" Margin="878,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="214" Margin="880,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Button x:Name="start_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="887,41,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
             <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="997,41,0,0" VerticalAlignment="Top" Width="75" Click="Stop_Click"/>
             <Label Content="Width:" HorizontalAlignment="Left" Margin="888,88,0,0" VerticalAlignment="Top"/>
@@ -48,17 +48,21 @@
 
         </Grid>
         <Grid x:Name="NeighbourhoodSetup">
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="882,410,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="880,410,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Neighbour Options" HorizontalAlignment="Left" Margin="927,419,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="neighboour_comboBox" HorizontalAlignment="Left" Margin="888,450,0,0" VerticalAlignment="Top" Width="184" SelectionChanged="NeighbourhoodComboBox_SelectionChanged">
-                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" >Von Neumann</ComboBoxItem>
+                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" IsSelected="True">Von Neumann</ComboBoxItem>
                 <ComboBoxItem x:Name="Moore_ComboBoxItem">Moore</ComboBoxItem>
                 <ComboBoxItem x:Name="Pentagonal_ComboBoxItem">Pentagonal</ComboBoxItem>
-                <ComboBoxItem x:Name="Hexagonal_ComboBoxItem">Hexagonal</ComboBoxItem>
+                <ComboBoxItem x:Name="Hexagonal_ComboBoxItem" Selected="Send_hexData">Hexagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Radius_ComboBoxItem">Radius</ComboBoxItem>
             </ComboBox>
-            <TextBox x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="997,492,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
-            <Label Content="Radius:" HorizontalAlignment="Left" Margin="888,487,0,0" VerticalAlignment="Top" Width="81"/>
+            <TextBox x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="997,537,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
+            <Label Content="Radius:" HorizontalAlignment="Left" Margin="888,537,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
+            <Label Content="Hexagonal:" HorizontalAlignment="Left" Margin="888,477,0,0" VerticalAlignment="Top" Width="75"/>
+            <RadioButton IsChecked="True" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,488,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="RightHexOptions_radioBtn" Content="Right" Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,508,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="RandomHexOptions_radioBtn" Content="Random" Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="888,508,0,0" VerticalAlignment="Top"/>
 
         </Grid>
     </Grid>

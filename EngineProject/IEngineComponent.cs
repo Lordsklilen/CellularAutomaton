@@ -1,10 +1,6 @@
 ﻿using EngineProject.DataStructures;
+using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineProject
 {
@@ -21,6 +17,7 @@ namespace EngineProject
         void SetGrainNumber(int grainNumber, int x, int y);
         void GenerateGrainTemplate(TemplateRequest request);
         void ChangeBorderConditions(bool state);
-        void ChangeNeighbooroodType(NeighbooorhoodType type);
+        void ChangeNeighbooroodType(NeighbooorhoodType type,HexType hexType);
+        void ChangeHexType(HexType type);
     }
 }

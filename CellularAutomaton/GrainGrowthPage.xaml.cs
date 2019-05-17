@@ -1,6 +1,7 @@
 ﻿using CellularAutomaton.Drawing;
 using EngineProject;
 using EngineProject.DataStructures;
+using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace CellularAutomaton
         }
         void DrawInitial(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, width, height,true);
+            drawingHelper = new DrawingHelper(img, width, height, true);
             drawingHelper.DrawBoard(engine.Board);
         }
         void Initializevariables()
@@ -63,7 +64,7 @@ namespace CellularAutomaton
         {
             var result = 1.0;
             double.TryParse(FpsCounter.Text, out result);
-            if (result < 1 || result >999)
+            if (result < 1 || result > 999)
                 result = 1;
             timer.Interval = (int)(1000.0 / result);
         }
@@ -77,9 +78,9 @@ namespace CellularAutomaton
         {
             int.TryParse(widthNumber.Text, out width);
             int.TryParse(iterationNumber.Text, out height);
-            if (width < 3 || width>800)
+            if (width < 3 || width > 800)
                 width = 3;
-            if (height < 3 || height>600)
+            if (height < 3 || height > 600)
                 height = 3;
 
             drawingHelper.PrepareToDraw(width, height);
@@ -130,7 +131,7 @@ namespace CellularAutomaton
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
-           
+
             var mousePosition = e.GetPosition(img);
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
@@ -151,12 +152,14 @@ namespace CellularAutomaton
                 engine.GenerateGrainTemplate(request);
                 drawingHelper.DrawBoard(engine.Board);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 drawingHelper.DrawBoard(engine.Board);
                 MessageBox.Show(ex.Message);
             }
         }
-        private TemplateRequest BuildTemplateRequest() {
+        private TemplateRequest BuildTemplateRequest()
+        {
             var request = new TemplateRequest();
             request.board = engine.Board;
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
@@ -175,7 +178,10 @@ namespace CellularAutomaton
         }
         private void NeighbourhoodComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null)
+                return;
             NeighbooorhoodType type;
+            HexType hexType;
             switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
             {
                 case "Moore":
@@ -192,7 +198,12 @@ namespace CellularAutomaton
                     type = NeighbooorhoodType.VonNeumann;
                     break;
             }
-            engine.ChangeNeighbooroodType(type);
+
+            if (LeftHexOptions_radioBtn.IsChecked ?? false) hexType = HexType.Left;
+            else if (RightHexOptions_radioBtn.IsChecked ?? false) hexType = HexType.Right;
+            else hexType = HexType.Random;
+
+            engine.ChangeNeighbooroodType(type,hexType);
         }
 
         private void SetBorderCondition(object sender, RoutedEventArgs e)
@@ -204,6 +215,18 @@ namespace CellularAutomaton
         {
             drawingHelper.net = !drawingHelper.net;
             drawingHelper.DrawBoard(engine.Board);
+        }
+
+        private void Send_hexData(object sender, RoutedEventArgs e)
+        {
+            if (LeftHexOptions_radioBtn.Content == null)
+                return;
+            if (LeftHexOptions_radioBtn.IsChecked ?? false)
+                engine.ChangeHexType(HexType.Left);
+            else if (RightHexOptions_radioBtn.IsChecked ?? false)
+                engine.ChangeHexType(HexType.Right);
+            else if (RandomHexOptions_radioBtn.IsChecked ?? false)
+                engine.ChangeHexType(HexType.Random);
         }
     }
 }

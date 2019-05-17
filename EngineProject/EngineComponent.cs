@@ -1,6 +1,7 @@
 ﻿using EngineProject.DataStructures;
 using EngineProject.Engines;
 using EngineProject.Engines.Engines;
+using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
 using System;
 
@@ -71,9 +72,13 @@ namespace EngineProject
             _engine.ChangeBorderConditions(state);
         }
 
-        public void ChangeNeighbooroodType(NeighbooorhoodType type)
+        public void ChangeNeighbooroodType(NeighbooorhoodType type, HexType hexType)
         {
-            (_engine as GrainGrowthEngine).ChangeStrategyType(type);
+            (_engine as GrainGrowthEngine).ChangeStrategyType(type,hexType);
+        }
+        public void ChangeHexType(HexType type)
+        {
+            (_engine as GrainGrowthEngine).ChangeHexType(type);
         }
     }
 }

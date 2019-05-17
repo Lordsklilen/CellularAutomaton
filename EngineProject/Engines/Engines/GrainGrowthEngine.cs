@@ -17,6 +17,7 @@ namespace EngineProject.Engines.Engines
         private bool OpenBorderCondition = true;
         private NeighbourFactory neighbourFactory;
         private INeighbourStrategy neighbourStrategy;
+        private HexType hexType;
 
         public Board GetBoard() => panel;
         public bool IsFinished() => panel.IsFinished();
@@ -38,6 +39,7 @@ namespace EngineProject.Engines.Engines
                 return;
             var copyPanel = new Board(_maxColumn, _maxRow, cellType);
             copyPanel.finished = true;
+            //ChangeHexType(hexType);
             neighbourStrategy.Initialize(panel,copyPanel,_maxRow,_maxColumn,OpenBorderCondition);
             foreach (var row in panel.board)
             {
@@ -68,14 +70,21 @@ namespace EngineProject.Engines.Engines
         {
             panel.SetGrainNumber(number, x, y);
         }
-        public void ChangeStrategyType(NeighbooorhoodType type) {
+        public void ChangeStrategyType(NeighbooorhoodType type, HexType hexType) {
             neighboursType = type;
-            neighbourStrategy = neighbourFactory.CreateNeighbourComputing(neighboursType);
+            this.hexType = hexType;
+            neighbourStrategy = neighbourFactory.CreateNeighbourComputing(neighboursType, hexType);
         }
 
         public void ChangeBorderConditions(bool state)
         {
             OpenBorderCondition = state;
+        }
+        public void ChangeHexType(HexType type)
+        {
+            hexType = type;
+            if ((neighbourStrategy as NeighbourHexagonal)!= null)
+                (neighbourStrategy as NeighbourHexagonal).type = type;
         }
     }
 }

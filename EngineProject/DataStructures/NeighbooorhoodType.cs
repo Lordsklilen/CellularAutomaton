@@ -11,7 +11,7 @@ namespace EngineProject.DataStructures
         VonNeumann=0,
         Moore=1,
         Pentagonal=2,
-        Hexagonal=3,
-        Radius=4,
+        Radius = 3,
+        Hexagonal =4
     }
 }
