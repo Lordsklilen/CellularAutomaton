@@ -55,6 +55,8 @@
     <Compile Include="Engines\Engines\OneDimensionEngine.cs" />
     <Compile Include="EngineComponent.cs" />
     <Compile Include="Engines\IEngine.cs" />
+    <Compile Include="Engines\NeighbourStrategy\INeighbourStrategy.cs" />
+    <Compile Include="Engines\NeighbourStrategy\NeighbourFactory.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateClean.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateFactory.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateRadius.cs" />
