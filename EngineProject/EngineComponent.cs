@@ -3,10 +3,6 @@ using EngineProject.Engines;
 using EngineProject.Engines.Engines;
 using EngineProject.Templates.GrainTemplates;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineProject
 {
@@ -14,6 +10,11 @@ namespace EngineProject
     {
         private IEngine _engine;
         private GrainTemplateFactory templateFactory;
+
+        public int MaxNumber =>_engine.GetBoard().MaxNumber();
+        public bool IsFinished => (_engine as GrainGrowthEngine).IsFinished() || MaxNumber == 1;
+
+        public Board Board => _engine.GetBoard();
 
         public void CreateEngine(EngineType type, int width, int height)
         {
@@ -27,23 +28,16 @@ namespace EngineProject
                     break;
                 case EngineType.GrainGrowth:
                     _engine = new GrainGrowthEngine(width, height);
+                    templateFactory = new GrainTemplateFactory();
                     break;
                 default:
                     throw new NotSupportedException("Unrecognized Engine type");
             }
-            templateFactory = new GrainTemplateFactory();
-
         }
 
         public Board GetNextIteration()
         {
-            if(_engine.GetBoard().MaxNumber()!=1)
-                _engine.NextIteration();
-            return _engine.GetBoard();
-        }
-
-        public Board GetBoard()
-        {
+            _engine.NextIteration();
             return _engine.GetBoard();
         }
 
@@ -65,7 +59,6 @@ namespace EngineProject
         {
             (_engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
         }
-        public bool IsFinished() => (_engine as GrainGrowthEngine).IsFinished();
 
         public void GenerateGrainTemplate(TemplateRequest request)
         {
@@ -80,7 +73,6 @@ namespace EngineProject
 
         public void ChangeNeighbooroodType(NeighbooorhoodType type)
         {
-
            //TODO
         }
     }

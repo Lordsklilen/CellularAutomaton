@@ -46,7 +46,7 @@ namespace CellularAutomaton
         void DrawInitial(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height);
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }
         void Initializevariables()
@@ -97,7 +97,7 @@ namespace CellularAutomaton
         void DrawAndReload(object sender, RoutedEventArgs e)
         {
             InitBoard();
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }
         private void Start_CLick(object sender, RoutedEventArgs e)
@@ -110,19 +110,19 @@ namespace CellularAutomaton
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
             _engineFacade.GetNextIteration();
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
-            if (_engineFacade.IsFinished())
+            if (_engineFacade.IsFinished)
                 Stop_Click(null, null);
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            while (!_engineFacade.IsFinished())
+            while (!_engineFacade.IsFinished)
             {
                 _engineFacade.GetNextIteration();
             }
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }
 
@@ -135,14 +135,18 @@ namespace CellularAutomaton
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ++numberOfGrains;
+           
             var mousePosition = e.GetPosition(img);
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.SetGrainNumber(numberOfGrains, position.X, position.Y);
-            var result = _engineFacade.GetBoard();
-            drawingHelper.DrawBoard(result);
+            if (_engineFacade.Board.GetGrainNumber(position.X, position.Y) == 0)
+            {
+                ++numberOfGrains;
+                _engineFacade.SetGrainNumber(numberOfGrains, position.X, position.Y);
+                var result = _engineFacade.Board;
+                drawingHelper.DrawBoard(result);
+            }
         }
 
         private void Generate_Template(object sender, RoutedEventArgs e)
@@ -151,18 +155,18 @@ namespace CellularAutomaton
             {
                 var request = BuildTemplateRequest();
                 _engineFacade.GenerateGrainTemplate(request);
-                var result = _engineFacade.GetBoard();
+                var result = _engineFacade.Board;
                 drawingHelper.DrawBoard(result);
             }
             catch (Exception ex) {
-                var result = _engineFacade.GetBoard();
+                var result = _engineFacade.Board;
                 drawingHelper.DrawBoard(result);
                 MessageBox.Show(ex.Message);
             }
         }
         private TemplateRequest BuildTemplateRequest() {
             var request = new TemplateRequest();
-            request.board = _engineFacade.GetBoard();
+            request.board = _engineFacade.Board;
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
             int.TryParse(Radius_textBox.Text, out request.radius);
             int.TryParse(Xhomogenious_textbox.Text, out request.x);

@@ -54,7 +54,7 @@ namespace CellularAutomaton
         void DrawInitialRow(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height);
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawFirstRow(result);
         }
 
@@ -68,7 +68,7 @@ namespace CellularAutomaton
             {
                 _engineFacade.GetNextIteration();
             }
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }
 
@@ -79,7 +79,7 @@ namespace CellularAutomaton
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
-            var result = _engineFacade.GetBoard();
+            var result = _engineFacade.Board;
             drawingHelper.DrawFirstRow(result);
         }
 
