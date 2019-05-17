@@ -57,6 +57,8 @@
     <Compile Include="Engines\IEngine.cs" />
     <Compile Include="Engines\NeighbourStrategy\INeighbourStrategy.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourFactory.cs" />
+    <Compile Include="Engines\NeighbourStrategy\NeighbourMoore.cs" />
+    <Compile Include="Engines\NeighbourStrategy\NeighbourVonNeumann.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateClean.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateFactory.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateRadius.cs" />

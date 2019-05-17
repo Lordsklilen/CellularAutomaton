@@ -73,7 +73,7 @@ namespace EngineProject
 
         public void ChangeNeighbooroodType(NeighbooorhoodType type)
         {
-           //TODO
+            (_engine as GrainGrowthEngine).ChangeStrategyType(type);
         }
     }
 }

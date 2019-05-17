@@ -5,21 +5,18 @@ namespace EngineProject.Engines.NeighbourStrategy
 {
     public class NeighbourFactory
     {
-        INeighbourStrategy CreateNeighbourComputing(NeighbooorhoodType type) {
+        public INeighbourStrategy CreateNeighbourComputing(NeighbooorhoodType type) {
             switch (type)
             {
                 case NeighbooorhoodType.VonNeumann:
-                    break;
+                    return new NeighbourVonNeumann();
                 case NeighbooorhoodType.Moore:
-                    break;
+                    return new NeighbourMoore();
                 case NeighbooorhoodType.Pentagonal:
-                    break;
                 case NeighbooorhoodType.Hexagonal:
-                    break;
                 default:
                     throw new System.Exception("This type of neighboorhood is not recognized");
             }
-            return null;
         }
     }
 }
