@@ -14,6 +14,7 @@ namespace EngineProject.Engines.NeighbourStrategy
                     return new NeighbourMoore();
                 case NeighbooorhoodType.Pentagonal:
                 case NeighbooorhoodType.Hexagonal:
+                case NeighbooorhoodType.Radius:
                 default:
                     throw new System.Exception("This type of neighboorhood is not recognized");
             }
