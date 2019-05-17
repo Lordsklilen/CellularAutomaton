@@ -28,7 +28,7 @@ namespace CellularAutomaton
     /// </summary>
     public partial class GrainGrowthPage : Page
     {
-        IEngineComponent _engineFacade;
+        IEngineComponent engine;
         int width;
         int height;
         DrawingHelper drawingHelper;
@@ -46,15 +46,14 @@ namespace CellularAutomaton
         void DrawInitial(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height,true);
-            var result = _engineFacade.Board;
-            drawingHelper.DrawBoard(result);
+            drawingHelper.DrawBoard(engine.Board);
         }
         void Initializevariables()
         {
             width = 100;
             height = 75;
-            _engineFacade = new EngineComponent(); // TODO DI
-            _engineFacade.CreateEngine(engineType, width, height);
+            engine = new EngineComponent(); // TODO DI
+            engine.CreateEngine(engineType, width, height);
             timer = new System.Windows.Forms.Timer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
@@ -78,13 +77,13 @@ namespace CellularAutomaton
         {
             int.TryParse(widthNumber.Text, out width);
             int.TryParse(iterationNumber.Text, out height);
-            if (width < 3)
+            if (width < 3 || width>800)
                 width = 3;
-            if (height < 3)
+            if (height < 3 || height>600)
                 height = 3;
 
             drawingHelper.PrepareToDraw(width, height);
-            _engineFacade.CreateEngine(engineType, width, height);
+            engine.CreateEngine(engineType, width, height);
         }
 
         void InitEvents(object sender, RoutedEventArgs e)
@@ -96,8 +95,7 @@ namespace CellularAutomaton
         void DrawAndReload(object sender, RoutedEventArgs e)
         {
             InitBoard();
-            var result = _engineFacade.Board;
-            drawingHelper.DrawBoard(result);
+            drawingHelper.DrawBoard(engine.Board);
         }
         private void Start_CLick(object sender, RoutedEventArgs e)
         {
@@ -108,21 +106,19 @@ namespace CellularAutomaton
 
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
-            _engineFacade.GetNextIteration();
-            var result = _engineFacade.Board;
-            drawingHelper.DrawBoard(result);
-            if (_engineFacade.IsFinished)
+            engine.GetNextIteration();
+            drawingHelper.DrawBoard(engine.Board);
+            if (engine.IsFinished)
                 Stop_Click(null, null);
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            while (!_engineFacade.IsFinished)
+            while (!engine.IsFinished)
             {
-                _engineFacade.GetNextIteration();
+                engine.GetNextIteration();
             }
-            var result = _engineFacade.Board;
-            drawingHelper.DrawBoard(result);
+            drawingHelper.DrawBoard(engine.Board);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
@@ -139,12 +135,11 @@ namespace CellularAutomaton
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            if (_engineFacade.Board.GetGrainNumber(position.X, position.Y) == 0)
+            if (engine.Board.GetGrainNumber(position.X, position.Y) == 0)
             {
                 ++numberOfGrains;
-                _engineFacade.SetGrainNumber(numberOfGrains, position.X, position.Y);
-                var result = _engineFacade.Board;
-                drawingHelper.DrawBoard(result);
+                engine.SetGrainNumber(numberOfGrains, position.X, position.Y);
+                drawingHelper.DrawBoard(engine.Board);
             }
         }
 
@@ -153,19 +148,17 @@ namespace CellularAutomaton
             try
             {
                 var request = BuildTemplateRequest();
-                _engineFacade.GenerateGrainTemplate(request);
-                var result = _engineFacade.Board;
-                drawingHelper.DrawBoard(result);
+                engine.GenerateGrainTemplate(request);
+                drawingHelper.DrawBoard(engine.Board);
             }
             catch (Exception ex) {
-                var result = _engineFacade.Board;
-                drawingHelper.DrawBoard(result);
+                drawingHelper.DrawBoard(engine.Board);
                 MessageBox.Show(ex.Message);
             }
         }
         private TemplateRequest BuildTemplateRequest() {
             var request = new TemplateRequest();
-            request.board = _engineFacade.Board;
+            request.board = engine.Board;
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
             int.TryParse(Radius_textBox.Text, out request.radius);
             int.TryParse(Xhomogenious_textbox.Text, out request.x);
@@ -199,19 +192,18 @@ namespace CellularAutomaton
                     type = NeighbooorhoodType.VonNeumann;
                     break;
             }
-            _engineFacade.ChangeNeighbooroodType(type);
+            engine.ChangeNeighbooroodType(type);
         }
 
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {
             bool OpenBorderCondition = Open_Radiobtn.IsChecked ?? false;
-            _engineFacade.ChangeBorderConditions(OpenBorderCondition);
+            engine.ChangeBorderConditions(OpenBorderCondition);
         }
         private void OnOffborder_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.net = !drawingHelper.net;
-            var result = _engineFacade.Board;
-            drawingHelper.DrawBoard(result);
+            drawingHelper.DrawBoard(engine.Board);
         }
     }
 }

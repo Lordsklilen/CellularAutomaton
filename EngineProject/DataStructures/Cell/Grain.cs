@@ -9,6 +9,8 @@ namespace EngineProject.DataStructures
     public class Grain : Cell
     {
         private int grainNumber { get; set; }
+        public double CenterOfX { get; set; }
+        public double CenterOfY { get; set; }
         public Grain(int x, int y) : base(x, y) {
             grainNumber = 0;
             type = CellType.Grain;
