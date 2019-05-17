@@ -41,7 +41,7 @@
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="881,360,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Neighbour Options" HorizontalAlignment="Left" Margin="926,369,0,0" VerticalAlignment="Top"/>
             <ComboBox HorizontalAlignment="Left" Margin="898,400,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="NeighbourhoodComboBox_SelectionChanged">
-                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" IsSelected="True">Von Neumann</ComboBoxItem>
+                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" >Von Neumann</ComboBoxItem>
                 <ComboBoxItem x:Name="Moore_ComboBoxItem">Moore</ComboBoxItem>
                 <ComboBoxItem x:Name="Pentagonal_ComboBoxItem">Pentagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Hexagonal_ComboBoxItem">Hexagonal</ComboBoxItem>

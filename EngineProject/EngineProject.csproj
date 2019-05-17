@@ -48,6 +48,7 @@
     <Compile Include="DataStructures\Cell\Grain.cs" />
     <Compile Include="DataStructures\IBoard.cs" />
     <Compile Include="DataStructures\Cell\ICell.cs" />
+    <Compile Include="DataStructures\NeighbooorhoodType.cs" />
     <Compile Include="Engines\Engines\GrainGrowthEngine.cs" />
     <Compile Include="Engines\EngineType.cs" />
     <Compile Include="Engines\Engines\GameOfLifeEngine.cs" />

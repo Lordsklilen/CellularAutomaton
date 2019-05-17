@@ -20,5 +20,6 @@ namespace EngineProject
         bool IsFinished();
         void GenerateGrainTemplate(TemplateRequest request);
         void ChangeBorderConditions(bool state);
+        void ChangeNeighbooroodType(NeighbooorhoodType type);
     }
 }

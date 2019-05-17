@@ -76,5 +76,10 @@ namespace EngineProject
         {
             _engine.ChangeBorderConditions(state);
         }
+
+        public void ChangeNeighbooroodType(NeighbooorhoodType type)
+        {
+           //TODO
+        }
     }
 }

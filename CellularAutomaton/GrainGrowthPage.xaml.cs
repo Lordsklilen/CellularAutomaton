@@ -51,6 +51,7 @@ namespace CellularAutomaton
         }
         void Initializevariables()
         {
+            //VonNeuman_ComboBoxItem.IsSelected = true;
             width = 100;
             height = 75;
             _engineFacade = new EngineComponent(); // TODO DI
@@ -64,7 +65,7 @@ namespace CellularAutomaton
         {
             var result = 1.0;
             double.TryParse(FpsCounter.Text, out result);
-            if (result < 1)
+            if (result < 1 || result >999)
                 result = 1;
             timer.Interval = (int)(1000.0 / result);
         }
@@ -172,7 +173,7 @@ namespace CellularAutomaton
         }
         private void NeighbourhoodComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("combobox changed");
+            _engineFacade.ChangeNeighbooroodType(NeighbooorhoodType.VonNeumann);
         }
 
         private void SetBorderCondition(object sender, RoutedEventArgs e)
