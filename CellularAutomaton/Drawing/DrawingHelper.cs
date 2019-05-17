@@ -17,18 +17,20 @@ namespace CellularAutomaton
         BrushFactory brushFactory;
         int x;
         int y;
-        int elHeight;
-        int elWidth;
+        double elHeight;
+        double elWidth;
         int numHeightCells;
         int numWidthCells;
+        public bool net;
 
-        public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY)
+        public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY, bool net = true)
         {
             wpfImage = _img;
             y = (int)wpfImage.Height;
             x = (int)wpfImage.Width;
             builder = new BoardTemplateBuilder();
             brushFactory = new BrushFactory();
+            this.net = net;
             PrepareToDraw(numX, numY);
         }
 
@@ -36,12 +38,8 @@ namespace CellularAutomaton
         {
             numHeightCells = numY;
             numWidthCells = numX;
-            elHeight = y / (numY);
-            elWidth = x / (numX);
-            if (elHeight > elWidth)
-                elHeight = elWidth;
-            if (elHeight < elWidth)
-                elWidth = elHeight;
+            elHeight = (double)y / (double)(numY);
+            elWidth = (double)x / (double)(numX);
         }
 
         public void DrawFirstRow(Board board)
@@ -50,7 +48,7 @@ namespace CellularAutomaton
             g = Graphics.FromImage(bitmap);
             foreach (var el in board.board[0])
             {
-                DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight),board);
+                DrawRectangle(el, (int)((double)el.Y() * (elWidth)), (int)((double)el.X() * (elHeight)), board);
             }
             wpfImage.Source = Convert(bitmap);
         }
@@ -63,7 +61,7 @@ namespace CellularAutomaton
             {
                 foreach (var el in row)
                 {
-                    DrawRectangle(el, el.Y() * (elWidth), el.X() * (elHeight), board);
+                    DrawRectangle(el, (int)((double)el.Y() * (elWidth)), (int)((double)el.X() * (elHeight)), board);
                 }
             }
             wpfImage.Source = Convert(bitmap);
@@ -87,8 +85,8 @@ namespace CellularAutomaton
                 brush,
                 x,
                 y,
-                elWidth - 1,
-                elHeight - 1
+                (int)(net ? elWidth - 1 : elWidth),
+               (int)(net ? elHeight - 1 : elHeight)
             );
         }
 
@@ -107,8 +105,8 @@ namespace CellularAutomaton
         public Point GetPosition(int width, int height)
         {
             var result = new Point();
-            result.X = height / (elHeight);
-            result.Y = width / (elWidth);
+            result.X =(int)(((double) height)/ (elHeight));
+            result.Y = (int)(((double)width) / (elWidth));
             return result;
         }
 

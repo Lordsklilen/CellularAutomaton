@@ -9,7 +9,9 @@
       Title="GrainGrowthPage" Background="White">
 
     <Grid>
-        <Image x:Name="img" HorizontalAlignment="Left" Width="800" Height="600" Margin="45,0,0,0" VerticalAlignment="Top" MouseDown="Img_MouseDown"/>
+        <Border HorizontalAlignment="Left" Width="802" Height="601" Margin="44,0,0,0" VerticalAlignment="Top"  Background="Gray">
+            <Image x:Name="img" Width="800" Height="600" MouseDown="Img_MouseDown"/>
+        </Border>
 
         <Grid x:Name="MainControlsGrid">
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="214" Margin="878,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
@@ -26,6 +28,7 @@
             <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="887,166,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
             <RadioButton  x:Name="Closed_RadioBtn" Click="SetBorderCondition" Content="Closed" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="888,193,0,0" VerticalAlignment="Top" Width="62"/>
             <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="997,193,0,0" VerticalAlignment="Top" Width="62"/>
+            <Button x:Name="Borders" Content="On/Off Net" HorizontalAlignment="Left" Margin="997,66,0,0" VerticalAlignment="Top" Width="75" Click="OnOffborder_Click"/>
         </Grid>
 
         <Grid x:Name="TemplatesGrid">

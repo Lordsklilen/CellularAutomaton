@@ -45,13 +45,12 @@ namespace CellularAutomaton
         }
         void DrawInitial(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, width, height);
+            drawingHelper = new DrawingHelper(img, width, height,true);
             var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }
         void Initializevariables()
         {
-            //VonNeuman_ComboBoxItem.IsSelected = true;
             width = 100;
             height = 75;
             _engineFacade = new EngineComponent(); // TODO DI
@@ -205,9 +204,14 @@ namespace CellularAutomaton
 
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {
-            bool OpenBorderCondition  = Open_Radiobtn.IsChecked ?? false;
+            bool OpenBorderCondition = Open_Radiobtn.IsChecked ?? false;
             _engineFacade.ChangeBorderConditions(OpenBorderCondition);
         }
-        
+        private void OnOffborder_Click(object sender, RoutedEventArgs e)
+        {
+            drawingHelper.net = !drawingHelper.net;
+            var result = _engineFacade.Board;
+            drawingHelper.DrawBoard(result);
+        }
     }
 }
