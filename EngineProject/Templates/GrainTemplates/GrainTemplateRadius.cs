@@ -38,8 +38,8 @@ namespace EngineProject.Templates.GrainTemplates
         }
         private bool FreeSpaceInRadius(TemplateRequest request, int x, int y)
         {
-            var _maxRow = request.board.X;
-            var _maxColumn = request.board.Y;
+            var _maxRow = request.board.Y;
+            var _maxColumn = request.board.X;
             var r = request.radius;
             var panel = request.board;
             for (int i = -r; i <= r; i++)

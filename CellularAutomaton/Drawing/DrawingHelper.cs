@@ -22,8 +22,9 @@ namespace CellularAutomaton
         int numHeightCells;
         int numWidthCells;
         public bool net;
+        public bool squares { get ;private set;}
 
-        public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY, bool net = true)
+        public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY, bool net = true, bool squares = false)
         {
             wpfImage = _img;
             y = (int)wpfImage.Height;
@@ -32,14 +33,32 @@ namespace CellularAutomaton
             brushFactory = new BrushFactory();
             this.net = net;
             PrepareToDraw(numX, numY);
+            this.squares = squares;
         }
 
         public void PrepareToDraw(int numX, int numY)
         {
             numHeightCells = numY;
             numWidthCells = numX;
-            elHeight = (double)y / (double)(numY);
-            elWidth = (double)x / (double)(numX);
+            SquaresSize();
+        }
+        private void SquaresSize()
+        {
+            elHeight = (double)y / (double)(numHeightCells);
+            elWidth = (double)x / (double)(numWidthCells);
+            if (squares)
+            {
+                if (elHeight < elWidth)
+                    elWidth = elHeight;
+                if (elWidth < elHeight)
+                    elHeight = elWidth;
+            }
+        }
+
+        public void SetSquareAndReload(bool _square)
+        {
+            squares = _square;
+            SquaresSize();
         }
 
         public void DrawFirstRow(Board board)
@@ -105,7 +124,7 @@ namespace CellularAutomaton
         public Point GetPosition(int width, int height)
         {
             var result = new Point();
-            result.X =(int)(((double) height)/ (elHeight));
+            result.X = (int)(((double)height) / (elHeight));
             result.Y = (int)(((double)width) / (elWidth));
             return result;
         }

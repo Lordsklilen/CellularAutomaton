@@ -73,7 +73,6 @@ namespace CellularAutomaton
             SetTime();
         }
 
-
         void InitBoard()
         {
             int.TryParse(widthNumber.Text, out width);
@@ -214,6 +213,11 @@ namespace CellularAutomaton
         private void OnOffborder_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.net = !drawingHelper.net;
+            drawingHelper.DrawBoard(engine.Board);
+        }
+        private void Squares_Click(object sender, RoutedEventArgs e)
+        {
+            drawingHelper.SetSquareAndReload(!drawingHelper.squares);
             drawingHelper.DrawBoard(engine.Board);
         }
 
