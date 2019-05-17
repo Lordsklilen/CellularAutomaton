@@ -13,6 +13,7 @@ namespace EngineProject.Engines.NeighbourStrategy
                 case NeighbooorhoodType.Moore:
                     return new NeighbourMoore();
                 case NeighbooorhoodType.Pentagonal:
+                    return new NeighbourPentagonal();
                 case NeighbooorhoodType.Hexagonal:
                 case NeighbooorhoodType.Radius:
                 default:
