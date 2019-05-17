@@ -8,6 +8,7 @@ namespace EngineProject.DataStructures
 
         public ICell[][] board { get; private set; }
         public CellType cellType { get; set; }
+        public NeighbooorhoodType neighbooorhoodType { get; set; }
         private ICellFactory cellFactory;
         private int width;
         private int height;

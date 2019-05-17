@@ -173,7 +173,24 @@ namespace CellularAutomaton
         }
         private void NeighbourhoodComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            _engineFacade.ChangeNeighbooroodType(NeighbooorhoodType.VonNeumann);
+            NeighbooorhoodType type;
+            switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
+            {
+                case "Moore":
+                    type = NeighbooorhoodType.Moore;
+                    break;
+                case "Pentagonal":
+                    type = NeighbooorhoodType.Pentagonal;
+                    break;
+                case "Hexagonal":
+                    type = NeighbooorhoodType.Hexagonal;
+                    break;
+                case "Von Neumann":
+                default:
+                    type = NeighbooorhoodType.VonNeumann;
+                    break;
+            }
+            _engineFacade.ChangeNeighbooroodType(type);
         }
 
         private void SetBorderCondition(object sender, RoutedEventArgs e)

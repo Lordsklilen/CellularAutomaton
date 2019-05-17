@@ -9,10 +9,11 @@ namespace EngineProject.DataStructures
     public class Grain : Cell
     {
         private int grainNumber { get; set; }
-
-        public Grain(int x, int y) : base(x, y) {
+        private NeighbooorhoodType neighbooorhoodType { get; set; }
+        public Grain(int x, int y, NeighbooorhoodType nType = NeighbooorhoodType.VonNeumann) : base(x, y) {
             grainNumber = 0;
             type = CellType.Grain;
+            neighbooorhoodType = nType;
         }
         public int GetGrainNumber() => grainNumber;
         public void SetGrainNumber(int number) => grainNumber = number;

@@ -11,6 +11,6 @@ namespace EngineProject.DataStructures
         VonNeumann=0,
         Moore=1,
         Pentagonal=2,
-        hexagonal=3
+        Hexagonal=3
     }
 }
