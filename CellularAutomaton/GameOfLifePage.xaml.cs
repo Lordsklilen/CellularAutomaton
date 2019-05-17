@@ -32,7 +32,7 @@ namespace CellularAutomaton
         }
         void DrawInitial(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, width, height);
+            drawingHelper = new DrawingHelper(img, width, height,true,false);
             var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }

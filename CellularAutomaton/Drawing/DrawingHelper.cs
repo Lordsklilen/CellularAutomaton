@@ -22,7 +22,7 @@ namespace CellularAutomaton
         int numHeightCells;
         int numWidthCells;
         public bool net;
-        public bool squares { get ;private set;}
+        public bool squares { get; private set; }
 
         public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY, bool net = true, bool squares = false)
         {
@@ -76,11 +76,18 @@ namespace CellularAutomaton
         {
             bitmap = new Bitmap(x, y);
             g = Graphics.FromImage(bitmap);
-            foreach (var row in board.board)
+            for (int i = 0; i < board.board.Length; i++)
             {
-                foreach (var el in row)
+                for (int j = 0; j < board.board[i].Length; j++)
                 {
-                    DrawRectangle(el, (int)((double)el.Y() * (elWidth)), (int)((double)el.X() * (elHeight)), board);
+                    var el = board.board[i][j];
+                    Rectangle rect = Rectangle.FromLTRB(
+                        (int)((double)el.Y() * (elWidth)),
+                        (int)((double)el.X() * (elHeight)),
+                        (int)(net ? ((double)(el.Y() + 1.0)  * (elWidth))-1.0 : (double)(el.Y() + 1.0) * (elWidth )),
+                        (int)(net ? ((double)(el.X() + 1.0) * (elHeight))-1.0 : (double)(el.X() + 1.0) * (elHeight))
+                        );
+                    DrawRectangle(el, rect, board);
                 }
             }
             wpfImage.Source = Convert(bitmap);
@@ -106,6 +113,25 @@ namespace CellularAutomaton
                 y,
                 (int)(net ? elWidth - 1 : elWidth),
                (int)(net ? elHeight - 1 : elHeight)
+            );
+        }
+        private void DrawRectangle(ICell element, Rectangle rectangle, Board board)
+        {
+            Brush brush;
+            switch (element.GetCellType())
+            {
+                case CellType.Cell:
+                    brush = brushFactory.CreateBinaryBrush(element.GetState());
+                    break;
+                case CellType.Grain:
+                    brush = brushFactory.CreateColorBrush(((Grain)element).GetGrainNumber(), board.MaxNumber());
+                    break;
+                default:
+                    throw new NotSupportedException("Cannot create brush. Cell type not supproted");
+            }
+            g.FillRectangle(
+                brush,
+                rectangle
             );
         }
 
