@@ -18,14 +18,16 @@ namespace CellularAutomaton.Drawing
         public Color GetColor(double elNumber, double max, double min)
         {
             var percentage = (elNumber - min) / (max - min);
-            if (percentage < 0.25)
-                return InterpolateColor(Color.Purple, Color.Blue, percentage * 4.0);
-            else if (percentage < 0.5)
-                return InterpolateColor(Color.Blue, Color.Yellow, (percentage - 0.25) * 4.0);
-            else if (percentage < 0.75)
-                return InterpolateColor(Color.Yellow, Color.Orange, (percentage - 0.5) * 4.0);
+            if (percentage < 0.20)
+                return InterpolateColor(Color.Black, Color.Blue, percentage * 5.0);
+            else if (percentage < 0.4)
+                return InterpolateColor(Color.Blue, Color.Green, (percentage - 0.20) * 5.0);
+            else if (percentage < 0.6)
+                return InterpolateColor(Color.Green, Color.Yellow, (percentage - 0.4) * 5.0);
+            else if (percentage < 0.8)
+                return InterpolateColor(Color.Yellow, Color.Orange, (percentage - 0.6) * 5.0);
             else
-                return InterpolateColor(Color.Orange, Color.Red, (percentage - 0.75) * 4.0);
+                return InterpolateColor(Color.Orange, Color.Red, (percentage - 0.8) * 5.0);
         }
 
     }
