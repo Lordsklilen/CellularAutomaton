@@ -170,6 +170,11 @@ namespace CellularAutomaton
                 request.type = GrainTemplateType.Clear;
             return request;
         }
+        private void NeighbourhoodComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("combobox changed");
+        }
+
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {
             bool OpenBorderCondition  = Open_Radiobtn.IsChecked ?? false;
