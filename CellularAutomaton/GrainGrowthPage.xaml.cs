@@ -175,6 +175,8 @@ namespace CellularAutomaton
                 request.type = GrainTemplateType.Radius;
             else if (Random_RadioBtn.IsChecked ?? false)
                 request.type = GrainTemplateType.Random;
+            else if (Homogenius_RadioBtn.IsChecked ?? false)
+                request.type = GrainTemplateType.Homogeneous;
             else
                 request.type = GrainTemplateType.Clear;
             return request;

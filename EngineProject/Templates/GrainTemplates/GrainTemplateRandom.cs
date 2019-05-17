@@ -19,8 +19,8 @@ namespace EngineProject.Templates.GrainTemplates
             {
                 if (NumberOfWrongShots > 100000)
                     throw new ArgumentOutOfRangeException("Cannot add that many points. Propably number of expected points is to big.");
-                int row = rand.Next(0, panel.MaxY());
-                int collumn = rand.Next(0, panel.MaxX());
+                int row = rand.Next(0, panel.Y);
+                int collumn = rand.Next(0, panel.X);
                 if (panel.GetGrainNumber(row,collumn) == 0)
                 {
                     panel.SetGrainNumber(i,row, collumn);

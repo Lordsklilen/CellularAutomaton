@@ -8,6 +8,8 @@ namespace EngineProject.DataStructures.interfaces
 {
     public interface IBoard
     {
+        int X { get; }
+        int Y { get; }
         void SetCellState(int x, int y, bool state);
         void Clear();
     }

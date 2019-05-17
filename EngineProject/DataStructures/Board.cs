@@ -9,12 +9,14 @@ namespace EngineProject.DataStructures
         public ICell[][] board { get; private set; }
         public CellType cellType { get; set; }
         public NeighbooorhoodType neighbooorhoodType { get; set; }
+
+
         private ICellFactory cellFactory;
         private int width;
         private int height;
         private int maxGrainNumber;
-        public int MaxX() => width;
-        public int MaxY() => height;
+        public int X => width;
+        public int Y => height;
         public bool finished;
         public bool IsFinished() => finished;
 

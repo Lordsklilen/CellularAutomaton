@@ -11,7 +11,7 @@ namespace EngineProject.Templates.GrainTemplates
         {
             var numberOfPoints = request.numberOfPoints;
             var panel = request.board;
-            if (numberOfPoints < 1 && request.radius> panel.MaxY() || request.radius> panel.MaxX())
+            if (numberOfPoints < 1 && request.radius> panel.Y || request.radius> panel.X)
                 throw new NotImplementedException("Cannot generate template with number of points: " + numberOfPoints.ToString() + " and  Radius: " + request.radius);
 
             panel.Clear();
@@ -22,8 +22,8 @@ namespace EngineProject.Templates.GrainTemplates
             {
                 if (NumberOfWrongShots > 100000 || stopWatch.ElapsedMilliseconds> 5000)
                     throw new ArgumentOutOfRangeException("Cannot add that many points. Propably number of expected points is to big. Number of Points: " + --i);
-                int row = rand.Next(0, panel.MaxY());
-                int collumn = rand.Next(0, panel.MaxX());
+                int row = rand.Next(0, panel.Y);
+                int collumn = rand.Next(0, panel.X);
                 if (panel.GetGrainNumber(row, collumn) == 0 && FreeSpaceInRadius(request, row, collumn))
                 {
                     panel.SetGrainNumber(i, row, collumn);
@@ -38,8 +38,8 @@ namespace EngineProject.Templates.GrainTemplates
         }
         private bool FreeSpaceInRadius(TemplateRequest request, int x, int y)
         {
-            var _maxRow = request.board.MaxY();
-            var _maxColumn = request.board.MaxX();
+            var _maxRow = request.board.X;
+            var _maxColumn = request.board.Y;
             var r = request.radius;
             var panel = request.board;
             for (int i = -r; i <= r; i++)
