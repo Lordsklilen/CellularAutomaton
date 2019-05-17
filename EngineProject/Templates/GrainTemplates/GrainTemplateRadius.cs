@@ -21,7 +21,7 @@ namespace EngineProject.Templates.GrainTemplates
             for (int i = 1; i <= numberOfPoints; i++)
             {
                 if (NumberOfWrongShots > 100000 || stopWatch.ElapsedMilliseconds> 5000)
-                    throw new ArgumentOutOfRangeException("Cannot add that many points. Propably number of expected points is to big.");
+                    throw new ArgumentOutOfRangeException("Cannot add that many points. Propably number of expected points is to big. Number of Points: " + --i);
                 int row = rand.Next(0, panel.MaxY());
                 int collumn = rand.Next(0, panel.MaxX());
                 if (panel.GetGrainNumber(row, collumn) == 0 && FreeSpaceInRadius(request, row, collumn))

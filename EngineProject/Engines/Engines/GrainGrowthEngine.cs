@@ -27,6 +27,8 @@ namespace EngineProject.Engines.Engines
 
         public void NextIteration()
         {
+            if (panel.MaxNumber() == 1)
+                return;
             var copyPanel = new Board(_maxColumn, _maxRow, cellType);
             copyPanel.finished = true;
             foreach (var row in panel.board)

@@ -155,6 +155,8 @@ namespace CellularAutomaton
                 drawingHelper.DrawBoard(result);
             }
             catch (Exception ex) {
+                var result = _engineFacade.GetBoard();
+                drawingHelper.DrawBoard(result);
                 MessageBox.Show(ex.Message);
             }
         }
@@ -163,6 +165,8 @@ namespace CellularAutomaton
             request.board = _engineFacade.GetBoard();
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
             int.TryParse(Radius_textBox.Text, out request.radius);
+            int.TryParse(Xhomogenious_textbox.Text, out request.x);
+            int.TryParse(Yhomogenious_textbox.Text, out request.y);
             if (Radius_RadioBtn.IsChecked ?? false)
                 request.type = GrainTemplateType.Radius;
             else if (Random_RadioBtn.IsChecked ?? false)

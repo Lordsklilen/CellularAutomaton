@@ -37,7 +37,8 @@ namespace EngineProject
 
         public Board GetNextIteration()
         {
-            _engine.NextIteration();
+            if(_engine.GetBoard().MaxNumber()!=1)
+                _engine.NextIteration();
             return _engine.GetBoard();
         }
 
@@ -79,6 +80,7 @@ namespace EngineProject
 
         public void ChangeNeighbooroodType(NeighbooorhoodType type)
         {
+
            //TODO
         }
     }

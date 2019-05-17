@@ -13,5 +13,7 @@ namespace EngineProject.Templates.GrainTemplates
         public int numberOfPoints;
         public GrainTemplateType type;
         public Board board;
+        public int x;
+        public int y; 
     }
 }

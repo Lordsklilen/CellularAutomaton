@@ -58,6 +58,7 @@
     <Compile Include="Templates\GrainTemplates\GrainTemplateClean.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateFactory.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateRadius.cs" />
+    <Compile Include="Templates\GrainTemplates\GrainTemplateHomogenious.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateRandom.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateType.cs" />
     <Compile Include="Templates\GrainTemplates\IGrainTemplateStrategy.cs" />

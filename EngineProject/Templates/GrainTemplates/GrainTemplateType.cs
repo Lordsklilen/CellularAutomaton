@@ -4,6 +4,7 @@
     {
         Clear,
         Random,
-        Radius
+        Radius,
+        Homogeneous,
     }
 }

@@ -17,6 +17,8 @@ namespace EngineProject.Templates.GrainTemplates
                     return new GrainTemplateRandom();
                 case GrainTemplateType.Radius:
                     return new GrainTemplateRadius();
+                case GrainTemplateType.Homogeneous:
+                    return new GrainTemplateHomogenious();
                 default:
                     throw new NotSupportedException("this type of template is not supproted");
             }
