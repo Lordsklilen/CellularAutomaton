@@ -20,10 +20,10 @@ namespace EngineProject.Engines.Engines
         private INeighbourStrategy neighbourStrategy;
         private HexType hexType;
         private MonteCarloEngine MCEngine;
-
+        private bool MCIterateAllCells = true;
         public Board GetBoard() => panel;
         public bool IsFinished() => panel.IsFinished();
-        public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.VonNeumann)
+        public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.Moore)
         {
             type = EngineType.GrainGrowth;
             cellType = CellType.Grain;
@@ -106,13 +106,19 @@ namespace EngineProject.Engines.Engines
             RecalculateEnergy();
         }
 
-        internal Board RecalculateEnergy() {
+        internal Board RecalculateEnergy()
+        {
             panel = MCEngine.ReCalculateAllEnergy(panel);
             return panel;
         }
 
-        internal void IterateMonteCarlo(int iterations) {
-            MCEngine.NextIterations(panel,iterations);
+        internal void IterateMonteCarlo(int iterations)
+        {
+
+            if (MCIterateAllCells)
+                MCEngine.NextIterationsEveryCell(panel, iterations);
+            else
+                MCEngine.NextIterations(panel, iterations);
             RecalculateEnergy();
         }
 

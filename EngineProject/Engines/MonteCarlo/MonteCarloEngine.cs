@@ -59,6 +59,21 @@ namespace EngineProject.Engines.MonteCarlo
             return panel;
         }
 
+        internal Board NextIterationsEveryCell(Board board, int iterations)
+        {
+            for (int iter = 0; iter < iterations; iter++)
+            {
+                for (int i = 0; i < board.Y; i++)
+                {
+                    for (int j = 0; j < board.X; j++)
+                    {
+                        board = NextIteration(board, i, j);
+                    }
+                }
+            }
+            ReCalculateAllEnergy(board);
+            return board;
+        }
         internal Board NextIterations(Board board, int iterations)
         {
             for (int i = 0; i < iterations; i++)
@@ -75,7 +90,8 @@ namespace EngineProject.Engines.MonteCarlo
         {
             var grain = board.board[x][y] as Grain;
             List<int> nieghbours = neighbourStrategy.NeighboursGrainNumbers(grain);
-
+            if (nieghbours.Count <= 0)
+                return board;
             int EBefore = nieghbours.Count(member => member != grain.grainNumber);
             int newGrainNumber = nieghbours[rand.Next(0, nieghbours.Count)];
             int EAfter = nieghbours.Count(member => member != newGrainNumber);

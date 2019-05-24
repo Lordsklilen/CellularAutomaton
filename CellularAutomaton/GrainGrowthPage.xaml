@@ -35,11 +35,11 @@
         <Grid x:Name="TemplatesGrid">
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="151" Margin="824,238,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Button x:Name="generateTemplate" Content="Generate Template" HorizontalAlignment="Left" Margin="867,245,0,0" VerticalAlignment="Top" Width="120" Click="Generate_Template"/>
-            <RadioButton IsChecked="True" x:Name="Clean_RadioBtn" Content="Clean" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,270,0,0" VerticalAlignment="Top"/>
-            <RadioButton  x:Name="Random_RadioBtn" Content="Random" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,290,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="Clean_RadioBtn" Content="Clean" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,270,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsChecked="True" x:Name="Random_RadioBtn" Content="Random" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,290,0,0" VerticalAlignment="Top"/>
             <RadioButton  x:Name="Radius_RadioBtn" Content="With Radius" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,310,0,0" VerticalAlignment="Top"/>
             <RadioButton  x:Name="Homogenius_RadioBtn" Content="Homogenious" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,330,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,290,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,290,0,0" TextWrapping="Wrap" Text="1000" VerticalAlignment="Top" Width="60"/>
             <TextBox x:Name="Radius_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,310,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
             <TextBox x:Name="Xhomogenious_textbox"  HorizontalAlignment="Left" Height="17" Margin="858,355,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
             <Label Content="X:" HorizontalAlignment="Left" Margin="837,351,0,0" VerticalAlignment="Top" Width="21"/>
@@ -52,8 +52,8 @@
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="824,395,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Neighbour Options" HorizontalAlignment="Left" Margin="871,404,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="neighboour_comboBox" HorizontalAlignment="Left" Margin="832,435,0,0" VerticalAlignment="Top" Width="184" SelectionChanged="ChangeNeighbourStrategy">
-                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" IsSelected="True">Von Neumann</ComboBoxItem>
-                <ComboBoxItem x:Name="Moore_ComboBoxItem">Moore</ComboBoxItem>
+                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" >Von Neumann</ComboBoxItem>
+                <ComboBoxItem x:Name="Moore_ComboBoxItem" IsSelected="True">Moore</ComboBoxItem>
                 <ComboBoxItem x:Name="Pentagonal_ComboBoxItem">Pentagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Hexagonal_ComboBoxItem" Selected="ChangeNeighbourStrategy">Hexagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Radius_ComboBoxItem">Radius</ComboBoxItem>

@@ -54,7 +54,7 @@ namespace CellularAutomaton
             timer = new System.Windows.Forms.Timer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
-        }    
+        }
         void SetTime()
         {
             var result = 1.0;
@@ -161,7 +161,6 @@ namespace CellularAutomaton
         {
             if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null || LeftHexOptions_radioBtn == null)
                 return;
-
             LeftHexOptions_radioBtn.IsEnabled = false;
             RightHexOptions_radioBtn.IsEnabled = false;
             RandomHexOptions_radioBtn.IsEnabled = false;
@@ -202,15 +201,32 @@ namespace CellularAutomaton
         }
 
 
-        private MonteCarloRequest CreateMonteCarloRequest() {
+        private MonteCarloRequest CreateMonteCarloRequest()
+        {
             var mcRequest = new MonteCarloRequest();
             int.TryParse(MCNumberOfPoints_textbox.Text, out mcRequest.numberOfIterations);
             double.TryParse(MCtemperature_textbox.Text, out mcRequest.Kt);
+            if (mcRequest.Kt <= 0)
+            {
+                mcRequest.Kt = 0.1;
+                MCtemperature_textbox.Text = "0,1";
+            }
+            if (mcRequest.Kt > 6)
+            {
+                mcRequest.Kt = 6;
+                MCtemperature_textbox.Text = "6";
+            }
+            if (mcRequest.numberOfIterations <= 0)
+            {
+                mcRequest.numberOfIterations = 1;
+                MCNumberOfPoints_textbox.Text = "1";
+            }
             mcRequest.border = Open_Radiobtn.IsChecked ?? false;
             mcRequest.strategyRequest = CreateNeighbourhoodRequest();
             return mcRequest;
         }
-        private NeighbourStrategyRequest CreateNeighbourhoodRequest() {
+        private NeighbourStrategyRequest CreateNeighbourhoodRequest()
+        {
             var request = new NeighbourStrategyRequest();
 
             switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
