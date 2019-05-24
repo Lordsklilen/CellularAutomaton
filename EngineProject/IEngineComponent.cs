@@ -1,4 +1,5 @@
 ﻿using EngineProject.DataStructures;
+using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
 
@@ -17,6 +18,8 @@ namespace EngineProject
         void SetGrainNumber(int grainNumber, int x, int y);
         void GenerateGrainTemplate(TemplateRequest request);
         void ChangeBorderConditions(bool state);
-        void ChangeNeighbooroodType(NeighbourStrategyRequest request);
+        void ChangeNeighboroodType(NeighbourStrategyRequest request);
+        void CalculateMonteCarlo(MonteCarloRequest request);
+        void CalculateEnergy(MonteCarloRequest request);
     }
 }

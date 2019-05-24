@@ -15,6 +15,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         private bool OpenBorderCondition;
 
         public Board CopyPanel => copyPanel;
+        public int N => 4;
 
         public void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition)
         {
@@ -65,7 +66,6 @@ namespace EngineProject.Engines.NeighbourStrategy
                     else
                         number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
                 }
-
                 if (number > 0)
                     neighbours.Add(number);
             }

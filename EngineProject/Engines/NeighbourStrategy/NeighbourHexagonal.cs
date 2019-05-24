@@ -18,7 +18,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         Random rand = new Random();
 
         public Board CopyPanel => copyPanel;
-
+        public int N => 6;
         public void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition)
         {
             this.panel = panel;

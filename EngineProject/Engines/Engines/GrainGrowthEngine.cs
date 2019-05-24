@@ -51,6 +51,7 @@ namespace EngineProject.Engines.Engines
                 }
             }
             panel = copyPanel;
+            panel = MCEngine.ReCalculateAllEnergy(panel);
         }
 
         public void ChangeCellState(int x, int y)
@@ -72,6 +73,7 @@ namespace EngineProject.Engines.Engines
         {
             panel.SetGrainNumber(number, x, y);
         }
+
         public void ChangeStrategyType(NeighbourStrategyRequest request)
         {
             neighboursType = request.neighbooorhoodType;
@@ -93,11 +95,25 @@ namespace EngineProject.Engines.Engines
 
         internal void CreateMCEngine(MonteCarloRequest request)
         {
-            MCEngine = new MonteCarloEngine(request);
+            request.board = panel;
+            request.CopyBoard = new Board(_maxColumn, _maxRow, cellType);
+            request.maxColumn = _maxColumn;
+            request.maxRow = _maxRow;
+            if (MCEngine == null)
+                MCEngine = new MonteCarloEngine(request);
+            else
+                MCEngine.Reinstate(request);
+            RecalculateEnergy();
         }
+
         internal Board RecalculateEnergy() {
             panel = MCEngine.ReCalculateAllEnergy(panel);
             return panel;
+        }
+
+        internal void IterateMonteCarlo(int iterations) {
+            MCEngine.NextIterations(panel,iterations);
+            RecalculateEnergy();
         }
 
     }

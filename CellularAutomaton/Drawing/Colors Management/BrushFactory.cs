@@ -30,6 +30,14 @@ namespace CellularAutomaton.Drawing
                 return new SolidBrush(Color.White);
             return new SolidBrush(colorTool.GetColor(number,max,0));
         }
+        public Brush CreateEnergyBrush(int energy) {
+
+            if(energy == 0)
+                return new SolidBrush(Color.White);
+            else
+                return new SolidBrush(Color.Lime);
+            throw new NotSupportedException("This type of binary brush is not supprted");
+        }
 
     }
 }

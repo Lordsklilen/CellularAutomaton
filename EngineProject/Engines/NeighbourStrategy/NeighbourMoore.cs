@@ -16,6 +16,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         private bool OpenBorderCondition;
 
         public Board CopyPanel => copyPanel;
+        public int N => 8;
 
         public void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition)
         {
@@ -46,6 +47,8 @@ namespace EngineProject.Engines.NeighbourStrategy
             {
                 for (int j = -1; j <= 1; j++)
                 {
+                    if (i == 0 && j == 0)
+                        continue;
                     int number = 0;
                     int widthId;
                     int heightId;

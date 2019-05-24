@@ -1,4 +1,5 @@
-﻿using EngineProject.Engines.NeighbourStrategy;
+﻿using EngineProject.DataStructures;
+using EngineProject.Engines.NeighbourStrategy;
 
 namespace EngineProject.Engines.MonteCarlo
 {
@@ -6,7 +7,11 @@ namespace EngineProject.Engines.MonteCarlo
     {
         public int numberOfIterations;
         public double Kt;
-        public bool borderConditions;
         public NeighbourStrategyRequest strategyRequest;
+        public bool border;
+        internal Board board;
+        internal Board CopyBoard;
+        internal int maxColumn;
+        internal int maxRow;
     }
 }

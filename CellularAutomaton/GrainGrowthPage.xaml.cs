@@ -1,6 +1,7 @@
 ﻿using CellularAutomaton.Drawing;
 using EngineProject;
 using EngineProject.DataStructures;
+using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
 using System;
@@ -98,6 +99,8 @@ namespace CellularAutomaton
         }
         private void Start_CLick(object sender, RoutedEventArgs e)
         {
+            var request = CreateMonteCarloRequest();
+            engine.CalculateEnergy(request);
             timer.Start();
             start_btn.IsEnabled = false;
             stopBtn.IsEnabled = true;
@@ -105,12 +108,15 @@ namespace CellularAutomaton
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
             engine.GetNextIteration();
+
             drawingHelper.DrawBoard(engine.Board);
             if (engine.IsFinished)
                 Stop_Click(null, null);
         }
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
+            var request = CreateMonteCarloRequest();
+            engine.CalculateEnergy(request);
             while (!engine.IsFinished)
             {
                 engine.GetNextIteration();
@@ -161,7 +167,7 @@ namespace CellularAutomaton
             RandomHexOptions_radioBtn.IsEnabled = false;
 
             var request = CreateNeighbourhoodRequest();
-            engine.ChangeNeighbooroodType(request);
+            engine.ChangeNeighboroodType(request);
         }
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {
@@ -181,14 +187,29 @@ namespace CellularAutomaton
 
         void GenrateMonteCarlo(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var request = CreateMonteCarloRequest();
+            engine.CalculateMonteCarlo(request);
+            drawingHelper.DrawBoard(engine.Board);
         }
 
         void ViewEnergy(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            drawingHelper.energyFocus = !drawingHelper.energyFocus;
+            var request = CreateMonteCarloRequest();
+            request.numberOfIterations = 0;
+            engine.CalculateMonteCarlo(request);
+            drawingHelper.DrawBoard(engine.Board);
         }
 
+
+        private MonteCarloRequest CreateMonteCarloRequest() {
+            var mcRequest = new MonteCarloRequest();
+            int.TryParse(MCNumberOfPoints_textbox.Text, out mcRequest.numberOfIterations);
+            double.TryParse(MCtemperature_textbox.Text, out mcRequest.Kt);
+            mcRequest.border = Open_Radiobtn.IsChecked ?? false;
+            mcRequest.strategyRequest = CreateNeighbourhoodRequest();
+            return mcRequest;
+        }
         private NeighbourStrategyRequest CreateNeighbourhoodRequest() {
             var request = new NeighbourStrategyRequest();
 

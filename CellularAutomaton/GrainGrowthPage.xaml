@@ -70,11 +70,11 @@
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="165" Margin="1033,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Monte Carlo" HorizontalAlignment="Left" Margin="1091,10,0,0" VerticalAlignment="Top"/>
             <Label Content="Number of iterations:" HorizontalAlignment="Left" Margin="1036,41,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="MCNumberOfPoints_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,44,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="59" />
+            <TextBox x:Name="MCNumberOfPoints_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,44,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="59" />
             <Button x:Name="GenerateMC_btn" Content="Generate Points" HorizontalAlignment="Left" Margin="1131,146,0,0" VerticalAlignment="Top" Width="92" Click="GenrateMonteCarlo"/>
             <Button x:Name="ChengeEnergyView_btn" Content="View Energy" HorizontalAlignment="Left" Margin="1042,146,0,0" VerticalAlignment="Top" Width="75" Click="ViewEnergy"/>
             <Label Content="Kt parameter:" HorizontalAlignment="Left" Margin="1036,69,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="MCtemperature_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,72,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="59" />
+            <TextBox x:Name="MCtemperature_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,72,0,0" TextWrapping="Wrap" Text="0,5" VerticalAlignment="Top" Width="59" />
 
         </Grid>
     </Grid>

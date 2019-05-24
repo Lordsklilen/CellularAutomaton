@@ -18,6 +18,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         public double radius;
 
         public Board CopyPanel => copyPanel;
+        public int N => (int) (radius*radius)+1;
 
         public void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition)
         {

@@ -23,9 +23,11 @@ namespace CellularAutomaton
         int numWidthCells;
         public bool net;
         public bool squares { get; private set; }
+        public bool energyFocus { get; set; }
 
         public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY, bool net = true, bool squares = false)
         {
+            energyFocus = false;
             wpfImage = _img;
             y = (int)wpfImage.Height;
             x = (int)wpfImage.Width;
@@ -87,7 +89,10 @@ namespace CellularAutomaton
                         (int)(net ? ((double)(el.Y() + 1.0)  * (elWidth))-1.0 : (double)(el.Y() + 1.0) * (elWidth )),
                         (int)(net ? ((double)(el.X() + 1.0) * (elHeight))-1.0 : (double)(el.X() + 1.0) * (elHeight))
                         );
-                    DrawRectangle(el, rect, board);
+                    if (energyFocus)
+                        DrawEnergyRectangle(el, rect, board);
+                    else
+                        DrawRectangle(el, rect, board);
                 }
             }
             wpfImage.Source = Convert(bitmap);
@@ -131,6 +136,14 @@ namespace CellularAutomaton
             }
             g.FillRectangle(
                 brush,
+                rectangle
+            );
+        }
+
+        private void DrawEnergyRectangle(ICell element, Rectangle rectangle, Board board)
+        {
+            g.FillRectangle(
+                brushFactory.CreateEnergyBrush((element as Grain).E),
                 rectangle
             );
         }

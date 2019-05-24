@@ -9,7 +9,7 @@ namespace EngineProject.DataStructures
 {
     public class Grain : Cell
     {
-        private int grainNumber { get; set; }
+        internal int grainNumber { get; private set; }
         public double CenterOfX { get; set; }
         public double CenterOfY { get; set; }
         public int E { get; set; } = 0;

@@ -1,6 +1,7 @@
 ﻿using EngineProject.DataStructures;
 using EngineProject.Engines;
 using EngineProject.Engines.Engines;
+using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
 using System;
@@ -72,10 +73,21 @@ namespace EngineProject
             engine.ChangeBorderConditions(state);
         }
 
-        public void ChangeNeighbooroodType(NeighbourStrategyRequest request)
+        public void ChangeNeighboroodType(NeighbourStrategyRequest request)
         {
             (engine as GrainGrowthEngine).ChangeStrategyType(request);
         }
 
+        public void CalculateMonteCarlo(MonteCarloRequest request)
+        {
+            (engine as GrainGrowthEngine).CreateMCEngine(request);
+            (engine as GrainGrowthEngine).IterateMonteCarlo(request.numberOfIterations);
+
+        }
+
+        public void CalculateEnergy(MonteCarloRequest request)
+        {
+            (engine as GrainGrowthEngine).CreateMCEngine(request);
+        }
     }
 }
