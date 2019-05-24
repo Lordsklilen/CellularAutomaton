@@ -58,5 +58,10 @@ namespace EngineProject.DataStructures
                 maxGrainNumber = number;
             (board[x][y] as Grain).SetGrainNumber(number);
         }
+
+        public int CalculateEnergy(int x,int y) {
+
+            return 0;
+        }
     }
 }

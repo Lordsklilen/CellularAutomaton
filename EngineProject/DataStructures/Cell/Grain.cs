@@ -12,6 +12,7 @@ namespace EngineProject.DataStructures
         private int grainNumber { get; set; }
         public double CenterOfX { get; set; }
         public double CenterOfY { get; set; }
+        public int E { get; set; } = 0;
 
         public Grain(int x, int y) : base(x, y)
         {

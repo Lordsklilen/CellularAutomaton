@@ -52,11 +52,13 @@
     <Compile Include="DataStructures\Cell\ICell.cs" />
     <Compile Include="DataStructures\NeighbooorhoodType.cs" />
     <Compile Include="Engines\Engines\GrainGrowthEngine.cs" />
+    <Compile Include="Engines\MonteCarlo\MonteCarloEngine.cs" />
     <Compile Include="Engines\EngineType.cs" />
     <Compile Include="Engines\Engines\GameOfLifeEngine.cs" />
     <Compile Include="Engines\Engines\OneDimensionEngine.cs" />
     <Compile Include="EngineComponent.cs" />
     <Compile Include="Engines\IEngine.cs" />
+    <Compile Include="Engines\MonteCarlo\MonteCarloRequest.cs" />
     <Compile Include="Engines\NeighbourStrategy\HexType.cs" />
     <Compile Include="Engines\NeighbourStrategy\INeighbourStrategy.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourFactory.cs" />

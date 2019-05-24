@@ -32,15 +32,15 @@ namespace EngineProject.Engines.NeighbourStrategy
         {
             if (cell.GetGrainNumber() == 0)
             {
-                int nextGrainNumber = MostCommonNeighbour(cell as Grain);
-                copyPanel.SetGrainNumber(nextGrainNumber, cell.x, cell.y);
+                var neighbours = NeighboursGrainNumbers(cell as Grain);
+                copyPanel.SetGrainNumber(Utils.MostCommonNeighbour(neighbours), cell.x, cell.y);
                 copyPanel.finished = false;
             }
             else
                 copyPanel.SetGrainNumber(cell.GetGrainNumber(), cell.x, cell.y);
         }
 
-        private int MostCommonNeighbour(Grain cell)
+        public List<int> NeighboursGrainNumbers(Grain cell)
         {
             List<int> neighbours = new List<int>();
             int[,] pairs;
@@ -83,14 +83,9 @@ namespace EngineProject.Engines.NeighbourStrategy
                 if (number > 0)
                     neighbours.Add(number);
             }
-            if (neighbours.Count == 0)
-                return 0;
-            else
-            {
-                var groups = neighbours.GroupBy(x => x);
-                return groups.OrderByDescending(x => x.Count()).First().Key;
-            }
+            return neighbours;
         }
+
         private int[,] GeneratePairs(HexType type)
         {
             if (type == HexType.Left)

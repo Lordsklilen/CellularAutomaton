@@ -9,26 +9,26 @@ namespace EngineProject
 {
     public class EngineComponent : IEngineComponent
     {
-        private IEngine _engine;
+        private IEngine engine;
         private GrainTemplateFactory templateFactory;
 
-        public int MaxNumber =>_engine.GetBoard().MaxNumber();
-        public bool IsFinished => (_engine as GrainGrowthEngine).IsFinished() || MaxNumber == 1;
+        public int MaxNumber =>engine.GetBoard().MaxNumber();
+        public bool IsFinished => (engine as GrainGrowthEngine).IsFinished() || MaxNumber == 1;
 
-        public Board Board => _engine.GetBoard();
+        public Board Board => engine.GetBoard();
 
         public void CreateEngine(EngineType type, int width, int height)
         {
             switch (type)
             {
                 case EngineType.OneDimensionEngine:
-                    _engine = new OneDimensionEngine(width, height);
+                    engine = new OneDimensionEngine(width, height);
                     break;
                 case EngineType.GameOfLife:
-                    _engine = new GameOfLifeEngine(width, height);
+                    engine = new GameOfLifeEngine(width, height);
                     break;
                 case EngineType.GrainGrowth:
-                    _engine = new GrainGrowthEngine(width, height);
+                    engine = new GrainGrowthEngine(width, height);
                     templateFactory = new GrainTemplateFactory();
                     break;
                 default:
@@ -38,27 +38,27 @@ namespace EngineProject
 
         public Board GetNextIteration()
         {
-            _engine.NextIteration();
-            return _engine.GetBoard();
+            engine.NextIteration();
+            return engine.GetBoard();
         }
 
         public void SetCellState(int x, int y, bool state)
         {
-            _engine.SetCellState(x, y, state);
+            engine.SetCellState(x, y, state);
         }
 
         public void ChangeCellState(int x, int y)
         {
-            _engine.ChangeCellState(x, y);
+            engine.ChangeCellState(x, y);
         }
 
         public void SetRule(int rule)
         {
-            _engine.SetRule(rule);
+            engine.SetRule(rule);
         }
         public void SetGrainNumber(int grainNumber, int x, int y)
         {
-            (_engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
+            (engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
         }
 
         public void GenerateGrainTemplate(TemplateRequest request)
@@ -69,20 +69,13 @@ namespace EngineProject
 
         public void ChangeBorderConditions(bool state)
         {
-            _engine.ChangeBorderConditions(state);
+            engine.ChangeBorderConditions(state);
         }
 
         public void ChangeNeighbooroodType(NeighbourStrategyRequest request)
         {
-            (_engine as GrainGrowthEngine).ChangeStrategyType(request);
+            (engine as GrainGrowthEngine).ChangeStrategyType(request);
         }
-        public void ChangeHexType(HexType type)
-        {
-            (_engine as GrainGrowthEngine).ChangeHexType(type);
-        }
-        public void ChangeRadiusLength(NeighbourStrategyRequest request)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
