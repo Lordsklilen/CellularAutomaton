@@ -5,65 +5,76 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CellularAutomaton"
       mc:Ignorable="d"       
-      d:DesignHeight="650" d:DesignWidth="1200"
+      d:DesignHeight="650" d:DesignWidth="1300"
       Title="GrainGrowthPage" Background="White">
 
     <Grid>
-        <Border HorizontalAlignment="Left" Width="802" Height="601" Margin="44,0,0,0" VerticalAlignment="Top"  Background="Gray">
+        <Border HorizontalAlignment="Left" Width="802" Height="601" Margin="10,0,0,0" VerticalAlignment="Top"  Background="Gray">
             <Image x:Name="img" Width="800" Height="600" MouseDown="Img_MouseDown"/>
         </Border>
 
         <Grid x:Name="MainControlsGrid">
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="221" Margin="880,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
-            <Button x:Name="start_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="887,41,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
-            <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="997,41,0,0" VerticalAlignment="Top" Width="75" Click="Stop_Click"/>
-            <Label Content="Width:" HorizontalAlignment="Left" Margin="887,110,0,0" VerticalAlignment="Top"/>
-            <Label Content="Height:" HorizontalAlignment="Left" Margin="887,136,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="996,113,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" />
-            <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="21" Margin="996,141,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="75"/>
-            <Label Content="Number FPS" HorizontalAlignment="Left" Margin="887,162,0,0" VerticalAlignment="Top" Width="81"/>
-            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="996,167,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
-            <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="887,66,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
-            <Label Content="Main Options" HorizontalAlignment="Left" Margin="937,10,0,0" VerticalAlignment="Top"/>
-            <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="886,188,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
-            <RadioButton  x:Name="Closed_RadioBtn" Click="SetBorderCondition" Content="Closed" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="887,215,0,0" VerticalAlignment="Top" Width="62"/>
-            <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="996,215,0,0" VerticalAlignment="Top" Width="62"/>
-            <Button x:Name="Borders" Content="On/Off Net" HorizontalAlignment="Left" Margin="887,91,0,0" VerticalAlignment="Top" Width="75" Click="OnOffborder_Click"/>
-            <Button x:Name="Squares" Content="Squares" HorizontalAlignment="Left" Margin="996,91,0,0" VerticalAlignment="Top" Width="75" Click="Squares_Click"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="221" Margin="825,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Button x:Name="start_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="832,41,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
+            <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="942,41,0,0" VerticalAlignment="Top" Width="75" Click="Stop_Click"/>
+            <Label Content="Width:" HorizontalAlignment="Left" Margin="832,110,0,0" VerticalAlignment="Top"/>
+            <Label Content="Height:" HorizontalAlignment="Left" Margin="832,136,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="941,113,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" />
+            <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="21" Margin="941,141,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="75"/>
+            <Label Content="Number FPS" HorizontalAlignment="Left" Margin="833,162,0,0" VerticalAlignment="Top" Width="81"/>
+            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="941,167,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="832,66,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
+            <Label Content="Main Options" HorizontalAlignment="Left" Margin="882,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="831,188,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
+            <RadioButton  x:Name="Closed_RadioBtn" Click="SetBorderCondition" Content="Closed" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="832,215,0,0" VerticalAlignment="Top" Width="62"/>
+            <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="941,215,0,0" VerticalAlignment="Top" Width="62"/>
+            <Button x:Name="Borders" Content="On/Off Net" HorizontalAlignment="Left" Margin="832,91,0,0" VerticalAlignment="Top" Width="75" Click="OnOffborder_Click"/>
+            <Button x:Name="Squares" Content="Squares" HorizontalAlignment="Left" Margin="941,91,0,0" VerticalAlignment="Top" Width="75" Click="Squares_Click"/>
         </Grid>
 
         <Grid x:Name="TemplatesGrid">
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="151" Margin="880,239,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
-            <Button x:Name="generateTemplate" Content="Generate Template" HorizontalAlignment="Left" Margin="923,246,0,0" VerticalAlignment="Top" Width="120" Click="Generate_Template"/>
-            <RadioButton IsChecked="True" x:Name="Clean_RadioBtn" Content="Clean" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,271,0,0" VerticalAlignment="Top"/>
-            <RadioButton  x:Name="Random_RadioBtn" Content="Random" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,291,0,0" VerticalAlignment="Top"/>
-            <RadioButton  x:Name="Radius_RadioBtn" Content="With Radius" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,311,0,0" VerticalAlignment="Top"/>
-            <RadioButton  x:Name="Homogenius_RadioBtn" Content="Homogenious" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="892,331,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="1001,291,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="60"/>
-            <TextBox x:Name="Radius_textBox"  HorizontalAlignment="Left" Height="17" Margin="1001,311,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
-            <TextBox x:Name="Xhomogenious_textbox"  HorizontalAlignment="Left" Height="17" Margin="914,356,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
-            <Label Content="X:" HorizontalAlignment="Left" Margin="893,352,0,0" VerticalAlignment="Top" Width="21"/>
-            <TextBox x:Name="Yhomogenious_textbox"  HorizontalAlignment="Left" Height="17" Margin="1000,356,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
-            <Label Content="Y:" HorizontalAlignment="Left" Margin="979,352,0,0" VerticalAlignment="Top" Width="21"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="151" Margin="824,238,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Button x:Name="generateTemplate" Content="Generate Template" HorizontalAlignment="Left" Margin="867,245,0,0" VerticalAlignment="Top" Width="120" Click="Generate_Template"/>
+            <RadioButton IsChecked="True" x:Name="Clean_RadioBtn" Content="Clean" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,270,0,0" VerticalAlignment="Top"/>
+            <RadioButton  x:Name="Random_RadioBtn" Content="Random" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,290,0,0" VerticalAlignment="Top"/>
+            <RadioButton  x:Name="Radius_RadioBtn" Content="With Radius" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,310,0,0" VerticalAlignment="Top"/>
+            <RadioButton  x:Name="Homogenius_RadioBtn" Content="Homogenious" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,330,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,290,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="Radius_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,310,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="Xhomogenious_textbox"  HorizontalAlignment="Left" Height="17" Margin="858,355,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
+            <Label Content="X:" HorizontalAlignment="Left" Margin="837,351,0,0" VerticalAlignment="Top" Width="21"/>
+            <TextBox x:Name="Yhomogenious_textbox"  HorizontalAlignment="Left" Height="17" Margin="944,355,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
+            <Label Content="Y:" HorizontalAlignment="Left" Margin="923,351,0,0" VerticalAlignment="Top" Width="21"/>
 
 
         </Grid>
         <Grid x:Name="NeighbourhoodSetup">
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="880,410,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
-            <Label Content="Neighbour Options" HorizontalAlignment="Left" Margin="927,419,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="neighboour_comboBox" HorizontalAlignment="Left" Margin="888,450,0,0" VerticalAlignment="Top" Width="184" SelectionChanged="ChangeNeighbourStrategy">
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="824,395,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Label Content="Neighbour Options" HorizontalAlignment="Left" Margin="871,404,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="neighboour_comboBox" HorizontalAlignment="Left" Margin="832,435,0,0" VerticalAlignment="Top" Width="184" SelectionChanged="ChangeNeighbourStrategy">
                 <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" IsSelected="True">Von Neumann</ComboBoxItem>
                 <ComboBoxItem x:Name="Moore_ComboBoxItem">Moore</ComboBoxItem>
                 <ComboBoxItem x:Name="Pentagonal_ComboBoxItem">Pentagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Hexagonal_ComboBoxItem" Selected="ChangeNeighbourStrategy">Hexagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Radius_ComboBoxItem">Radius</ComboBoxItem>
             </ComboBox>
-            <TextBox TextChanged="ChangeNeighbourStrategy" x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="997,537,0,0" TextWrapping="Wrap" Text="2,45" VerticalAlignment="Top" Width="75"/>
-            <Label Content="Radius:" HorizontalAlignment="Left" Margin="888,537,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
-            <Label Content="Hexagonal:" HorizontalAlignment="Left" Margin="888,477,0,0" VerticalAlignment="Top" Width="75"/>
-            <RadioButton IsEnabled="False" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,488,0,0" VerticalAlignment="Top"/>
-            <RadioButton IsEnabled="False" x:Name="RightHexOptions_radioBtn" Content="Right" Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,508,0,0" VerticalAlignment="Top"/>
-            <RadioButton IsEnabled="False" x:Name="RandomHexOptions_radioBtn" Content="Random" Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="888,508,0,0" VerticalAlignment="Top"/>
+            <TextBox TextChanged="ChangeNeighbourStrategy" x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="941,522,0,0" TextWrapping="Wrap" Text="2,45" VerticalAlignment="Top" Width="75"/>
+            <Label Content="Radius:" HorizontalAlignment="Left" Margin="832,522,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
+            <Label Content="Hexagonal:" HorizontalAlignment="Left" Margin="832,462,0,0" VerticalAlignment="Top" Width="75"/>
+            <RadioButton IsEnabled="False" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="941,473,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsEnabled="False" x:Name="RightHexOptions_radioBtn" Content="Right" Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="941,493,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsEnabled="False" x:Name="RandomHexOptions_radioBtn" Content="Random" Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="832,493,0,0" VerticalAlignment="Top"/>
+        </Grid>
+
+        <Grid >
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="165" Margin="1033,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Label Content="Monte Carlo" HorizontalAlignment="Left" Margin="1091,10,0,0" VerticalAlignment="Top"/>
+            <Label Content="Number of iterations:" HorizontalAlignment="Left" Margin="1036,41,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="MCNumberOfPoints_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,44,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="59" />
+            <Button x:Name="GenerateMC_btn" Content="Generate Points" HorizontalAlignment="Left" Margin="1131,146,0,0" VerticalAlignment="Top" Width="92" Click="GenrateMonteCarlo"/>
+            <Button x:Name="ChengeEnergyView_btn" Content="View Energy" HorizontalAlignment="Left" Margin="1042,146,0,0" VerticalAlignment="Top" Width="75" Click="ViewEnergy"/>
+            <Label Content="Simulation temerature:" HorizontalAlignment="Left" Margin="1036,69,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="MCtemperature_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,72,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="59" />
 
         </Grid>
     </Grid>

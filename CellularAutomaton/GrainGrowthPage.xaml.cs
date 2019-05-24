@@ -44,11 +44,6 @@ namespace CellularAutomaton
             Loaded += DrawInitial;
             Loaded += InitEvents;
         }
-        void DrawInitial(object sender, RoutedEventArgs e)
-        {
-            drawingHelper = new DrawingHelper(img, width, height, true);
-            drawingHelper.DrawBoard(engine.Board);
-        }
         void Initializevariables()
         {
             width = 100;
@@ -58,8 +53,7 @@ namespace CellularAutomaton
             timer = new System.Windows.Forms.Timer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
-        }
-
+        }    
         void SetTime()
         {
             var result = 1.0;
@@ -68,11 +62,6 @@ namespace CellularAutomaton
                 result = 1;
             timer.Interval = (int)(1000.0 / result);
         }
-        private void SetTime_timer(object sender, EventArgs e)
-        {
-            SetTime();
-        }
-
         void InitBoard()
         {
             int.TryParse(widthNumber.Text, out width);
@@ -84,6 +73,16 @@ namespace CellularAutomaton
 
             drawingHelper.PrepareToDraw(width, height);
             engine.CreateEngine(engineType, width, height);
+        }
+
+        private void SetTime_timer(object sender, EventArgs e)
+        {
+            SetTime();
+        }
+        void DrawInitial(object sender, RoutedEventArgs e)
+        {
+            drawingHelper = new DrawingHelper(img, width, height, true);
+            drawingHelper.DrawBoard(engine.Board);
         }
 
         void InitEvents(object sender, RoutedEventArgs e)
@@ -103,7 +102,6 @@ namespace CellularAutomaton
             start_btn.IsEnabled = false;
             stopBtn.IsEnabled = true;
         }
-
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
             engine.GetNextIteration();
@@ -111,7 +109,6 @@ namespace CellularAutomaton
             if (engine.IsFinished)
                 Stop_Click(null, null);
         }
-
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
             while (!engine.IsFinished)
@@ -120,14 +117,12 @@ namespace CellularAutomaton
             }
             drawingHelper.DrawBoard(engine.Board);
         }
-
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             start_btn.IsEnabled = true;
             stopBtn.IsEnabled = false;
             timer.Stop();
         }
-
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -142,7 +137,6 @@ namespace CellularAutomaton
                 drawingHelper.DrawBoard(engine.Board);
             }
         }
-
         private void Generate_Template(object sender, RoutedEventArgs e)
         {
             try
@@ -157,24 +151,6 @@ namespace CellularAutomaton
                 MessageBox.Show(ex.Message);
             }
         }
-        private TemplateRequest BuildTemplateRequest()
-        {
-            var request = new TemplateRequest();
-            request.board = engine.Board;
-            int.TryParse(Random_textBox.Text, out request.numberOfPoints);
-            int.TryParse(Radius_textBox.Text, out request.radius);
-            int.TryParse(Xhomogenious_textbox.Text, out request.x);
-            int.TryParse(Yhomogenious_textbox.Text, out request.y);
-            if (Radius_RadioBtn.IsChecked ?? false)
-                request.type = GrainTemplateType.Radius;
-            else if (Random_RadioBtn.IsChecked ?? false)
-                request.type = GrainTemplateType.Random;
-            else if (Homogenius_RadioBtn.IsChecked ?? false)
-                request.type = GrainTemplateType.Homogeneous;
-            else
-                request.type = GrainTemplateType.Clear;
-            return request;
-        }
         private void ChangeNeighbourStrategy(object sender, RoutedEventArgs e)
         {
             if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null || LeftHexOptions_radioBtn == null)
@@ -187,7 +163,6 @@ namespace CellularAutomaton
             var request = CreateNeighbourhoodRequest();
             engine.ChangeNeighbooroodType(request);
         }
-
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {
             bool OpenBorderCondition = Open_Radiobtn.IsChecked ?? false;
@@ -202,6 +177,16 @@ namespace CellularAutomaton
         {
             drawingHelper.SetSquareAndReload(!drawingHelper.squares);
             drawingHelper.DrawBoard(engine.Board);
+        }
+
+        void GenrateMonteCarlo(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ViewEnergy(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private NeighbourStrategyRequest CreateNeighbourhoodRequest() {
@@ -243,6 +228,24 @@ namespace CellularAutomaton
             {
                 request.Radius = 1.0;
             }
+            return request;
+        }
+        private TemplateRequest BuildTemplateRequest()
+        {
+            var request = new TemplateRequest();
+            request.board = engine.Board;
+            int.TryParse(Random_textBox.Text, out request.numberOfPoints);
+            int.TryParse(Radius_textBox.Text, out request.radius);
+            int.TryParse(Xhomogenious_textbox.Text, out request.x);
+            int.TryParse(Yhomogenious_textbox.Text, out request.y);
+            if (Radius_RadioBtn.IsChecked ?? false)
+                request.type = GrainTemplateType.Radius;
+            else if (Random_RadioBtn.IsChecked ?? false)
+                request.type = GrainTemplateType.Random;
+            else if (Homogenius_RadioBtn.IsChecked ?? false)
+                request.type = GrainTemplateType.Homogeneous;
+            else
+                request.type = GrainTemplateType.Clear;
             return request;
         }
 
