@@ -5,9 +5,9 @@ namespace EngineProject.Engines.NeighbourStrategy
 {
     public class NeighbourFactory
     {
-        public INeighbourStrategy CreateNeighbourComputing(NeighbooorhoodType type, HexType hexType = HexType.Left)
+        public INeighbourStrategy CreateNeighbourComputing(NeighbourStrategyRequest request)
         {
-            switch (type)
+            switch (request.neighbooorhoodType)
             {
                 case NeighbooorhoodType.VonNeumann:
                     return new NeighbourVonNeumann();
@@ -17,9 +17,12 @@ namespace EngineProject.Engines.NeighbourStrategy
                     return new NeighbourPentagonal();
                 case NeighbooorhoodType.Hexagonal:
                     var result = new NeighbourHexagonal();
-                    result.type = hexType;
+                    result.type = request.hexType;
                     return result;
                 case NeighbooorhoodType.Radius:
+                    var radius = new NeighbourRadius();
+                    radius.radius = request.Radius;
+                    return radius;
                 default:
                     throw new System.Exception("This type of neighboorhood is not recognized");
             }

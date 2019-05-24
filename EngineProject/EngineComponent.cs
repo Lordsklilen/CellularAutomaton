@@ -72,13 +72,17 @@ namespace EngineProject
             _engine.ChangeBorderConditions(state);
         }
 
-        public void ChangeNeighbooroodType(NeighbooorhoodType type, HexType hexType)
+        public void ChangeNeighbooroodType(NeighbourStrategyRequest request)
         {
-            (_engine as GrainGrowthEngine).ChangeStrategyType(type,hexType);
+            (_engine as GrainGrowthEngine).ChangeStrategyType(request);
         }
         public void ChangeHexType(HexType type)
         {
             (_engine as GrainGrowthEngine).ChangeHexType(type);
+        }
+        public void ChangeRadiusLength(NeighbourStrategyRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

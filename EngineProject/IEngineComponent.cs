@@ -17,7 +17,6 @@ namespace EngineProject
         void SetGrainNumber(int grainNumber, int x, int y);
         void GenerateGrainTemplate(TemplateRequest request);
         void ChangeBorderConditions(bool state);
-        void ChangeNeighbooroodType(NeighbooorhoodType type,HexType hexType);
-        void ChangeHexType(HexType type);
+        void ChangeNeighbooroodType(NeighbourStrategyRequest request);
     }
 }

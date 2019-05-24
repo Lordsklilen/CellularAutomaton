@@ -30,7 +30,8 @@ namespace EngineProject.Engines.Engines
             _maxColumn = width;
             neighboursType = nType;
             neighbourFactory = new NeighbourFactory();
-            neighbourStrategy = neighbourFactory.CreateNeighbourComputing(nType);
+            NeighbourStrategyRequest request = new NeighbourStrategyRequest() { neighbooorhoodType = nType };
+            neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
         }
 
         public void NextIteration()
@@ -70,10 +71,10 @@ namespace EngineProject.Engines.Engines
         {
             panel.SetGrainNumber(number, x, y);
         }
-        public void ChangeStrategyType(NeighbooorhoodType type, HexType hexType) {
-            neighboursType = type;
-            this.hexType = hexType;
-            neighbourStrategy = neighbourFactory.CreateNeighbourComputing(neighboursType, hexType);
+        public void ChangeStrategyType(NeighbourStrategyRequest request) {
+            neighboursType = request.neighbooorhoodType;
+            this.hexType = request.hexType;
+            neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
         }
 
         public void ChangeBorderConditions(bool state)

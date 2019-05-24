@@ -32,12 +32,14 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructures\Cell\CellFactory.cs" />
@@ -59,8 +61,10 @@
     <Compile Include="Engines\NeighbourStrategy\INeighbourStrategy.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourFactory.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourHexagonal.cs" />
+    <Compile Include="Engines\NeighbourStrategy\NeighbourRadius.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourPentagonal.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourMoore.cs" />
+    <Compile Include="Engines\NeighbourStrategy\NeighbourStrategyRequest.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourVonNeumann.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateClean.cs" />
     <Compile Include="Templates\GrainTemplates\GrainTemplateFactory.cs" />

@@ -175,47 +175,17 @@ namespace CellularAutomaton
                 request.type = GrainTemplateType.Clear;
             return request;
         }
-        private void NeighbourhoodComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+        private void ChangeNeighbourStrategy(object sender, RoutedEventArgs e)
         {
-            if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null)
+            if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null || LeftHexOptions_radioBtn == null)
                 return;
 
             LeftHexOptions_radioBtn.IsEnabled = false;
             RightHexOptions_radioBtn.IsEnabled = false;
             RandomHexOptions_radioBtn.IsEnabled = false;
-            RightHexOptions_radioBtn.IsChecked = false;
-            LeftHexOptions_radioBtn.IsChecked = false;
-            RandomHexOptions_radioBtn.IsChecked = false;
 
-            NeighbooorhoodType type;
-            HexType hexType;
-            switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
-            {
-                case "Moore":
-                    type = NeighbooorhoodType.Moore;
-                    break;
-                case "Pentagonal":
-                    type = NeighbooorhoodType.Pentagonal;
-                    RandomHexOptions_radioBtn.IsChecked = true;
-                    break;
-                case "Hexagonal":
-                    type = NeighbooorhoodType.Hexagonal;
-                    RandomHexOptions_radioBtn.IsChecked = true;
-                    LeftHexOptions_radioBtn.IsEnabled = true;
-                    RightHexOptions_radioBtn.IsEnabled = true;
-                    RandomHexOptions_radioBtn.IsEnabled = true;
-                    break;
-                case "Von Neumann":
-                default:
-                    type = NeighbooorhoodType.VonNeumann;
-                    break;
-            }
-
-            if (LeftHexOptions_radioBtn.IsChecked ?? false) hexType = HexType.Left;
-            else if (RightHexOptions_radioBtn.IsChecked ?? false) hexType = HexType.Right;
-            else hexType = HexType.Random;
-
-            engine.ChangeNeighbooroodType(type,hexType);
+            var request = CreateNeighbourhoodRequest();
+            engine.ChangeNeighbooroodType(request);
         }
 
         private void SetBorderCondition(object sender, RoutedEventArgs e)
@@ -234,16 +204,47 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Board);
         }
 
-        private void Send_hexData(object sender, RoutedEventArgs e)
-        {
-            if (LeftHexOptions_radioBtn.Content == null)
-                return;
-            if (LeftHexOptions_radioBtn.IsChecked ?? false)
-                engine.ChangeHexType(HexType.Left);
-            else if (RightHexOptions_radioBtn.IsChecked ?? false)
-                engine.ChangeHexType(HexType.Right);
-            else if (RandomHexOptions_radioBtn.IsChecked ?? false)
-                engine.ChangeHexType(HexType.Random);
+        private NeighbourStrategyRequest CreateNeighbourhoodRequest() {
+            var request = new NeighbourStrategyRequest();
+
+            switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
+            {
+                case "Moore":
+                    request.neighbooorhoodType = NeighbooorhoodType.Moore;
+                    break;
+                case "Pentagonal":
+                    request.neighbooorhoodType = NeighbooorhoodType.Pentagonal;
+                    RandomHexOptions_radioBtn.IsChecked = true;
+                    break;
+                case "Hexagonal":
+                    request.neighbooorhoodType = NeighbooorhoodType.Hexagonal;
+                    LeftHexOptions_radioBtn.IsEnabled = true;
+                    RightHexOptions_radioBtn.IsEnabled = true;
+                    RandomHexOptions_radioBtn.IsEnabled = true;
+                    break;
+                case "Radius":
+                    request.neighbooorhoodType = NeighbooorhoodType.Radius;
+                    break;
+                case "Von Neumann":
+                default:
+                    request.neighbooorhoodType = NeighbooorhoodType.VonNeumann;
+                    break;
+            }
+
+            if (LeftHexOptions_radioBtn.IsChecked ?? false) request.hexType = HexType.Left;
+            else if (RightHexOptions_radioBtn.IsChecked ?? false) request.hexType = HexType.Right;
+            else
+            {
+                request.hexType = HexType.Random;
+            }
+
+            double.TryParse(RadiusNeighbour_textbox.Text, out request.Radius);
+            if (request.Radius < 1.0)
+            {
+                request.Radius = 1.0;
+            }
+            return request;
         }
+
     }
 }
