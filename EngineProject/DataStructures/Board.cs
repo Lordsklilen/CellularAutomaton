@@ -18,7 +18,6 @@ namespace EngineProject.DataStructures
         public int X => width;
         public int Y => height;
         public bool finished;
-        public bool IsFinished() => finished;
 
         public int MaxNumber() => maxGrainNumber;
         public int GetGrainNumber(int x, int y) => (board[x][y] as Grain).GetGrainNumber();
@@ -29,7 +28,7 @@ namespace EngineProject.DataStructures
             this.height = height;
             cellType = type;
             cellFactory = new CellFactory();
-            maxGrainNumber = 1;
+            maxGrainNumber = 0 ;
             Clear();
         }
 
@@ -49,7 +48,7 @@ namespace EngineProject.DataStructures
                     board[i][j] = cellFactory.CreateCell(cellType, i, j);
                 }
             }
-            maxGrainNumber = 1;
+            maxGrainNumber = 0;
             finished = false;
         }
         
@@ -57,11 +56,6 @@ namespace EngineProject.DataStructures
             if (number > maxGrainNumber)
                 maxGrainNumber = number;
             (board[x][y] as Grain).SetGrainNumber(number);
-        }
-
-        public int CalculateEnergy(int x,int y) {
-
-            return 0;
         }
     }
 }

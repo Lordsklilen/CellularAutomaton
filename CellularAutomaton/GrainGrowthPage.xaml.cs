@@ -167,6 +167,8 @@ namespace CellularAutomaton
 
             var request = CreateNeighbourhoodRequest();
             engine.ChangeNeighboroodType(request);
+            drawingHelper.DrawBoard(engine.Board);
+
         }
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {

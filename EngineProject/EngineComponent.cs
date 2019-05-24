@@ -14,7 +14,7 @@ namespace EngineProject
         private GrainTemplateFactory templateFactory;
 
         public int MaxNumber =>engine.GetBoard().MaxNumber();
-        public bool IsFinished => (engine as GrainGrowthEngine).IsFinished() || MaxNumber == 1;
+        public bool IsFinished => (engine as GrainGrowthEngine).IsFinished() || MaxNumber == 0;
 
         public Board Board => engine.GetBoard();
 

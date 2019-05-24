@@ -25,6 +25,5 @@ namespace EngineProject.Engines.NeighbourStrategy
                 return groups.OrderByDescending(x => x.Count()).First().Key;
             }
         }
-
     }
 }

@@ -65,9 +65,7 @@ namespace EngineProject.Engines.NeighbourStrategy
                         widthId = (i + cell.x);
                         heightId = (j + cell.y);
                         if (widthId < 0 || heightId < 0 || widthId >= _maxRow || heightId >= _maxColumn)
-                            number = 0;
-                        else
-                            number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                            continue;
                     }
 
                     Grain colleague = (Grain)panel.board[widthId][heightId];

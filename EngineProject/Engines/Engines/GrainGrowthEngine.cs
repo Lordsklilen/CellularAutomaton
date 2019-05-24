@@ -22,7 +22,7 @@ namespace EngineProject.Engines.Engines
         private MonteCarloEngine MCEngine;
         private bool MCIterateAllCells = true;
         public Board GetBoard() => panel;
-        public bool IsFinished() => panel.IsFinished();
+        public bool IsFinished() => panel.finished;
         public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.Moore)
         {
             type = EngineType.GrainGrowth;
@@ -38,7 +38,7 @@ namespace EngineProject.Engines.Engines
 
         public void NextIteration()
         {
-            if (panel.MaxNumber() == 1)
+            if (panel.finished)
                 return;
             var copyPanel = new Board(_maxColumn, _maxRow, cellType);
             copyPanel.finished = true;
@@ -50,8 +50,7 @@ namespace EngineProject.Engines.Engines
                     neighbourStrategy.ComputeCell((Grain)cell);
                 }
             }
-            panel = copyPanel;
-            panel = MCEngine.ReCalculateAllEnergy(panel);
+            panel = MCEngine.ReCalculateAllEnergy(copyPanel);
         }
 
         public void ChangeCellState(int x, int y)
@@ -79,6 +78,11 @@ namespace EngineProject.Engines.Engines
             neighboursType = request.neighbooorhoodType;
             this.hexType = request.hexType;
             neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
+            if (MCEngine != null)
+            {
+                MCEngine.ChangeStrategy(request);
+                RecalculateEnergy();
+            }
         }
 
         public void ChangeBorderConditions(bool state)
@@ -114,7 +118,6 @@ namespace EngineProject.Engines.Engines
 
         internal void IterateMonteCarlo(int iterations)
         {
-
             if (MCIterateAllCells)
                 MCEngine.NextIterationsEveryCell(panel, iterations);
             else
