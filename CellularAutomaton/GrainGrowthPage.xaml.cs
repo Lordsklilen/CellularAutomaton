@@ -179,6 +179,14 @@ namespace CellularAutomaton
         {
             if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null)
                 return;
+
+            LeftHexOptions_radioBtn.IsEnabled = false;
+            RightHexOptions_radioBtn.IsEnabled = false;
+            RandomHexOptions_radioBtn.IsEnabled = false;
+            RightHexOptions_radioBtn.IsChecked = false;
+            LeftHexOptions_radioBtn.IsChecked = false;
+            RandomHexOptions_radioBtn.IsChecked = false;
+
             NeighbooorhoodType type;
             HexType hexType;
             switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
@@ -188,9 +196,14 @@ namespace CellularAutomaton
                     break;
                 case "Pentagonal":
                     type = NeighbooorhoodType.Pentagonal;
+                    RandomHexOptions_radioBtn.IsChecked = true;
                     break;
                 case "Hexagonal":
                     type = NeighbooorhoodType.Hexagonal;
+                    RandomHexOptions_radioBtn.IsChecked = true;
+                    LeftHexOptions_radioBtn.IsEnabled = true;
+                    RightHexOptions_radioBtn.IsEnabled = true;
+                    RandomHexOptions_radioBtn.IsEnabled = true;
                     break;
                 case "Von Neumann":
                 default:

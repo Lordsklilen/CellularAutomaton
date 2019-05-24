@@ -61,9 +61,9 @@
             <TextBox x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="997,537,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
             <Label Content="Radius:" HorizontalAlignment="Left" Margin="888,537,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
             <Label Content="Hexagonal:" HorizontalAlignment="Left" Margin="888,477,0,0" VerticalAlignment="Top" Width="75"/>
-            <RadioButton IsChecked="True" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,488,0,0" VerticalAlignment="Top"/>
-            <RadioButton x:Name="RightHexOptions_radioBtn" Content="Right" Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,508,0,0" VerticalAlignment="Top"/>
-            <RadioButton x:Name="RandomHexOptions_radioBtn" Content="Random" Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="888,508,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsEnabled="False" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,488,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsEnabled="False" x:Name="RightHexOptions_radioBtn" Content="Right" Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="997,508,0,0" VerticalAlignment="Top"/>
+            <RadioButton IsEnabled="False" x:Name="RandomHexOptions_radioBtn" Content="Random" Checked="Send_hexData" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="888,508,0,0" VerticalAlignment="Top"/>
 
         </Grid>
     </Grid>
