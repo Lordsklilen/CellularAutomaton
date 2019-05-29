@@ -22,13 +22,24 @@ namespace EngineProject.DataStructures
         public int MaxNumber() => maxGrainNumber;
         public int GetGrainNumber(int x, int y) => (board[x][y] as Grain).GetGrainNumber();
 
+        public Board(Board main)
+        {
+            this.width = main.width;
+            this.height = main.height;
+            cellType = main.cellType;
+            cellFactory = new CellFactory();
+            maxGrainNumber = main.maxGrainNumber;
+            Copy(main);
+        }
+
+
         public Board(int width, int height, CellType type = CellType.Cell)
         {
             this.width = width;
             this.height = height;
             cellType = type;
             cellFactory = new CellFactory();
-            maxGrainNumber = 0 ;
+            maxGrainNumber = 0;
             Clear();
         }
 
@@ -51,7 +62,22 @@ namespace EngineProject.DataStructures
             maxGrainNumber = 0;
             finished = false;
         }
-        
+
+        public void Copy(Board main)
+        {
+            board = new ICell[height][];
+            for (int i = 0; i < height; i++)
+            {
+                board[i] = new ICell[width];
+                for (int j = 0; j < width; j++)
+                {
+                    board[i][j] = cellFactory.CreateCell(main.board[i][j] as Grain);
+                }
+            }
+            maxGrainNumber = 0;
+            finished = false;
+        }
+
         public void SetGrainNumber(int number, int x, int y) {
             if (number > maxGrainNumber)
                 maxGrainNumber = number;

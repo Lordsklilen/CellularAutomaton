@@ -11,8 +11,8 @@ namespace EngineProject.Engines.NeighbourStrategy
     {
         private Board panel;
         private Board copyPanel;
-        private int _maxRow;
-        private int _maxColumn;
+        private int maxRow;
+        private int maxColumn;
         private bool OpenBorderCondition;
 
         public Board CopyPanel => copyPanel;
@@ -22,8 +22,8 @@ namespace EngineProject.Engines.NeighbourStrategy
         {
             this.panel = panel;
             this.copyPanel = copyPanel;
-            this._maxRow = _maxRow;
-            this._maxColumn = _maxColumn;
+            this.maxRow = _maxRow;
+            this.maxColumn = _maxColumn;
             this.OpenBorderCondition = OpenBorderCondition;
         }
 
@@ -32,7 +32,7 @@ namespace EngineProject.Engines.NeighbourStrategy
             if (cell.GetGrainNumber() == 0)
             {
                 var neighbours = NeighboursGrainNumbers(cell as Grain);
-                copyPanel.SetGrainNumber(Utils.MostCommonNeighbour(neighbours), cell.x, cell.y);
+                copyPanel.SetGrainNumber(NeighbourHelper.MostCommonNeighbour(neighbours), cell.x, cell.y);
                 copyPanel.finished = false;
             }
             else
@@ -54,8 +54,8 @@ namespace EngineProject.Engines.NeighbourStrategy
                     int heightId;
                     if (OpenBorderCondition)
                     {
-                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (_maxRow) : _maxRow - 1;
-                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (_maxColumn) : _maxColumn - 1;
+                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x)+ maxRow;
+                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (maxColumn) : (j + cell.y) + maxColumn;
                         number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
                     }
                     else
@@ -63,7 +63,7 @@ namespace EngineProject.Engines.NeighbourStrategy
                         widthId = (i + cell.x);
                         heightId = (j + cell.y);
 
-                        if (widthId < 0 || heightId < 0 || widthId >= _maxRow || heightId >= _maxColumn)
+                        if (widthId < 0 || heightId < 0 || widthId >= maxRow || heightId >= maxColumn)
                             number = 0;
                         else
                             number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();

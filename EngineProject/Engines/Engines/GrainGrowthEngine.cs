@@ -40,7 +40,7 @@ namespace EngineProject.Engines.Engines
         {
             if (panel.finished)
                 return;
-            var copyPanel = new Board(_maxColumn, _maxRow, cellType);
+            var copyPanel = new Board(panel);
             copyPanel.finished = true;
             neighbourStrategy.Initialize(panel, copyPanel, _maxRow, _maxColumn, OpenBorderCondition);
             foreach (var row in panel.board)
@@ -100,7 +100,7 @@ namespace EngineProject.Engines.Engines
         internal void CreateMCEngine(MonteCarloRequest request)
         {
             request.board = panel;
-            request.CopyBoard = new Board(_maxColumn, _maxRow, cellType);
+            request.CopyBoard = new Board(panel);
             request.maxColumn = _maxColumn;
             request.maxRow = _maxRow;
             if (MCEngine == null)

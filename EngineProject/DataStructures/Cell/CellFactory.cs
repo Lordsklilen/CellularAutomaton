@@ -24,5 +24,13 @@ namespace EngineProject.DataStructures
                     throw new NotSupportedException("This type of cell is not supproted");
             }
         }
+
+        public Grain CreateCell(Grain grain)
+        {
+            var newGrain = new Grain(grain.x, grain.y);
+            newGrain.CenterOfX = grain.CenterOfX;
+            newGrain.CenterOfY = grain.CenterOfY;
+            return newGrain;
+        }
     }
 }

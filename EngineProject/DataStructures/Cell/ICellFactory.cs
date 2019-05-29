@@ -10,5 +10,6 @@ namespace EngineProject.DataStructures
     public interface ICellFactory
     {
         ICell CreateCell(CellType type, int x, int y);
+        Grain CreateCell(Grain grain);
     }
 }

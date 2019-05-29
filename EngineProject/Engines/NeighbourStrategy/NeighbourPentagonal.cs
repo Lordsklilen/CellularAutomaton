@@ -33,7 +33,7 @@ namespace EngineProject.Engines.NeighbourStrategy
             if (cell.GetGrainNumber() == 0)
             {
                 var neighbours = NeighboursGrainNumbers(cell as Grain);
-                copyPanel.SetGrainNumber(Utils.MostCommonNeighbour(neighbours), cell.x, cell.y);
+                copyPanel.SetGrainNumber(NeighbourHelper.MostCommonNeighbour(neighbours), cell.x, cell.y);
                 copyPanel.finished = false;
             }
             else

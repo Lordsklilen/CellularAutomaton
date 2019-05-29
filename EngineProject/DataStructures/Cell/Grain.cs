@@ -22,7 +22,8 @@ namespace EngineProject.DataStructures
 
         public int GetGrainNumber() => grainNumber;
         public void SetGrainNumber(int number) => grainNumber = number;
-        public Point GetMassCenter() => new Point(CenterOfX + x, CenterOfY + y);
+        public Point GetMassCenter() => new Point(CenterOfY + y, CenterOfX + x);
+        public Point GetInsideMassCenter() => new Point(CenterOfY, CenterOfX);
 
     }
 }

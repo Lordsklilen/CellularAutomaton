@@ -140,6 +140,7 @@ namespace CellularAutomaton
             {
                 ++numberOfGrains;
                 engine.SetGrainNumber(numberOfGrains, position.X, position.Y);
+                
                 drawingHelper.DrawBoard(engine.Board);
             }
         }
@@ -202,6 +203,12 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Board);
         }
 
+        void CenterPoints_Click(object sender, RoutedEventArgs e)
+        {
+            drawingHelper.centerPoints = !drawingHelper.centerPoints;
+            drawingHelper.DrawBoard(engine.Board);
+        }
+
 
         private MonteCarloRequest CreateMonteCarloRequest()
         {
@@ -227,6 +234,7 @@ namespace CellularAutomaton
             mcRequest.strategyRequest = CreateNeighbourhoodRequest();
             return mcRequest;
         }
+
         private NeighbourStrategyRequest CreateNeighbourhoodRequest()
         {
             var request = new NeighbourStrategyRequest();
@@ -269,6 +277,7 @@ namespace CellularAutomaton
             }
             return request;
         }
+
         private TemplateRequest BuildTemplateRequest()
         {
             var request = new TemplateRequest();

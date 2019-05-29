@@ -29,7 +29,7 @@ namespace EngineProject.Engines
 
         public void NextIteration()
         {
-            var copyPanel = new Board(_maxColumn,_maxRow);
+            var copyPanel = new Board(panel);
             foreach (var row in panel.board)
             {
                 foreach (var cell in row)

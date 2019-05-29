@@ -22,7 +22,7 @@
             <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="941,113,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" />
             <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="21" Margin="941,141,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="75"/>
             <Label Content="Number FPS" HorizontalAlignment="Left" Margin="833,162,0,0" VerticalAlignment="Top" Width="81"/>
-            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="941,167,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
+            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="941,167,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="75"/>
             <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="832,66,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
             <Label Content="Main Options" HorizontalAlignment="Left" Margin="882,10,0,0" VerticalAlignment="Top"/>
             <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="831,188,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
@@ -30,6 +30,7 @@
             <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="941,215,0,0" VerticalAlignment="Top" Width="62"/>
             <Button x:Name="Borders" Content="On/Off Net" HorizontalAlignment="Left" Margin="832,91,0,0" VerticalAlignment="Top" Width="75" Click="OnOffborder_Click"/>
             <Button x:Name="Squares" Content="Squares" HorizontalAlignment="Left" Margin="941,91,0,0" VerticalAlignment="Top" Width="75" Click="Squares_Click"/>
+            <Button x:Name="centerPoints_btn" Content="Center points" HorizontalAlignment="Left" Margin="942,66,0,0" VerticalAlignment="Top" Width="75" Click="CenterPoints_Click"/>
         </Grid>
 
         <Grid x:Name="TemplatesGrid">
@@ -58,7 +59,7 @@
                 <ComboBoxItem x:Name="Hexagonal_ComboBoxItem" Selected="ChangeNeighbourStrategy">Hexagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Radius_ComboBoxItem">Radius</ComboBoxItem>
             </ComboBox>
-            <TextBox TextChanged="ChangeNeighbourStrategy" x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="941,522,0,0" TextWrapping="Wrap" Text="2,45" VerticalAlignment="Top" Width="75"/>
+            <TextBox TextChanged="ChangeNeighbourStrategy" x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="941,522,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="75"/>
             <Label Content="Radius:" HorizontalAlignment="Left" Margin="832,522,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
             <Label Content="Hexagonal:" HorizontalAlignment="Left" Margin="832,462,0,0" VerticalAlignment="Top" Width="75"/>
             <RadioButton IsEnabled="False" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="941,473,0,0" VerticalAlignment="Top"/>

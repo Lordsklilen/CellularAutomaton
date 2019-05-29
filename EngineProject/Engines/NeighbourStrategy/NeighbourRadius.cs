@@ -12,20 +12,20 @@ namespace EngineProject.Engines.NeighbourStrategy
     {
         private Board panel;
         private Board copyPanel;
-        private int _maxRow;
-        private int _maxColumn;
+        private int maxRow;
+        private int maxColumn;
         private bool OpenBorderCondition;
         public double radius;
 
         public Board CopyPanel => copyPanel;
-        public int N => (int) (radius*radius)+1;
+        public int N => (int)(radius * radius) + 1;
 
         public void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition)
         {
             this.panel = panel;
             this.copyPanel = copyPanel;
-            this._maxRow = _maxRow;
-            this._maxColumn = _maxColumn;
+            this.maxRow = _maxRow;
+            this.maxColumn = _maxColumn;
             this.OpenBorderCondition = OpenBorderCondition;
         }
 
@@ -34,7 +34,7 @@ namespace EngineProject.Engines.NeighbourStrategy
             if (cell.GetGrainNumber() == 0)
             {
                 var neighbours = NeighboursGrainNumbers(cell as Grain);
-                copyPanel.SetGrainNumber(Utils.MostCommonNeighbour(neighbours), cell.x, cell.y);
+                copyPanel.SetGrainNumber(NeighbourHelper.MostCommonNeighbour(neighbours), cell.x, cell.y);
                 copyPanel.finished = false;
             }
             else
@@ -45,35 +45,47 @@ namespace EngineProject.Engines.NeighbourStrategy
         {
             List<int> neighbours = new List<int>();
             int RadiusTop = (int)radius + 1;
-            Point centerOfMass = cell.GetMassCenter();
-            double X = centerOfMass.X;
-            double Y = centerOfMass.Y;
             for (int i = -RadiusTop; i <= RadiusTop; i++)
             {
                 for (int j = -RadiusTop; j <= RadiusTop; j++)
                 {
+                    if (i == 0 && j == 0)
+                        continue;
+
                     int number = 0;
                     int widthId;
                     int heightId;
                     if (OpenBorderCondition)
                     {
-                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (_maxRow) : _maxRow - 1;
-                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (_maxColumn) : _maxColumn - 1;
+                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x) + maxRow;
+                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (maxColumn) : (j + cell.y) + maxColumn;
                     }
                     else
                     {
                         widthId = (i + cell.x);
                         heightId = (j + cell.y);
-                        if (widthId < 0 || heightId < 0 || widthId >= _maxRow || heightId >= _maxColumn)
+                        if (widthId < 0 || heightId < 0 || widthId >= maxRow || heightId >= maxColumn)
                             continue;
                     }
 
                     Grain colleague = (Grain)panel.board[widthId][heightId];
-                    Point NeighbourMassCenter = colleague.GetMassCenter();
-                    if (Math.Sqrt((Math.Pow(NeighbourMassCenter.X - X, 2) + Math.Pow(NeighbourMassCenter.Y - Y, 2))) <= radius)
+                    number = colleague.GetGrainNumber();
+                    if (number == 0)
+                        continue;
+                    Point NeighbourMassCenter = colleague.GetInsideMassCenter();
+                    NeighbourMassCenter.X += (j + cell.y);
+                    NeighbourMassCenter.Y += (i + cell.x);
+
+                    Point centerOfMass = cell.GetMassCenter();
+                    //Point NeighbourMassCenter = colleague.GetMassCenter();
+
+                    double r = Math.Sqrt((Math.Pow(NeighbourMassCenter.X - centerOfMass.X, 2) + Math.Pow(NeighbourMassCenter.Y - centerOfMass.Y, 2)));
+                    if (r <= radius)
+                    {
                         number = colleague.GetGrainNumber();
-                    if (number > 0)
-                        neighbours.Add(number);
+                        if (number > 0)
+                            neighbours.Add(number);
+                    }
                 }
             }
             return neighbours;

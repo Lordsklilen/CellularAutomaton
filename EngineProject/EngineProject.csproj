@@ -59,6 +59,7 @@
     <Compile Include="EngineComponent.cs" />
     <Compile Include="Engines\IEngine.cs" />
     <Compile Include="Engines\MonteCarlo\MonteCarloRequest.cs" />
+    <Compile Include="Engines\NeighbourStrategy\BorderConditionResolver.cs" />
     <Compile Include="Engines\NeighbourStrategy\HexType.cs" />
     <Compile Include="Engines\NeighbourStrategy\INeighbourStrategy.cs" />
     <Compile Include="Engines\NeighbourStrategy\NeighbourFactory.cs" />

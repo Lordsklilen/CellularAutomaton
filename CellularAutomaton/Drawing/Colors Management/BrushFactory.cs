@@ -60,6 +60,9 @@ namespace CellularAutomaton.Drawing
                 return new SolidBrush(Color.Lime);
             throw new NotSupportedException("This type of binary brush is not supprted");
         }
+        public Brush CreateCenterOfMassBrush() {
+            return new SolidBrush(Color.Red);
+        }
 
     }
 }

@@ -60,12 +60,14 @@ namespace EngineProject
         public void SetGrainNumber(int grainNumber, int x, int y)
         {
             (engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
+            //(engine as GrainGrowthEngine).RecalculateEnergy();
         }
 
         public void GenerateGrainTemplate(TemplateRequest request)
         {
             var template = templateFactory.CreateTemplate(request.type);
             template.GenerateTemplate(request);
+            (engine as GrainGrowthEngine).RecalculateEnergy();
         }
 
         public void ChangeBorderConditions(bool state)

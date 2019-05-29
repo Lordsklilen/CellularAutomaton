@@ -22,6 +22,7 @@ namespace CellularAutomaton
         int numHeightCells;
         int numWidthCells;
         public bool net;
+        public bool centerPoints = true;
         public bool squares { get; private set; }
         public bool energyFocus { get; set; }
 
@@ -74,7 +75,7 @@ namespace CellularAutomaton
             wpfImage.Source = Convert(bitmap);
         }
 
-        public void DrawBoard(Board board)
+        public void DrawCenterMassBoard(Board board)
         {
             bitmap = new Bitmap(x, y);
             g = Graphics.FromImage(bitmap);
@@ -82,20 +83,99 @@ namespace CellularAutomaton
             {
                 for (int j = 0; j < board.board[i].Length; j++)
                 {
+                    var center = (board.board[i][j]as Grain).GetMassCenter();
+                    g.FillRectangle(
+                           brushFactory.CreateCenterOfMassBrush(),
+                           (float)center.X,
+                           (float)center.Y,
+                           (float)center.X,
+                           (float)center.Y
+                       );
+                }
+            }
+            wpfImage.Source = Convert(bitmap);
+        }
+
+
+        public void DrawBoard(Board board)
+        {
+
+            bitmap = new Bitmap(x, y);
+            g = Graphics.FromImage(bitmap);
+            for (int i = 0; i < board.board.Length; i++)
+            {
+                for (int j = 0; j < board.board[i].Length; j++)
+                {
                     var el = board.board[i][j];
+                    int width = (int)((double)el.Y() * (elWidth));
+                    int height = (int)((double)el.X() * (elHeight));
                     Rectangle rect = Rectangle.FromLTRB(
-                        (int)((double)el.Y() * (elWidth)),
-                        (int)((double)el.X() * (elHeight)),
-                        (int)(net ? ((double)(el.Y() + 1.0)  * (elWidth))-1.0 : (double)(el.Y() + 1.0) * (elWidth )),
-                        (int)(net ? ((double)(el.X() + 1.0) * (elHeight))-1.0 : (double)(el.X() + 1.0) * (elHeight))
+                        width,
+                        height,
+                        (int)(net ? ((double)(el.Y() + 1.0) * (elWidth)) - 1.0 : (double)(el.Y() + 1.0) * (elWidth)),
+                        (int)(net ? ((double)(el.X() + 1.0) * (elHeight)) - 1.0 : (double)(el.X() + 1.0) * (elHeight))
                         );
                     if (energyFocus)
                         DrawEnergyRectangle(el, rect, board);
                     else
                         DrawRectangle(el, rect, board);
+                    if (centerPoints)
+                        DrawCenter(width, height, el as Grain);
                 }
             }
+
+
+
+
+
+            //var el1 = board.board[0][0];
+            //var el2 = board.board[0][1];
+            var el3 = board.board[1][1];
+
+            //var center1 = (el1 as Grain).GetInsideMassCenter();
+            //var center5Main = (el5 as Grain).GetMassCenter();
+            //var center5 = (el5 as Grain).GetInsideMassCenter();
+            //var w = el5.X() + center5.X;
+            //var h = el5.Y() + center5.Y; ;
+            //var center4 = (el2 as Grain).GetMassCenter();
+
+
+
+            Pen skyBluePen = new Pen(Brushes.DeepSkyBlue);
+            //g.DrawLine(skyBluePen,
+            //     (float)((double)center3.X * (elWidth)),
+            //       (float)((double)center3.Y * (elHeight)),
+            //        (float)((double)center4.X * (elWidth)),
+            //       (float)((double)center4.Y * (elHeight))
+            //       );
+
+            //g.DrawLine(skyBluePen,
+            //   (float)((double)(w)* (elWidth)),
+            //     (float)((double)(h)* (elHeight)),
+            //      (float)((double)center4.X * (elWidth)),
+            //     (float)((double)center4.Y * (elHeight))
+            //     );
+
+
+
+            var center3 = (el3 as Grain).GetMassCenter();
+            float centerX = (float)((double)center3.X * (elWidth));
+            float centerY = (float)((double)center3.Y * (elHeight));
+            g.DrawEllipse(skyBluePen, centerX - (float)elWidth, centerY - (float)elHeight,
+                                 (float)(2* elWidth), (float)(2 * elHeight));
             wpfImage.Source = Convert(bitmap);
+        }
+
+        private void DrawCenter(int width, int height, Grain el) {
+            var center = (el as Grain).GetMassCenter();
+            g.FillRectangle(
+                   brushFactory.CreateCenterOfMassBrush(),
+                   (float)((double)center.X * (elWidth)),
+                   (float)((double)center.Y * (elHeight)),
+                   2,
+                   2
+               );
+
         }
 
         private void DrawRectangle(ICell element, int x, int y, Board board)
