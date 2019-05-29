@@ -59,7 +59,7 @@
                 <ComboBoxItem x:Name="Hexagonal_ComboBoxItem" Selected="ChangeNeighbourStrategy">Hexagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Radius_ComboBoxItem">Radius</ComboBoxItem>
             </ComboBox>
-            <TextBox TextChanged="ChangeNeighbourStrategy" x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="941,522,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="75"/>
+            <TextBox TextChanged="ChangeNeighbourStrategy" x:Name="RadiusNeighbour_textbox"  HorizontalAlignment="Left" Height="23" Margin="941,522,0,0" TextWrapping="Wrap" Text="2,35" VerticalAlignment="Top" Width="75"/>
             <Label Content="Radius:" HorizontalAlignment="Left" Margin="832,522,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
             <Label Content="Hexagonal:" HorizontalAlignment="Left" Margin="832,462,0,0" VerticalAlignment="Top" Width="75"/>
             <RadioButton IsEnabled="False" x:Name="LeftHexOptions_radioBtn" Content="Left"  Checked="ChangeNeighbourStrategy" GroupName="HexOptions_radioBtn" HorizontalAlignment="Left" Margin="941,473,0,0" VerticalAlignment="Top"/>

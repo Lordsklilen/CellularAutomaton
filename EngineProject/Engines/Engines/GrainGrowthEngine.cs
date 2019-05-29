@@ -71,10 +71,14 @@ namespace EngineProject.Engines.Engines
         public void SetGrainNumber(int number, int x, int y)
         {
             panel.SetGrainNumber(number, x, y);
+            if (MCEngine != null)
+                RecalculateEnergy();
+
         }
 
         public void ChangeStrategyType(NeighbourStrategyRequest request)
         {
+            OpenBorderCondition = request.border;
             neighboursType = request.neighbooorhoodType;
             this.hexType = request.hexType;
             neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
@@ -99,14 +103,15 @@ namespace EngineProject.Engines.Engines
 
         internal void CreateMCEngine(MonteCarloRequest request)
         {
+            OpenBorderCondition = request.border;
             request.board = panel;
             request.CopyBoard = new Board(panel);
             request.maxColumn = _maxColumn;
             request.maxRow = _maxRow;
             if (MCEngine == null)
-                MCEngine = new MonteCarloEngine(request);
+                MCEngine = new MonteCarloEngine(request,this.neighbourStrategy);
             else
-                MCEngine.Reinstate(request);
+                MCEngine.Reinstate(request, this.neighbourStrategy);
             RecalculateEnergy();
         }
 

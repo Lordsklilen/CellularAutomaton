@@ -275,6 +275,10 @@ namespace CellularAutomaton
             {
                 request.Radius = 1.0;
             }
+
+
+            request.border = Open_Radiobtn.IsChecked ?? false;
+
             return request;
         }
 

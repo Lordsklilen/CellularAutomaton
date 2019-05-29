@@ -20,14 +20,19 @@ namespace EngineProject.Engines.MonteCarlo
         private Board board;
         private Board copyBorad;
         Random rand = new Random();
-        internal MonteCarloEngine(MonteCarloRequest request)
+        internal MonteCarloEngine(MonteCarloRequest request, INeighbourStrategy strategy)
         {
             factory = new NeighbourFactory();
-            Reinstate(request);
+            Reinstate(request,strategy);
         }
 
-        internal void Reinstate(MonteCarloRequest r)
+        //internal ChangeStrategy(INeighbourStrategy strategy) {
+        //    neighbourStrategy = strategy;
+        //}
+
+        internal void Reinstate(MonteCarloRequest r, INeighbourStrategy strategy)
         {
+            neighbourStrategy = strategy;
             iterations = r.numberOfIterations;
             Kt = r.Kt;
             strategyRequest = r.strategyRequest;
@@ -35,13 +40,14 @@ namespace EngineProject.Engines.MonteCarlo
             maxRow = r.maxRow;
             board = r.board;
             copyBorad = r.CopyBoard;
+            border = r.border;
             neighbourStrategy = factory.CreateNeighbourComputing(strategyRequest);
             neighbourStrategy.Initialize(r.board, r.CopyBoard, r.maxRow, r.maxColumn, r.border);
         }
 
         internal void ChangeStrategy(NeighbourStrategyRequest r) {
             neighbourStrategy = factory.CreateNeighbourComputing(r);
-            neighbourStrategy.Initialize(board, null, maxRow, maxColumn, border);
+            neighbourStrategy.Initialize(board, null, maxRow, maxColumn, r.border);
         }
 
         private int CalculateEnergy(Board panel, int x, int y)

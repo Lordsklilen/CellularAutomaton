@@ -7,5 +7,6 @@ namespace EngineProject.Engines.NeighbourStrategy
         public NeighbooorhoodType neighbooorhoodType;
         public HexType hexType;
         public double Radius;
+        public bool border;
     }
 }
