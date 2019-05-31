@@ -97,5 +97,20 @@ namespace EngineProject
             return (engine as GrainGrowthEngine).CalculateDRX(request);
             
         }
+
+        public Board InitializeDRX(DRXRequest request)
+        {
+            return (engine as GrainGrowthEngine).InitializeDRX(request);
+        }
+
+        public Board NextDRXIteration(double t)
+        {
+            return (engine as GrainGrowthEngine).NextDRXIteration(t);
+        }
+
+        public string GetSaveText()
+        {
+            return (engine as GrainGrowthEngine).GetSaveText();
+        }
     }
 }

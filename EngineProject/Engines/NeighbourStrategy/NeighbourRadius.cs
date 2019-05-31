@@ -90,5 +90,55 @@ namespace EngineProject.Engines.NeighbourStrategy
             }
             return neighbours;
         }
+
+        public List<Grain> NeighboursGrainCells(Grain cell)
+        {
+            List<Grain> neighbours = new List<Grain>();
+            int RadiusTop = (int)radius + 1;
+            Point centerOfMass = cell.GetMassCenter();
+            for (int i = -RadiusTop; i <= RadiusTop; i++)
+            {
+                for (int j = -RadiusTop; j <= RadiusTop; j++)
+                {
+                    if (i == 0 && j == 0)
+                        continue;
+
+                    int number = 0;
+                    int widthId;
+                    int heightId;
+                    if (OpenBorderCondition)
+                    {
+                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x) + maxRow;
+                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (maxColumn) : (j + cell.y) + maxColumn;
+                    }
+                    else
+                    {
+                        widthId = (i + cell.x);
+                        heightId = (j + cell.y);
+                        if (widthId < 0 || heightId < 0 || widthId >= maxRow || heightId >= maxColumn)
+                            continue;
+                    }
+
+                    Grain colleague = (Grain)panel.board[widthId][heightId];
+                    number = colleague.GetGrainNumber();
+                    if (number == 0)
+                        continue;
+                    Point NeighbourMassCenter = colleague.GetInsideMassCenter();
+                    NeighbourMassCenter.X += (j + cell.y);
+                    NeighbourMassCenter.Y += (i + cell.x);
+
+                    //Point NeighbourMassCenter = colleague.GetMassCenter();
+
+                    double r = Math.Sqrt((Math.Pow(NeighbourMassCenter.X - centerOfMass.X, 2) + Math.Pow(NeighbourMassCenter.Y - centerOfMass.Y, 2)));
+                    if (r <= radius)
+                    {
+                        number = colleague.GetGrainNumber();
+                        if (number > 0)
+                            neighbours.Add(((Grain)panel.board[widthId][heightId]));
+                    }
+                }
+            }
+            return neighbours;
+        }
     }
 }

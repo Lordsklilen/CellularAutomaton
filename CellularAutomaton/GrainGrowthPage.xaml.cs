@@ -5,10 +5,12 @@ using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,6 +25,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static EngineProject.EngineComponent;
 
 namespace CellularAutomaton
 {
@@ -36,9 +39,12 @@ namespace CellularAutomaton
         int height;
         DrawingHelper drawingHelper;
         static System.Windows.Forms.Timer timer;
+        static DispatcherTimer Recrystalizationtimer;
         EngineType engineType = EngineType.GrainGrowth;
         int numberOfGrains = 0;
-
+        double t;
+        double tMax;
+        bool DRXSkipToAction=true;
         public GrainGrowthPage()
         {
             InitializeComponent();
@@ -50,11 +56,15 @@ namespace CellularAutomaton
         {
             width = 100;
             height = 75;
-            engine = new EngineComponent(); // TODO DI
+            engine = new EngineComponent();
+            t = 0;
+            tMax = 0;
             engine.CreateEngine(engineType, width, height);
             timer = new System.Windows.Forms.Timer();
+            Recrystalizationtimer = new DispatcherTimer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
+            Recrystalizationtimer.Tick += StartRecrystalization_Ticking_timer;
         }
         void SetTime()
         {
@@ -63,9 +73,12 @@ namespace CellularAutomaton
             if (result < 1 || result > 999)
                 result = 1;
             timer.Interval = (int)(1000.0 / result);
+            Recrystalizationtimer.Interval = TimeSpan.FromMilliseconds((int)(1000.0 / result));
         }
         void InitBoard()
         {
+            t = 0;
+            tMax = 0;
             int.TryParse(widthNumber.Text, out width);
             int.TryParse(iterationNumber.Text, out height);
             if (width < 3 || width > 800)
@@ -107,6 +120,24 @@ namespace CellularAutomaton
             timer.Start();
             start_btn.IsEnabled = false;
             stopBtn.IsEnabled = true;
+        }
+
+        private void StartRecrystalization_Ticking_timer(object sender, EventArgs e)
+        {
+            double dt;
+            double.TryParse(dt_DRX_textbox.Text, out dt);
+            t += dt;
+            var board = engine.NextDRXIteration(t);
+            drawingHelper.DrawBoard(board);
+            time_label.Content = "Czas: " + t;
+            double max = board.MaxDensity();
+            maxRecVal_label.Content = "MaxVal: "+ max.ToString("0.###E+0");
+            minRecVal_label.Content = "MinVal: " + board.MinDensity().ToString("0.###E+0");
+            if (t >= tMax || (DRXSkipToAction && max >= 40000000))
+            {
+                StopRecrystalization_Click(null, null);
+                DRXSkipToAction = false;
+            }
         }
 
         private void Start_Ticking_timer(object sender, EventArgs e)
@@ -154,6 +185,8 @@ namespace CellularAutomaton
 
         private void Generate_Template(object sender, RoutedEventArgs e)
         {
+            t = 0;
+            tMax = 0;
             try
             {
                 var request = BuildTemplateRequest();
@@ -248,6 +281,35 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Board);
         }
 
+        private void StartRecrystalization_CLick(object sender, RoutedEventArgs e)
+        {
+            startRecrystalization_btn.IsEnabled = false;
+            stopRecrystalization_btn.IsEnabled = true;
+            var r = CreateDRXRequest();
+            engine.InitializeDRX(r);
+            double tmp;
+            double.TryParse(tEntire_DRX_textbox.Text, out tmp);
+            tMax += tmp;
+            Recrystalizationtimer.Start();
+        }
+
+        private void StopRecrystalization_Click(object sender, RoutedEventArgs e)
+        {
+            startRecrystalization_btn.IsEnabled = true;
+            stopRecrystalization_btn.IsEnabled = false;
+            Recrystalizationtimer.Stop();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt|All files(*)|*.*";
+            if (saveFileDialog.ShowDialog() == true) {
+                string text = engine.GetSaveText();
+                File.WriteAllText(saveFileDialog.FileName, text);
+            }
+        }
+
         private MonteCarloRequest CreateMonteCarloRequest()
         {
             var mcRequest = new MonteCarloRequest();
@@ -281,6 +343,7 @@ namespace CellularAutomaton
             double.TryParse(B_DRX_textbox.Text, out drxRequest.B);
             double.TryParse(dt_DRX_textbox.Text, out drxRequest.dt);
             double.TryParse(tEntire_DRX_textbox.Text, out drxRequest.tMax);
+
             return drxRequest;
         }
 

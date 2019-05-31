@@ -13,12 +13,14 @@ namespace EngineProject.DataStructures
         public double CenterOfX { get; set; }
         public double CenterOfY { get; set; }
         public bool IsRecrystallized { get; set; }
+        public int RecrystalizedNumber {get;set;}
         public double DyslocationDensity { get; set; }
 
         public int E { get; set; } = 0;
 
         public Grain(int x, int y) : base(x, y)
         {
+            RecrystalizedNumber = 0;
             DyslocationDensity = 0;
             IsRecrystallized = false;
             grainNumber = 0;

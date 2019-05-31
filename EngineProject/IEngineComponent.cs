@@ -23,5 +23,8 @@ namespace EngineProject
         void CalculateMonteCarlo(MonteCarloRequest request);
         void CalculateEnergy(MonteCarloRequest request);
         Board CalculateDRX(DRXRequest request);
+        Board InitializeDRX(DRXRequest request);
+        Board NextDRXIteration(double t);
+        string GetSaveText();
     }
 }

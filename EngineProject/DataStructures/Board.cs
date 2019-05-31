@@ -17,6 +17,7 @@ namespace EngineProject.DataStructures
         public int X => width;
         public int Y => height;
         public bool finished;
+        public int maxRecrystalizedNumber;
 
         public int MaxNumber() => maxGrainNumber;
         public int GetGrainNumber(int x, int y) => (board[x][y] as Grain).GetGrainNumber();
@@ -58,6 +59,7 @@ namespace EngineProject.DataStructures
                 }
             }
             maxGrainNumber = 0;
+            maxRecrystalizedNumber = 0;
             finished = false;
         }
 
@@ -72,14 +74,27 @@ namespace EngineProject.DataStructures
                     board[i][j] = cellFactory.CreateCell(main.board[i][j] as Grain);
                 }
             }
-            maxGrainNumber = 0;
+            maxGrainNumber = main.maxGrainNumber;
+            maxRecrystalizedNumber = main.maxRecrystalizedNumber;
             finished = false;
         }
 
-        public void SetGrainNumber(int number, int x, int y) {
+        public void SetGrainNumber(int number, int x, int y)
+        {
             if (number > maxGrainNumber)
                 maxGrainNumber = number;
             (board[x][y] as Grain).SetGrainNumber(number);
+        }
+
+        public void SetNewGrainNumber(int x, int y)
+        {
+            maxGrainNumber += 1;
+            (board[x][y] as Grain).SetGrainNumber(maxGrainNumber);
+        }
+        public void SetNewRecrystalizedNumber(int x, int y)
+        {
+            maxRecrystalizedNumber += 1;
+            (board[x][y] as Grain).RecrystalizedNumber = maxRecrystalizedNumber;
         }
 
         public List<Point> GetBorderGrainsCoordinates(){

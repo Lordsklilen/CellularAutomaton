@@ -140,8 +140,29 @@ namespace EngineProject.Engines.Engines
                 DRXEngine = new DynamicRecrystalizationEngine(request);
             else
                 DRXEngine.Initialize(request);
-            panel = DRXEngine.Iterate(panel);
+            panel = DRXEngine.IterateAll(panel);
             return panel;
         }
-    }
+        public Board InitializeDRX(DRXRequest request)
+        {
+            if (DRXEngine == null)
+                DRXEngine = new DynamicRecrystalizationEngine(request);
+            else
+                DRXEngine.Initialize(request);
+            return panel;
+        }
+        public Board NextDRXIteration(double t)
+        {
+            panel = DRXEngine.NextIteration(panel,t);
+            return panel;
+        }
+        public string GetSaveText()
+        {
+            if (DRXEngine != null)
+                return DRXEngine.GetSaveText();
+            else
+                return "";
+        }
+     
+    } 
 }

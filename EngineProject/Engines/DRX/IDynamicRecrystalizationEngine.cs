@@ -14,6 +14,8 @@ namespace EngineProject.Engines.DRX
         IList<DensitySnapshot> TotalDensityList { get; }
 
         void Initialize(DRXRequest r);
-        Board Iterate(Board board);
+        Board IterateAll(Board board);
+        Board NextIteration(Board board, double t);
+        string GetSaveText();
     }
 }

@@ -189,7 +189,11 @@ namespace CellularAutomaton
                     brush = brushFactory.CreateBinaryBrush(element.GetState());
                     break;
                 case CellType.Grain:
-                    brush = brushFactory.CreateColorBrush(((Grain)element).GetGrainNumber(), board.MaxNumber());
+                    var el = (Grain)element;
+                    if (el.IsRecrystallized)
+                        brush = brushFactory.CreateRecrystalizationBrush(el.RecrystalizedNumber, board.maxRecrystalizedNumber);
+                    else 
+                        brush = brushFactory.CreateColorBrush(el.GetGrainNumber(), board.MaxNumber());
                     break;
                 default:
                     throw new NotSupportedException("Cannot create brush. Cell type not supproted");
@@ -211,7 +215,7 @@ namespace CellularAutomaton
         private void DrawRecrystalizationRectangle(ICell element, Rectangle rectangle)
         {
             g.FillRectangle(
-                brushFactory.CreateRecrystalizationBrush((element as Grain).IsRecrystallized),
+                brushFactory.CreateOnlyRecrystalizationBrush((element as Grain).IsRecrystallized),
                 rectangle
             );
         }

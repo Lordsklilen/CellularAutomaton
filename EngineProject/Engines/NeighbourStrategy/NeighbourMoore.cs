@@ -75,5 +75,43 @@ namespace EngineProject.Engines.NeighbourStrategy
             }
             return neighbours;
         }
+
+        public List<Grain> NeighboursGrainCells(Grain cell)
+        {
+            List<Grain> neighbours = new List<Grain>();
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                        continue;
+                    int number = 0;
+                    int widthId;
+                    int heightId;
+                    if (OpenBorderCondition)
+                    {
+                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x) + maxRow;
+                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (maxColumn) : (j + cell.y) + maxColumn;
+                        number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                    }
+                    else
+                    {
+                        widthId = (i + cell.x);
+                        heightId = (j + cell.y);
+
+                        if (widthId < 0 || heightId < 0 || widthId >= maxRow || heightId >= maxColumn)
+                            number = 0;
+                        else
+                            number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
+                    }
+
+                    if (number > 0)
+                        neighbours.Add(((Grain)panel.board[widthId][heightId]));
+                }
+            }
+            return neighbours;
+        }
+
     }
 }

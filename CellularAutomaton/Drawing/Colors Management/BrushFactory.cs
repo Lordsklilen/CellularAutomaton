@@ -49,16 +49,21 @@ namespace CellularAutomaton.Drawing
                 return new SolidBrush(Color.Blue);
             else
                 return new SolidBrush(Color.Black);
-            throw new NotSupportedException("This type of binary brush is not supprted");
         }
 
-        public Brush CreateRecrystalizationBrush(bool recrystalized)
+        public Brush CreateRecrystalizationBrush(double density, double max)
+        {
+
+            return new SolidBrush(colorTool.GetRecrystalizationColors(density, max));
+        }
+
+
+        public Brush CreateOnlyRecrystalizationBrush(bool recrystalized)
         {
             if (recrystalized)
                 return new SolidBrush(Color.Lime);
             else
                 return new SolidBrush(Color.SaddleBrown);
-            throw new NotSupportedException("This type of binary brush is not supprted");
         }
 
 
@@ -66,7 +71,7 @@ namespace CellularAutomaton.Drawing
         {
             if (density == 0)
                 return new SolidBrush(Color.White);
-            return new SolidBrush(colorTool.GetRecrystalizationColors(density, max, min));
+            return new SolidBrush(colorTool.GetDensityColors(density, max, min));
         }
 
         public Brush CreateCenterOfMassBrush() {

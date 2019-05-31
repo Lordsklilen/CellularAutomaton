@@ -40,7 +40,7 @@
             <RadioButton IsChecked="True" x:Name="Random_RadioBtn" Content="Random" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,290,0,0" VerticalAlignment="Top"/>
             <RadioButton  x:Name="Radius_RadioBtn" Content="With Radius" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,310,0,0" VerticalAlignment="Top"/>
             <RadioButton  x:Name="Homogenius_RadioBtn" Content="Homogenious" GroupName="GrainTemplates" HorizontalAlignment="Left" Margin="836,330,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,290,0,0" TextWrapping="Wrap" Text="1000" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="Random_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,290,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="60"/>
             <TextBox x:Name="Radius_textBox"  HorizontalAlignment="Left" Height="17" Margin="945,310,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
             <TextBox x:Name="Xhomogenious_textbox"  HorizontalAlignment="Left" Height="17" Margin="858,355,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="60"/>
             <Label Content="X:" HorizontalAlignment="Left" Margin="837,351,0,0" VerticalAlignment="Top" Width="21"/>
@@ -78,19 +78,25 @@
             <TextBox x:Name="MCtemperature_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,72,0,0" TextWrapping="Wrap" Text="0,5" VerticalAlignment="Top" Width="59" />
         </Grid>
         <Grid>
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="241" Margin="1033,144,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="294" Margin="1033,144,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Dynamic Recystalization" HorizontalAlignment="Left" Margin="1064,143,0,0" VerticalAlignment="Top"/>
             <Label Content="A:" HorizontalAlignment="Left" Margin="1036,174,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="A_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1056,177,0,0" TextWrapping="Wrap" Text="86710969050178,5" VerticalAlignment="Top" Width="167" />
             <Label Content="Krok czasowy:" HorizontalAlignment="Left" Margin="1036,247,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="dt_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,247,0,0" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Top" Width="59" />
+            <TextBox x:Name="dt_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,247,0,0" TextWrapping="Wrap" Text="0,00005" VerticalAlignment="Top" Width="59" />
             <Label Content="B:" HorizontalAlignment="Left" Margin="1036,202,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="B_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1056,205,0,0" TextWrapping="Wrap" Text="9,41268203527779" VerticalAlignment="Top" Width="167" />
             <Label Content="Całkowity czas:" HorizontalAlignment="Left" Margin="1036,275,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="tEntire_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,275,0,0" TextWrapping="Wrap" Text="0,5" VerticalAlignment="Top" Width="59" />
-            <Button x:Name="GenerateDRX_btn" Content="Iterate" HorizontalAlignment="Left" Margin="1156,359,0,0" VerticalAlignment="Top" Width="67" Click="GenrateDRX"/>
-            <Button x:Name="Recrystalization_btn" Content="View Reclystalization" HorizontalAlignment="Left" Margin="1036,359,0,0" VerticalAlignment="Top" Width="115" Click="ViewReclystalization"/>
-            <Button x:Name="Density_btn" Content="View Density" HorizontalAlignment="Left" Margin="1036,334,0,0" VerticalAlignment="Top" Width="84" Click="ViewDensity"/>
+            <TextBox x:Name="tEntire_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,275,0,0" TextWrapping="Wrap" Text="0,002" VerticalAlignment="Top" Width="59" />
+            <Button x:Name="GenerateDRX_btn" Content="Generate" HorizontalAlignment="Left" Margin="1156,407,0,0" VerticalAlignment="Top" Width="67" Click="GenrateDRX"/>
+            <Button x:Name="Recrystalization_btn" Content="View Reclystalization" HorizontalAlignment="Left" Margin="1036,407,0,0" VerticalAlignment="Top" Width="115" Click="ViewReclystalization"/>
+            <Button x:Name="Density_btn" Content="View Density" HorizontalAlignment="Left" Margin="1036,382,0,0" VerticalAlignment="Top" Width="84" Click="ViewDensity"/>
+            <Button x:Name="startRecrystalization_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="1036,354,0,0" VerticalAlignment="Top" Width="84" Click="StartRecrystalization_CLick"/>
+            <Button x:Name="stopRecrystalization_btn" IsEnabled="False" Content="Stop" Width="84" Margin="1139,357,77,0" VerticalAlignment="Top" Click="StopRecrystalization_Click"/>
+            <Label x:Name="time_label" Content="Czas: 0" HorizontalAlignment="Left" Margin="1036,301,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="maxRecVal_label" Content="Max val: " HorizontalAlignment="Left" Margin="1036,323,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="minRecVal_label" Content="Min val: " HorizontalAlignment="Left" Margin="1137,323,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="Save_btn" Content="Save results" HorizontalAlignment="Left" Margin="1139,382,0,0" VerticalAlignment="Top" Width="84" Click="Save_Click"/>
 
         </Grid>
 

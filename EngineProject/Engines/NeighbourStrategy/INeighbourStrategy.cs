@@ -11,6 +11,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         Board CopyPanel { get; }
         void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition);
         void ComputeCell(Grain cell);
+        List<Grain> NeighboursGrainCells(Grain cell);
         List<int> NeighboursGrainNumbers(Grain cell);
     }
     
