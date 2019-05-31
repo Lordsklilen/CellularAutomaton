@@ -12,10 +12,15 @@ namespace EngineProject.DataStructures
         internal int grainNumber { get; private set; }
         public double CenterOfX { get; set; }
         public double CenterOfY { get; set; }
+        public bool IsRecrystallized { get; set; }
+        public long DyslocationDensity { get; set; }
+
         public int E { get; set; } = 0;
 
         public Grain(int x, int y) : base(x, y)
         {
+            DyslocationDensity = 0;
+            IsRecrystallized = false;
             grainNumber = 0;
             type = CellType.Grain;
         }

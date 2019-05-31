@@ -1,5 +1,6 @@
 ﻿using EngineProject.DataStructures;
 using EngineProject.Engines;
+using EngineProject.Engines.DRX;
 using EngineProject.Engines.Engines;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
@@ -84,12 +85,17 @@ namespace EngineProject
         {
             (engine as GrainGrowthEngine).CreateMCEngine(request);
             (engine as GrainGrowthEngine).IterateMonteCarlo(request.numberOfIterations);
-
         }
 
         public void CalculateEnergy(MonteCarloRequest request)
         {
             (engine as GrainGrowthEngine).CreateMCEngine(request);
+        }
+
+        public Board CalculateDRX(DRXRequest request)
+        {
+            return (engine as GrainGrowthEngine).CalculateDRX(request);
+            
         }
     }
 }

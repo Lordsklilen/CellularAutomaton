@@ -9,6 +9,7 @@ namespace EngineProject.Engines
 {
     public interface IEngine
     {
+        Board panel { get; }
         void NextIteration();
         Board GetBoard();
         void SetRule(int rule);

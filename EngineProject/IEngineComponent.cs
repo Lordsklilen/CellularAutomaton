@@ -1,4 +1,5 @@
 ﻿using EngineProject.DataStructures;
+using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
@@ -21,5 +22,6 @@ namespace EngineProject
         void ChangeNeighboroodType(NeighbourStrategyRequest request);
         void CalculateMonteCarlo(MonteCarloRequest request);
         void CalculateEnergy(MonteCarloRequest request);
+        Board CalculateDRX(DRXRequest request);
     }
 }

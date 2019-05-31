@@ -68,15 +68,33 @@
         </Grid>
 
         <Grid >
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="165" Margin="1033,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="128" Margin="1033,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Monte Carlo" HorizontalAlignment="Left" Margin="1091,10,0,0" VerticalAlignment="Top"/>
             <Label Content="Number of iterations:" HorizontalAlignment="Left" Margin="1036,41,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="MCNumberOfPoints_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,44,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="59" />
-            <Button x:Name="GenerateMC_btn" Content="Iterate" HorizontalAlignment="Left" Margin="1131,146,0,0" VerticalAlignment="Top" Width="92" Click="GenrateMonteCarlo"/>
-            <Button x:Name="ChengeEnergyView_btn" Content="View Energy" HorizontalAlignment="Left" Margin="1042,146,0,0" VerticalAlignment="Top" Width="75" Click="ViewEnergy"/>
+            <Button x:Name="GenerateMC_btn" Content="Iterate" HorizontalAlignment="Left" Margin="1131,107,0,0" VerticalAlignment="Top" Width="92" Click="GenrateMonteCarlo"/>
+            <Button x:Name="ChengeEnergyView_btn" Content="View Energy" HorizontalAlignment="Left" Margin="1042,107,0,0" VerticalAlignment="Top" Width="75" Click="ViewEnergy"/>
             <Label Content="Kt parameter:" HorizontalAlignment="Left" Margin="1036,69,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="MCtemperature_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,72,0,0" TextWrapping="Wrap" Text="0,5" VerticalAlignment="Top" Width="59" />
+        </Grid>
+        <Grid>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="241" Margin="1033,144,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Label Content="Dynamic Recystalization" HorizontalAlignment="Left" Margin="1064,143,0,0" VerticalAlignment="Top"/>
+            <Label Content="A:" HorizontalAlignment="Left" Margin="1036,174,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="A_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1056,177,0,0" TextWrapping="Wrap" Text="86710969050178,5" VerticalAlignment="Top" Width="167" />
+            <Label Content="Krok czasowy:" HorizontalAlignment="Left" Margin="1036,247,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="dt_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,247,0,0" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Top" Width="59" />
+            <Label Content="B:" HorizontalAlignment="Left" Margin="1036,202,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="B_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1056,205,0,0" TextWrapping="Wrap" Text="9,41268203527779" VerticalAlignment="Top" Width="167" />
+            <Label Content="Całkowity czas:" HorizontalAlignment="Left" Margin="1036,275,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="tEntire_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,275,0,0" TextWrapping="Wrap" Text="0,5" VerticalAlignment="Top" Width="59" />
+            <Button x:Name="GenerateDRX_btn" Content="Iterate" HorizontalAlignment="Left" Margin="1156,359,0,0" VerticalAlignment="Top" Width="67" Click="GenrateDRX"/>
+            <Button x:Name="Recrystalization_btn" Content="View Reclystalization" HorizontalAlignment="Left" Margin="1036,359,0,0" VerticalAlignment="Top" Width="115" Click="ViewReclystalization"/>
+            <Button x:Name="Density_btn" Content="View Density" HorizontalAlignment="Left" Margin="1036,334,0,0" VerticalAlignment="Top" Width="84" Click="ViewDensity"/>
 
         </Grid>
+
+
+
     </Grid>
 </Page>

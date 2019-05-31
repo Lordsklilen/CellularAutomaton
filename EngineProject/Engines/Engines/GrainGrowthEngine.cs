@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EngineProject.DataStructures;
+using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 
@@ -20,7 +21,9 @@ namespace EngineProject.Engines.Engines
         private INeighbourStrategy neighbourStrategy;
         private HexType hexType;
         private MonteCarloEngine MCEngine;
+        private DynamicRecrystalizationEngine DRXEngine;
         private bool MCIterateAllCells = true;
+
         public Board GetBoard() => panel;
         public bool IsFinished() => panel.finished;
         public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.Moore)
@@ -131,5 +134,14 @@ namespace EngineProject.Engines.Engines
             RecalculateEnergy();
         }
 
+        public Board CalculateDRX(DRXRequest request)
+        {
+            if (DRXEngine == null)
+                DRXEngine = new DynamicRecrystalizationEngine(request);
+            else
+                DRXEngine.Initialize(request);
+            panel = DRXEngine.Iterate(panel);
+            return panel;
+        }
     }
 }

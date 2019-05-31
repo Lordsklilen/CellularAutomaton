@@ -51,6 +51,9 @@
     <Compile Include="DataStructures\IBoard.cs" />
     <Compile Include="DataStructures\Cell\ICell.cs" />
     <Compile Include="DataStructures\NeighbooorhoodType.cs" />
+    <Compile Include="Engines\DRX\DRXRequest.cs" />
+    <Compile Include="Engines\DRX\IDynamicRecrystalizationEngine.cs" />
+    <Compile Include="Engines\DRX\DynamicRecrystalizationEngine.cs" />
     <Compile Include="Engines\Engines\GrainGrowthEngine.cs" />
     <Compile Include="Engines\MonteCarlo\MonteCarloEngine.cs" />
     <Compile Include="Engines\EngineType.cs" />

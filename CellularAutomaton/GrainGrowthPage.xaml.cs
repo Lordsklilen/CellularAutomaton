@@ -1,6 +1,7 @@
 ﻿using CellularAutomaton.Drawing;
 using EngineProject;
 using EngineProject.DataStructures;
+using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
@@ -92,11 +93,13 @@ namespace CellularAutomaton
             iterationNumber.TextChanged += DrawAndReload;
             FpsCounter.TextChanged += SetTime_timer;
         }
+
         void DrawAndReload(object sender, RoutedEventArgs e)
         {
             InitBoard();
             drawingHelper.DrawBoard(engine.Board);
         }
+
         private void Start_CLick(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
@@ -105,6 +108,7 @@ namespace CellularAutomaton
             start_btn.IsEnabled = false;
             stopBtn.IsEnabled = true;
         }
+
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
             engine.GetNextIteration();
@@ -113,6 +117,7 @@ namespace CellularAutomaton
             if (engine.IsFinished)
                 Stop_Click(null, null);
         }
+
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
@@ -123,12 +128,14 @@ namespace CellularAutomaton
             }
             drawingHelper.DrawBoard(engine.Board);
         }
+
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             start_btn.IsEnabled = true;
             stopBtn.IsEnabled = false;
             timer.Stop();
         }
+
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -140,10 +147,11 @@ namespace CellularAutomaton
             {
                 ++numberOfGrains;
                 engine.SetGrainNumber(numberOfGrains, position.X, position.Y);
-                
+
                 drawingHelper.DrawBoard(engine.Board);
             }
         }
+
         private void Generate_Template(object sender, RoutedEventArgs e)
         {
             try
@@ -158,6 +166,7 @@ namespace CellularAutomaton
                 MessageBox.Show(ex.Message);
             }
         }
+
         private void ChangeNeighbourStrategy(object sender, RoutedEventArgs e)
         {
             if ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content == null || LeftHexOptions_radioBtn == null)
@@ -171,30 +180,33 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Board);
 
         }
+
         private void SetBorderCondition(object sender, RoutedEventArgs e)
         {
             bool OpenBorderCondition = Open_Radiobtn.IsChecked ?? false;
             engine.ChangeBorderConditions(OpenBorderCondition);
         }
+
         private void OnOffborder_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.net = !drawingHelper.net;
             drawingHelper.DrawBoard(engine.Board);
         }
+
         private void Squares_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.SetSquareAndReload(!drawingHelper.squares);
             drawingHelper.DrawBoard(engine.Board);
         }
 
-        void GenrateMonteCarlo(object sender, RoutedEventArgs e)
+        private void GenrateMonteCarlo(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
             engine.CalculateMonteCarlo(request);
             drawingHelper.DrawBoard(engine.Board);
         }
 
-        void ViewEnergy(object sender, RoutedEventArgs e)
+        private void ViewEnergy(object sender, RoutedEventArgs e)
         {
             drawingHelper.energyFocus = !drawingHelper.energyFocus;
             var request = CreateMonteCarloRequest();
@@ -203,12 +215,27 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Board);
         }
 
-        void CenterPoints_Click(object sender, RoutedEventArgs e)
+        private void CenterPoints_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.centerPoints = !drawingHelper.centerPoints;
             drawingHelper.DrawBoard(engine.Board);
         }
 
+        private void GenrateDRX(object sender, RoutedEventArgs e)
+        {
+            var result = engine.CalculateDRX(CreateDRXRequest());
+            drawingHelper.DrawBoard(result);
+        }
+
+        private void ViewReclystalization(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ViewDensity(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         private MonteCarloRequest CreateMonteCarloRequest()
         {
@@ -233,6 +260,17 @@ namespace CellularAutomaton
             mcRequest.border = Open_Radiobtn.IsChecked ?? false;
             mcRequest.strategyRequest = CreateNeighbourhoodRequest();
             return mcRequest;
+        }
+
+        private DRXRequest CreateDRXRequest()
+        {
+            var drxRequest = new DRXRequest();
+
+            double.TryParse(A_DRX_textbox.Text, out drxRequest.A);
+            double.TryParse(B_DRX_textbox.Text, out drxRequest.B);
+            double.TryParse(dt_DRX_textbox.Text, out drxRequest.dt);
+            double.TryParse(tEntire_DRX_textbox.Text, out drxRequest.tMax);
+            return drxRequest;
         }
 
         private NeighbourStrategyRequest CreateNeighbourhoodRequest()
