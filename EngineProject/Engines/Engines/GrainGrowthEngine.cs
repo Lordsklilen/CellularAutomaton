@@ -117,7 +117,8 @@ namespace EngineProject.Engines.Engines
 
         internal Board RecalculateEnergy()
         {
-            panel = MCEngine.ReCalculateAllEnergy(panel);
+            if(MCEngine!=null)
+                panel = MCEngine.ReCalculateAllEnergy(panel);
             return panel;
         }
 

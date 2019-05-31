@@ -45,6 +45,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         {
             List<int> neighbours = new List<int>();
             int RadiusTop = (int)radius + 1;
+            Point centerOfMass = cell.GetMassCenter();
             for (int i = -RadiusTop; i <= RadiusTop; i++)
             {
                 for (int j = -RadiusTop; j <= RadiusTop; j++)
@@ -76,7 +77,6 @@ namespace EngineProject.Engines.NeighbourStrategy
                     NeighbourMassCenter.X += (j + cell.y);
                     NeighbourMassCenter.Y += (i + cell.x);
 
-                    Point centerOfMass = cell.GetMassCenter();
                     //Point NeighbourMassCenter = colleague.GetMassCenter();
 
                     double r = Math.Sqrt((Math.Pow(NeighbourMassCenter.X - centerOfMass.X, 2) + Math.Pow(NeighbourMassCenter.Y - centerOfMass.Y, 2)));
