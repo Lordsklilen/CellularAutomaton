@@ -21,14 +21,14 @@ namespace CellularAutomaton
         double elWidth;
         int numHeightCells;
         int numWidthCells;
+        public DrawingType drawingType;
         public bool net;
         public bool centerPoints = false;
         public bool squares { get; private set; }
-        public bool energyFocus { get; set; }
 
         public DrawingHelper(System.Windows.Controls.Image _img, int numX, int numY, bool net = true, bool squares = false)
         {
-            energyFocus = false;
+            drawingType = DrawingType.DrawBoard;
             wpfImage = _img;
             y = (int)wpfImage.Height;
             x = (int)wpfImage.Width;
@@ -99,6 +99,13 @@ namespace CellularAutomaton
 
         public void DrawBoard(Board board)
         {
+            double max = 0;
+            double min = 0;
+            if (drawingType == DrawingType.DrawDensity) {
+                max = board.MaxDensity();
+                min = board.MinDensity();
+            }
+
             bitmap = new Bitmap(x, y);
             g = Graphics.FromImage(bitmap);
             for (int i = 0; i < board.board.Length; i++)
@@ -114,10 +121,24 @@ namespace CellularAutomaton
                         (int)(net ? ((double)(el.Y() + 1.0) * (elWidth)) - 1.0 : (double)(el.Y() + 1.0) * (elWidth)),
                         (int)(net ? ((double)(el.X() + 1.0) * (elHeight)) - 1.0 : (double)(el.X() + 1.0) * (elHeight))
                         );
-                    if (energyFocus)
-                        DrawEnergyRectangle(el, rect, board);
-                    else
-                        DrawRectangle(el, rect, board);
+
+                    switch (drawingType)
+                    {
+                        case DrawingType.DrawEnergy:
+                            DrawEnergyRectangle(el, rect);
+                            break;
+                        case DrawingType.DrawDensity:
+                            DrawDensityRectangle(el,rect,min,max);
+                            break;
+                        case DrawingType.DrawRecrystalization:
+                            DrawRecrystalizationRectangle(el, rect);
+                            break;
+                        case DrawingType.DrawBoard:
+                        default:
+                            DrawRectangle(el, rect, board);
+                            break;
+                    }
+
                     if (centerPoints)
                         DrawCenter(width, height, el as Grain);
                 }
@@ -134,7 +155,6 @@ namespace CellularAutomaton
                    2,
                    2
                );
-
         }
 
         private void DrawRectangle(ICell element, int x, int y, Board board)
@@ -159,6 +179,7 @@ namespace CellularAutomaton
                (int)(net ? elHeight - 1 : elHeight)
             );
         }
+
         private void DrawRectangle(ICell element, Rectangle rectangle, Board board)
         {
             Brush brush;
@@ -179,7 +200,7 @@ namespace CellularAutomaton
             );
         }
 
-        private void DrawEnergyRectangle(ICell element, Rectangle rectangle, Board board)
+        private void DrawEnergyRectangle(ICell element, Rectangle rectangle)
         {
             g.FillRectangle(
                 brushFactory.CreateEnergyBrush((element as Grain).E),
@@ -187,7 +208,23 @@ namespace CellularAutomaton
             );
         }
 
-        public BitmapImage Convert(Bitmap src)
+        private void DrawRecrystalizationRectangle(ICell element, Rectangle rectangle)
+        {
+            g.FillRectangle(
+                brushFactory.CreateRecrystalizationBrush((element as Grain).IsRecrystallized),
+                rectangle
+            );
+        }
+
+        private void DrawDensityRectangle(ICell element, Rectangle rectangle, double min, double max)
+        {
+            g.FillRectangle(
+                brushFactory.CreateDyslocationBrush((element as Grain).DyslocationDensity,min,max),
+                rectangle
+            );
+        }
+
+        private BitmapImage Convert(Bitmap src)
         {
             MemoryStream ms = new MemoryStream();
             ((Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);

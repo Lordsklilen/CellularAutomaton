@@ -208,7 +208,10 @@ namespace CellularAutomaton
 
         private void ViewEnergy(object sender, RoutedEventArgs e)
         {
-            drawingHelper.energyFocus = !drawingHelper.energyFocus;
+            if(drawingHelper.drawingType == DrawingType.DrawEnergy)
+                drawingHelper.drawingType = DrawingType.DrawBoard;
+            else
+                drawingHelper.drawingType = DrawingType.DrawEnergy;
             var request = CreateMonteCarloRequest();
             request.numberOfIterations = 0;
             engine.CalculateMonteCarlo(request);
@@ -229,12 +232,20 @@ namespace CellularAutomaton
 
         private void ViewReclystalization(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (drawingHelper.drawingType == DrawingType.DrawRecrystalization)
+                drawingHelper.drawingType = DrawingType.DrawBoard;
+            else
+                drawingHelper.drawingType = DrawingType.DrawRecrystalization;
+            drawingHelper.DrawBoard(engine.Board);
         }
 
         private void ViewDensity(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (drawingHelper.drawingType == DrawingType.DrawDensity)
+                drawingHelper.drawingType = DrawingType.DrawBoard;
+            else
+                drawingHelper.drawingType = DrawingType.DrawDensity;
+            drawingHelper.DrawBoard(engine.Board);
         }
 
         private MonteCarloRequest CreateMonteCarloRequest()

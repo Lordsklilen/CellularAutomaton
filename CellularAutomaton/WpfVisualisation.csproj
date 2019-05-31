@@ -95,6 +95,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Drawing\DrawingType.cs" />
     <Compile Include="Drawing\Templates\GolTemplates\BoardTemplateBuilder.cs" />
     <Compile Include="Drawing\Colors Management\BrushFactory.cs" />
     <Compile Include="Drawing\Colors Management\BrushType.cs" />

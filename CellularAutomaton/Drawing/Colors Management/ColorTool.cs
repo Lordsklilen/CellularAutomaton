@@ -19,9 +19,9 @@ namespace CellularAutomaton.Drawing
         {
             var percentage = (elNumber - min) / (max - min);
             if (percentage < 0.1)
-                return InterpolateColor(Color.Orange, Color.Red, percentage * 10.0);
+                return InterpolateColor(Color.Orange, Color.Violet, percentage * 10.0);
             else if (percentage < 0.2)
-                return InterpolateColor(Color.Red, Color.Yellow, (percentage - 0.1) * 10.0);
+                return InterpolateColor(Color.Violet, Color.Yellow, (percentage - 0.1) * 10.0);
             else if (percentage < 0.3)
                 return InterpolateColor(Color.Yellow, Color.Green, (percentage - 0.2) * 10.0);
             else if (percentage < 0.4)
@@ -38,6 +38,17 @@ namespace CellularAutomaton.Drawing
                 return InterpolateColor(Color.Teal, Color.Black, (percentage - 0.8) * 10.0);
             else
                 return InterpolateColor(Color.Black, Color.Pink, (percentage - 0.9) * 10.0);
+        }
+
+        public Color GetRecrystalizationColors(double elNumber, double max, double min)
+        {
+            var percentage = (elNumber - min) / (max - min);
+            if (percentage < 0.1)
+                return InterpolateColor(Color.LightYellow, Color.Yellow, percentage * 10);
+            if (percentage < 0.9)
+                return InterpolateColor(Color.Yellow, Color.Orange, (percentage - 0.1)* 10.0/8.0 );
+            else
+                return InterpolateColor(Color.Orange, Color.Red, (percentage - 2.0 / 3.0) * 3);
         }
 
     }

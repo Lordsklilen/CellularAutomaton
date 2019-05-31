@@ -10,8 +10,6 @@ namespace EngineProject.DataStructures
         public ICell[][] board { get; private set; }
         public CellType cellType { get; set; }
         public NeighbooorhoodType neighbooorhoodType { get; set; }
-
-
         private ICellFactory cellFactory;
         private int width;
         private int height;
@@ -32,7 +30,6 @@ namespace EngineProject.DataStructures
             maxGrainNumber = main.maxGrainNumber;
             Copy(main);
         }
-
 
         public Board(int width, int height, CellType type = CellType.Cell)
         {
@@ -98,6 +95,7 @@ namespace EngineProject.DataStructures
             }
             return result;
         }
+
         public List<Point> GetNonBorderGrainsCoordinates()
         {
             List<Point> result = new List<Point>();
@@ -108,6 +106,36 @@ namespace EngineProject.DataStructures
                     var el = board[i][j] as Grain;
                     if (el.E == 0)
                         result.Add(new Point() { X = i, Y = j });
+                }
+            }
+            return result;
+        }
+
+        public double MinDensity()
+        {
+            double result = double.MaxValue;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    var el = board[i][j] as Grain;
+                    if (el.DyslocationDensity < result)
+                        result = el.DyslocationDensity;
+                }
+            }
+            return result;
+        }
+
+        public double MaxDensity()
+        {
+            double result = 0;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    var el = board[i][j] as Grain;
+                    if (el.DyslocationDensity > result)
+                        result = el.DyslocationDensity;
                 }
             }
             return result;
