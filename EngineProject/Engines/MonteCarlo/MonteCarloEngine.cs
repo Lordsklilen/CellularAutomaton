@@ -3,6 +3,7 @@ using EngineProject.DataStructures;
 using EngineProject.Engines.NeighbourStrategy;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace EngineProject.Engines.MonteCarlo
@@ -23,13 +24,9 @@ namespace EngineProject.Engines.MonteCarlo
         internal MonteCarloEngine(MonteCarloRequest request, INeighbourStrategy strategy)
         {
             factory = new NeighbourFactory();
-            Reinstate(request,strategy);
+            Reinstate(request, strategy);
         }
-
-        //internal ChangeStrategy(INeighbourStrategy strategy) {
-        //    neighbourStrategy = strategy;
-        //}
-
+        
         internal void Reinstate(MonteCarloRequest r, INeighbourStrategy strategy)
         {
             neighbourStrategy = strategy;
@@ -45,7 +42,8 @@ namespace EngineProject.Engines.MonteCarlo
             neighbourStrategy.Initialize(r.board, r.CopyBoard, r.maxRow, r.maxColumn, r.border);
         }
 
-        internal void ChangeStrategy(NeighbourStrategyRequest r) {
+        internal void ChangeStrategy(NeighbourStrategyRequest r)
+        {
             neighbourStrategy = factory.CreateNeighbourComputing(r);
             neighbourStrategy.Initialize(board, null, maxRow, maxColumn, r.border);
         }
@@ -74,12 +72,11 @@ namespace EngineProject.Engines.MonteCarlo
         {
             for (int iter = 0; iter < iterations; iter++)
             {
-                for (int i = 0; i < board.Y; i++)
+                var pairs = GeneratePairs();
+                pairs = Shuffle(pairs);
+                for (int i = 0; i < pairs.Count(); i++)
                 {
-                    for (int j = 0; j < board.X; j++)
-                    {
-                        board = NextIteration(board, i, j);
-                    }
+                    board = NextIteration(board, pairs[i].X, pairs[i].Y);
                 }
             }
             ReCalculateAllEnergy(board);
@@ -122,9 +119,31 @@ namespace EngineProject.Engines.MonteCarlo
             return board;
         }
 
+        internal List<Point> GeneratePairs()
+        {
+            List<Point> result = new List<Point>();
+            for (int i = 0; i < maxRow; i++)
+            {
+                for (int j = 0; j < maxColumn; j++)
+                {
+                    result.Add(new Point(i, j));
+                }
+            }
+            return result;
+        }
 
-
-
-
-    }
+        public List<Point> Shuffle(List<Point> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rand.Next(n + 1);
+                Point value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+            return list;
+        }
+    } 
 }
