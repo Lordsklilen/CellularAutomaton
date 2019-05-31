@@ -51,6 +51,7 @@
     <Compile Include="DataStructures\IBoard.cs" />
     <Compile Include="DataStructures\Cell\ICell.cs" />
     <Compile Include="DataStructures\NeighbooorhoodType.cs" />
+    <Compile Include="Engines\DRX\DensitySnapshot.cs" />
     <Compile Include="Engines\DRX\DRXRequest.cs" />
     <Compile Include="Engines\DRX\IDynamicRecrystalizationEngine.cs" />
     <Compile Include="Engines\DRX\DynamicRecrystalizationEngine.cs" />

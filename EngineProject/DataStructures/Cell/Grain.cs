@@ -13,7 +13,7 @@ namespace EngineProject.DataStructures
         public double CenterOfX { get; set; }
         public double CenterOfY { get; set; }
         public bool IsRecrystallized { get; set; }
-        public long DyslocationDensity { get; set; }
+        public double DyslocationDensity { get; set; }
 
         public int E { get; set; } = 0;
 

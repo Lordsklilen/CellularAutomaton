@@ -1,5 +1,6 @@
 ﻿using EngineProject.DataStructures.interfaces;
-
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace EngineProject.DataStructures
 {
@@ -82,6 +83,34 @@ namespace EngineProject.DataStructures
             if (number > maxGrainNumber)
                 maxGrainNumber = number;
             (board[x][y] as Grain).SetGrainNumber(number);
+        }
+
+        public List<Point> GetBorderGrainsCoordinates(){
+            List<Point> result = new List<Point>();
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    var el = board[i][j] as Grain;
+                    if (el.E > 0)
+                        result.Add(new Point() { X = i, Y = j });
+                }
+            }
+            return result;
+        }
+        public List<Point> GetNonBorderGrainsCoordinates()
+        {
+            List<Point> result = new List<Point>();
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    var el = board[i][j] as Grain;
+                    if (el.E == 0)
+                        result.Add(new Point() { X = i, Y = j });
+                }
+            }
+            return result;
         }
     }
 }

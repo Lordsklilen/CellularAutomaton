@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EngineProject.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,11 @@ namespace EngineProject.Engines.DRX
 {
     internal interface IDynamicRecrystalizationEngine
     {
-        double CurrentTotalDensity { get; }
-        double PreviousTotalDensity { get; }
+        //    double TotalRo { get; }
+        //    double PreviousTotalRo { get; }
+        IList<DensitySnapshot> TotalDensityList { get; }
+
+        void Initialize(DRXRequest r);
+        Board Iterate(Board board);
     }
 }

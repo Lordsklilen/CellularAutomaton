@@ -12,17 +12,17 @@ namespace EngineProject.Engines.Engines
     {
         public Board panel { get; private set; }
         public EngineType type;
-        private CellType cellType;
-        private NeighbooorhoodType neighboursType;
         private int _maxRow;
         private int _maxColumn;
         private bool OpenBorderCondition = true;
+        private readonly bool MCIterateAllCells = true;
         private NeighbourFactory neighbourFactory;
+        private MonteCarloEngine MCEngine;
+        private readonly CellType cellType;
+        private NeighbooorhoodType neighboursType;
         private INeighbourStrategy neighbourStrategy;
         private HexType hexType;
-        private MonteCarloEngine MCEngine;
-        private DynamicRecrystalizationEngine DRXEngine;
-        private bool MCIterateAllCells = true;
+        private IDynamicRecrystalizationEngine DRXEngine;
 
         public Board GetBoard() => panel;
         public bool IsFinished() => panel.finished;
