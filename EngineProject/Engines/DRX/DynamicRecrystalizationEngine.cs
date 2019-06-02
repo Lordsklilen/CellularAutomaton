@@ -50,7 +50,6 @@ namespace EngineProject.Engines.DRX
 
         public Board IterateAll(Board board)
         {
-            //pCritical = 46842668.25;//totalCriticalValue / (board.X * board.Y);
             for (decimal t = dt; t <= tMax; t += dt)
             {
                 board = NextIteration(board, t);
