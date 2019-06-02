@@ -22,7 +22,7 @@
             <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="941,113,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" />
             <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="21" Margin="941,141,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="75"/>
             <Label Content="Number FPS" HorizontalAlignment="Left" Margin="833,162,0,0" VerticalAlignment="Top" Width="81"/>
-            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="941,167,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="75"/>
+            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="941,167,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75"/>
             <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="832,66,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
             <Label Content="Main Options" HorizontalAlignment="Left" Margin="882,10,0,0" VerticalAlignment="Top"/>
             <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="831,188,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
@@ -53,8 +53,8 @@
             <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="161" Margin="824,395,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Label Content="Neighbour Options" HorizontalAlignment="Left" Margin="871,404,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="neighboour_comboBox" HorizontalAlignment="Left" Margin="832,435,0,0" VerticalAlignment="Top" Width="184" SelectionChanged="ChangeNeighbourStrategy">
-                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem" >Von Neumann</ComboBoxItem>
-                <ComboBoxItem x:Name="Moore_ComboBoxItem" IsSelected="True">Moore</ComboBoxItem>
+                <ComboBoxItem x:Name="VonNeuman_ComboBoxItem"  IsSelected="True">Von Neumann</ComboBoxItem>
+                <ComboBoxItem x:Name="Moore_ComboBoxItem">Moore</ComboBoxItem>
                 <ComboBoxItem x:Name="Pentagonal_ComboBoxItem">Pentagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Hexagonal_ComboBoxItem" Selected="ChangeNeighbourStrategy">Hexagonal</ComboBoxItem>
                 <ComboBoxItem x:Name="Radius_ComboBoxItem">Radius</ComboBoxItem>
@@ -83,19 +83,18 @@
             <Label Content="A:" HorizontalAlignment="Left" Margin="1036,174,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="A_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1056,177,0,0" TextWrapping="Wrap" Text="86710969050178,5" VerticalAlignment="Top" Width="167" />
             <Label Content="Krok czasowy:" HorizontalAlignment="Left" Margin="1036,247,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="dt_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,247,0,0" TextWrapping="Wrap" Text="0,00005" VerticalAlignment="Top" Width="59" />
-            <Label Content="B:" HorizontalAlignment="Left" Margin="1036,202,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="B_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1056,205,0,0" TextWrapping="Wrap" Text="9,41268203527779" VerticalAlignment="Top" Width="167" />
+            <TextBox x:Name="dt_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,247,0,0" TextWrapping="Wrap" Text="0,00001" VerticalAlignment="Top" Width="59" />
+            <Label Content="B:" HorizontalAlignment="Left" Margin="1036,202,0,0" VerticalAlignment="Top"/>
             <Label Content="Całkowity czas:" HorizontalAlignment="Left" Margin="1036,275,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="tEntire_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,275,0,0" TextWrapping="Wrap" Text="0,002" VerticalAlignment="Top" Width="59" />
+            <TextBox x:Name="tEntire_DRX_textbox" HorizontalAlignment="Left" Height="23" Margin="1164,275,0,0" TextWrapping="Wrap" Text="0,00230" VerticalAlignment="Top" Width="59" />
             <Button x:Name="GenerateDRX_btn" Content="Generate" HorizontalAlignment="Left" Margin="1156,407,0,0" VerticalAlignment="Top" Width="67" Click="GenrateDRX"/>
             <Button x:Name="Recrystalization_btn" Content="View Reclystalization" HorizontalAlignment="Left" Margin="1036,407,0,0" VerticalAlignment="Top" Width="115" Click="ViewReclystalization"/>
             <Button x:Name="Density_btn" Content="View Density" HorizontalAlignment="Left" Margin="1036,382,0,0" VerticalAlignment="Top" Width="84" Click="ViewDensity"/>
             <Button x:Name="startRecrystalization_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="1036,354,0,0" VerticalAlignment="Top" Width="84" Click="StartRecrystalization_CLick"/>
-            <Button x:Name="stopRecrystalization_btn" IsEnabled="False" Content="Stop" Width="84" Margin="1139,357,77,0" VerticalAlignment="Top" Click="StopRecrystalization_Click"/>
+            <Button x:Name="stopRecrystalization_btn" IsEnabled="False" Content="Stop"  HorizontalAlignment="Left" Margin="1139,354,0,0" VerticalAlignment="Top" Width="84"  Click="StopRecrystalization_Click" RenderTransformOrigin="0.329,-1.233"/>
             <Label x:Name="time_label" Content="Czas: 0" HorizontalAlignment="Left" Margin="1036,301,0,0" VerticalAlignment="Top"/>
             <Label x:Name="maxRecVal_label" Content="Max val: " HorizontalAlignment="Left" Margin="1036,323,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="minRecVal_label" Content="Min val: " HorizontalAlignment="Left" Margin="1137,323,0,0" VerticalAlignment="Top"/>
             <Button x:Name="Save_btn" Content="Save results" HorizontalAlignment="Left" Margin="1139,382,0,0" VerticalAlignment="Top" Width="84" Click="Save_Click"/>
 
         </Grid>

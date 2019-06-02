@@ -42,8 +42,8 @@ namespace CellularAutomaton
         static DispatcherTimer Recrystalizationtimer;
         EngineType engineType = EngineType.GrainGrowth;
         int numberOfGrains = 0;
-        double t;
-        double tMax;
+        decimal t;
+        decimal tMax;
         bool DRXSkipToAction=true;
         public GrainGrowthPage()
         {
@@ -124,16 +124,15 @@ namespace CellularAutomaton
 
         private void StartRecrystalization_Ticking_timer(object sender, EventArgs e)
         {
-            double dt;
-            double.TryParse(dt_DRX_textbox.Text, out dt);
+            decimal dt;
+            decimal.TryParse(dt_DRX_textbox.Text, out dt);
             t += dt;
             var board = engine.NextDRXIteration(t);
             drawingHelper.DrawBoard(board);
             time_label.Content = "Czas: " + t;
-            double max = board.MaxDensity();
+            decimal max = board.MaxDensity();
             maxRecVal_label.Content = "MaxVal: "+ max.ToString("0.###E+0");
-            minRecVal_label.Content = "MinVal: " + board.MinDensity().ToString("0.###E+0");
-            if (t >= tMax || (DRXSkipToAction && max >= 40000000))
+            if (t >= tMax)
             {
                 StopRecrystalization_Click(null, null);
                 DRXSkipToAction = false;
@@ -287,8 +286,8 @@ namespace CellularAutomaton
             stopRecrystalization_btn.IsEnabled = true;
             var r = CreateDRXRequest();
             engine.InitializeDRX(r);
-            double tmp;
-            double.TryParse(tEntire_DRX_textbox.Text, out tmp);
+            decimal tmp;
+            decimal.TryParse(tEntire_DRX_textbox.Text, out tmp);
             tMax += tmp;
             Recrystalizationtimer.Start();
         }
@@ -339,10 +338,10 @@ namespace CellularAutomaton
         {
             var drxRequest = new DRXRequest();
 
-            double.TryParse(A_DRX_textbox.Text, out drxRequest.A);
-            double.TryParse(B_DRX_textbox.Text, out drxRequest.B);
-            double.TryParse(dt_DRX_textbox.Text, out drxRequest.dt);
-            double.TryParse(tEntire_DRX_textbox.Text, out drxRequest.tMax);
+            decimal.TryParse(A_DRX_textbox.Text, out drxRequest.A);
+            decimal.TryParse(B_DRX_textbox.Text, out drxRequest.B);
+            decimal.TryParse(dt_DRX_textbox.Text, out drxRequest.dt);
+            decimal.TryParse(tEntire_DRX_textbox.Text, out drxRequest.tMax);
 
             return drxRequest;
         }

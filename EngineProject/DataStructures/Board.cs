@@ -126,9 +126,9 @@ namespace EngineProject.DataStructures
             return result;
         }
 
-        public double MinDensity()
+        public decimal MinDensity()
         {
-            double result = double.MaxValue;
+            decimal result = decimal.MaxValue;
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
@@ -141,9 +141,9 @@ namespace EngineProject.DataStructures
             return result;
         }
 
-        public double MaxDensity()
+        public decimal MaxDensity()
         {
-            double result = 0;
+            decimal result = 0;
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)

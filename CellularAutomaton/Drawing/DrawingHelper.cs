@@ -99,8 +99,8 @@ namespace CellularAutomaton
 
         public void DrawBoard(Board board)
         {
-            double max = 0;
-            double min = 0;
+            decimal max = 0;
+            decimal min = 0;
             if (drawingType == DrawingType.DrawDensity) {
                 max = board.MaxDensity();
                 min = board.MinDensity();
@@ -220,7 +220,7 @@ namespace CellularAutomaton
             );
         }
 
-        private void DrawDensityRectangle(ICell element, Rectangle rectangle, double min, double max)
+        private void DrawDensityRectangle(ICell element, Rectangle rectangle, decimal min, decimal max)
         {
             g.FillRectangle(
                 brushFactory.CreateDyslocationBrush((element as Grain).DyslocationDensity,min,max),

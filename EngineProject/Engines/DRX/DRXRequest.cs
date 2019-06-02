@@ -8,9 +8,9 @@ namespace EngineProject.Engines.DRX
 {
    public class DRXRequest
     {
-        public double A;
-        public double B;
-        public double dt;
-        public double tMax;
+        public decimal A;
+        public decimal B;
+        public decimal dt;
+        public decimal tMax;
     }
 }

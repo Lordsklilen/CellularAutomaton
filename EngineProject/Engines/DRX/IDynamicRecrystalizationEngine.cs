@@ -1,4 +1,5 @@
 ﻿using EngineProject.DataStructures;
+using EngineProject.Engines.NeighbourStrategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace EngineProject.Engines.DRX
         //    double PreviousTotalRo { get; }
         IList<DensitySnapshot> TotalDensityList { get; }
 
-        void Initialize(DRXRequest r);
+        void Initialize(DRXRequest r, INeighbourStrategy strategy);
         Board IterateAll(Board board);
-        Board NextIteration(Board board, double t);
+        Board NextIteration(Board board, decimal t);
         string GetSaveText();
     }
 }

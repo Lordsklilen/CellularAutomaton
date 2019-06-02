@@ -103,7 +103,7 @@ namespace EngineProject
             return (engine as GrainGrowthEngine).InitializeDRX(request);
         }
 
-        public Board NextDRXIteration(double t)
+        public Board NextDRXIteration(decimal t)
         {
             return (engine as GrainGrowthEngine).NextDRXIteration(t);
         }

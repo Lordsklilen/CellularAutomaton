@@ -67,7 +67,7 @@ namespace CellularAutomaton.Drawing
         }
 
 
-        public Brush CreateDyslocationBrush(double density, double min, double max)
+        public Brush CreateDyslocationBrush(decimal density, decimal min, decimal max)
         {
             if (density == 0)
                 return new SolidBrush(Color.White);

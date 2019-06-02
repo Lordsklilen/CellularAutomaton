@@ -2,7 +2,7 @@
 {
     public class DensitySnapshot
     {
-        public double T;
-        public double TotalDensity;
+        public decimal T;
+        public decimal TotalDensity;
     }
 }

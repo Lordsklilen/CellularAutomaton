@@ -26,7 +26,7 @@ namespace EngineProject.Engines.Engines
 
         public Board GetBoard() => panel;
         public bool IsFinished() => panel.finished;
-        public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.Moore)
+        public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.VonNeumann)
         {
             type = EngineType.GrainGrowth;
             cellType = CellType.Grain;
@@ -137,25 +137,28 @@ namespace EngineProject.Engines.Engines
         public Board CalculateDRX(DRXRequest request)
         {
             if (DRXEngine == null)
-                DRXEngine = new DynamicRecrystalizationEngine(request);
+                DRXEngine = new DynamicRecrystalizationEngine(request, neighbourStrategy);
             else
-                DRXEngine.Initialize(request);
+                DRXEngine.Initialize(request,neighbourStrategy);
             panel = DRXEngine.IterateAll(panel);
             return panel;
         }
+
         public Board InitializeDRX(DRXRequest request)
         {
             if (DRXEngine == null)
-                DRXEngine = new DynamicRecrystalizationEngine(request);
+                DRXEngine = new DynamicRecrystalizationEngine(request, neighbourStrategy);
             else
-                DRXEngine.Initialize(request);
+                DRXEngine.Initialize(request, neighbourStrategy);
             return panel;
         }
-        public Board NextDRXIteration(double t)
+
+        public Board NextDRXIteration(decimal t)
         {
             panel = DRXEngine.NextIteration(panel,t);
             return panel;
         }
+
         public string GetSaveText()
         {
             if (DRXEngine != null)
@@ -163,6 +166,5 @@ namespace EngineProject.Engines.Engines
             else
                 return "";
         }
-     
     } 
 }
