@@ -83,7 +83,7 @@ namespace EngineProject.Engines.DRX
             int nbcount = nonBorderCoordinates.Count();
 
 
-            //DistributeEqualy
+            //Distribute equaly
             Parallel.For(0, board.Y, i =>
             {
                 for (int j = 0; j < board.X; j++)
@@ -121,7 +121,7 @@ namespace EngineProject.Engines.DRX
                 dRo -= randomDistribution;
             }
 
-            //rozrost
+            //Growth
             if (PreviousChanges.Any())
             {
                 strategy.Initialize(board, null, board.Y, board.X, false);
@@ -136,7 +136,7 @@ namespace EngineProject.Engines.DRX
                         {
                             el.DyslocationDensity = 0;
                             el.IsRecrystallized = true;
-                            board.SetNewRecrystalizedNumber(el.X(), el.Y());
+                            (board.board[el.X()][el.Y()] as Grain).RecrystalizedNumber = RecrystalizedNeighbour(neighbours).RecrystalizedNumber;
                             Changes.Add(el);
                         }
 
@@ -150,6 +150,11 @@ namespace EngineProject.Engines.DRX
         private decimal MaxNeighboursValue(List<Grain> grains)
         {
             return grains.Max(x => x.DyslocationDensity);
+        }
+
+        private Grain RecrystalizedNeighbour(List<Grain> grains)
+        {
+            return grains.FirstOrDefault(x => x.RecrystalizedNumber>0);
         }
 
 
