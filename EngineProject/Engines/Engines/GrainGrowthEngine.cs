@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using EngineProject.DataStructures;
 using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
@@ -46,13 +47,14 @@ namespace EngineProject.Engines.Engines
             var copyPanel = new Board(panel);
             copyPanel.finished = true;
             neighbourStrategy.Initialize(panel, copyPanel, _maxRow, _maxColumn, OpenBorderCondition);
-            foreach (var row in panel.board)
+            Parallel.For(0, panel.Y, i =>
             {
+                var row = panel.board[i];
                 foreach (var cell in row)
                 {
                     neighbourStrategy.ComputeCell((Grain)cell);
                 }
-            }
+            });
             panel = MCEngine.ReCalculateAllEnergy(copyPanel);
         }
 
@@ -112,7 +114,7 @@ namespace EngineProject.Engines.Engines
             request.maxColumn = _maxColumn;
             request.maxRow = _maxRow;
             if (MCEngine == null)
-                MCEngine = new MonteCarloEngine(request,this.neighbourStrategy);
+                MCEngine = new MonteCarloEngine(request, this.neighbourStrategy);
             else
                 MCEngine.Reinstate(request, this.neighbourStrategy);
             RecalculateEnergy();
@@ -120,7 +122,7 @@ namespace EngineProject.Engines.Engines
 
         internal Board RecalculateEnergy()
         {
-            if(MCEngine!=null)
+            if (MCEngine != null)
                 panel = MCEngine.ReCalculateAllEnergy(panel);
             return panel;
         }
@@ -139,7 +141,7 @@ namespace EngineProject.Engines.Engines
             if (DRXEngine == null)
                 DRXEngine = new DynamicRecrystalizationEngine(request, neighbourStrategy);
             else
-                DRXEngine.Initialize(request,neighbourStrategy);
+                DRXEngine.Initialize(request, neighbourStrategy);
             panel = DRXEngine.IterateAll(panel);
             return panel;
         }
@@ -155,7 +157,7 @@ namespace EngineProject.Engines.Engines
 
         public Board NextDRXIteration(decimal t)
         {
-            panel = DRXEngine.NextIteration(panel,t);
+            panel = DRXEngine.NextIteration(panel, t);
             return panel;
         }
 
@@ -166,5 +168,5 @@ namespace EngineProject.Engines.Engines
             else
                 return "";
         }
-    } 
+    }
 }

@@ -10,8 +10,6 @@ namespace EngineProject.Engines.DRX
 {
     internal interface IDynamicRecrystalizationEngine
     {
-        //    double TotalRo { get; }
-        //    double PreviousTotalRo { get; }
         IList<DensitySnapshot> TotalDensityList { get; }
 
         void Initialize(DRXRequest r, INeighbourStrategy strategy);

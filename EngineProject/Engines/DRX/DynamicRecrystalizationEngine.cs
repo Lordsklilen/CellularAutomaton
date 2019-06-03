@@ -132,11 +132,12 @@ namespace EngineProject.Engines.DRX
                         var el = (board.board[i][j] as Grain);
                         el.DyslocationDensity += randomDistribution;
                         var neighbours = strategy.NeighboursGrainCells(el);
-                        if (IsThereChange(neighbours) && MaxNeighboursValue(neighbours) < el.DyslocationDensity)
+                        var recrystalizedGrain = RecrystalizedGrain(neighbours);
+                        if (recrystalizedGrain!= null && MaxNeighboursValue(neighbours) < el.DyslocationDensity)
                         {
                             el.DyslocationDensity = 0;
                             el.IsRecrystallized = true;
-                            (board.board[el.X()][el.Y()] as Grain).RecrystalizedNumber = RecrystalizedNeighbour(neighbours).RecrystalizedNumber;
+                            (board.board[el.X()][el.Y()] as Grain).RecrystalizedNumber = recrystalizedGrain.RecrystalizedNumber;
                             Changes.Add(el);
                         }
 
@@ -157,10 +158,9 @@ namespace EngineProject.Engines.DRX
             return grains.FirstOrDefault(x => x.RecrystalizedNumber>0);
         }
 
-
-        private bool IsThereChange(List<Grain> grains)
+        private Grain RecrystalizedGrain(List<Grain> grains)
         {
-            return grains.Any(x => PreviousChanges.Any(y => x.x == y.x && x.y == y.y));
+            return grains.FirstOrDefault(x => PreviousChanges.Any(y => x.x == y.x && x.y == y.y));
         }
 
         private Grain GetHighestDensity(List<Grain> grains)

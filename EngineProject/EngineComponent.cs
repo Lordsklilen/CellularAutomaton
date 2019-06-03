@@ -58,10 +58,10 @@ namespace EngineProject
         {
             engine.SetRule(rule);
         }
+
         public void SetGrainNumber(int grainNumber, int x, int y)
         {
             (engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
-            //(engine as GrainGrowthEngine).RecalculateEnergy();
         }
 
         public void GenerateGrainTemplate(TemplateRequest request)
@@ -95,7 +95,6 @@ namespace EngineProject
         public Board CalculateDRX(DRXRequest request)
         {
             return (engine as GrainGrowthEngine).CalculateDRX(request);
-            
         }
 
         public Board InitializeDRX(DRXRequest request)
