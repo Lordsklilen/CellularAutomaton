@@ -51,9 +51,10 @@ namespace EngineProject.Engines.MonteCarlo
         private int CalculateEnergy(Board panel, int x, int y)
         {
             var grain = panel.board[x][y] as Grain;
-            List<int> nieghbours = neighbourStrategy.NeighboursGrainNumbers(grain);
-            return nieghbours.Count(member => member != grain.grainNumber);
+            List<Grain> grains = neighbourStrategy.NeighboursGrainCells(grain);
+            return neighbourStrategy.GetRecrystalizedAndGrainGrains(grains, grain.RecrystalizedNumber, grain.GetGrainNumber());
         }
+
 
         internal Board ReCalculateAllEnergy(Board panel)
         {

@@ -26,7 +26,7 @@ namespace CellularAutomaton.Drawing
 
         public Brush CreateColorBrush(int number, int max)
         {
-            if(number ==0)
+            if(number ==0 || max <=0)
                 return new SolidBrush(Color.White);
             return new SolidBrush(colorTool.GetColor(number,max,0));
         }
@@ -53,7 +53,8 @@ namespace CellularAutomaton.Drawing
 
         public Brush CreateRecrystalizationBrush(double density, double max)
         {
-
+            if (max <= 0)
+                return new SolidBrush(Color.White);
             return new SolidBrush(colorTool.GetRecrystalizationColors(density, max));
         }
 
@@ -69,7 +70,7 @@ namespace CellularAutomaton.Drawing
 
         public Brush CreateDyslocationBrush(decimal density, decimal min, decimal max)
         {
-            if (density == 0)
+            if (density == 0 || max <=0)
                 return new SolidBrush(Color.White);
             return new SolidBrush(colorTool.GetDensityColors(density, max, min));
         }

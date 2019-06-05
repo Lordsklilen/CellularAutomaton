@@ -11,7 +11,7 @@ namespace EngineProject.Engines.DRX
     internal interface IDynamicRecrystalizationEngine
     {
         IList<DensitySnapshot> TotalDensityList { get; }
-
+        bool IsChaged();
         void Initialize(DRXRequest r, INeighbourStrategy strategy);
         Board IterateAll(Board board);
         Board NextIteration(Board board, decimal t);

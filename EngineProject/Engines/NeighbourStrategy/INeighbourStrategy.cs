@@ -13,6 +13,10 @@ namespace EngineProject.Engines.NeighbourStrategy
         void ComputeCell(Grain cell);
         List<Grain> NeighboursGrainCells(Grain cell);
         List<int> NeighboursGrainNumbers(Grain cell);
+        List<int> GetOnlyGrainNumbers(List<Grain> cells);
+        List<int> GetOnlyRecrystalizationNumbers(List<Grain> cells);
+        int GetRecrystalizedAndGrainGrains(List<Grain> Grains, int recrystalizationNumber, int grainNumber);
+
     }
     
     public class Utils{

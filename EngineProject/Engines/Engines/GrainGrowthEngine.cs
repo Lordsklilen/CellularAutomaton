@@ -13,8 +13,8 @@ namespace EngineProject.Engines.Engines
     {
         public Board panel { get; private set; }
         public EngineType type;
-        private int _maxRow;
-        private int _maxColumn;
+        private int maxRow;
+        private int maxColumn;
         private bool OpenBorderCondition = true;
         private readonly bool MCIterateAllCells = true;
         private NeighbourFactory neighbourFactory;
@@ -32,8 +32,8 @@ namespace EngineProject.Engines.Engines
             type = EngineType.GrainGrowth;
             cellType = CellType.Grain;
             panel = new Board(width, height, cellType);
-            _maxRow = height;
-            _maxColumn = width;
+            maxRow = height;
+            maxColumn = width;
             neighboursType = nType;
             neighbourFactory = new NeighbourFactory();
             NeighbourStrategyRequest request = new NeighbourStrategyRequest() { neighbooorhoodType = nType };
@@ -46,7 +46,7 @@ namespace EngineProject.Engines.Engines
                 return;
             var copyPanel = new Board(panel);
             copyPanel.finished = true;
-            neighbourStrategy.Initialize(panel, copyPanel, _maxRow, _maxColumn, OpenBorderCondition);
+            neighbourStrategy.Initialize(panel, copyPanel, maxRow, maxColumn, OpenBorderCondition);
             Parallel.For(0, panel.Y, i =>
             {
                 var row = panel.board[i];
@@ -111,8 +111,8 @@ namespace EngineProject.Engines.Engines
             OpenBorderCondition = request.border;
             request.board = panel;
             request.CopyBoard = new Board(panel);
-            request.maxColumn = _maxColumn;
-            request.maxRow = _maxRow;
+            request.maxColumn = maxColumn;
+            request.maxRow = maxRow;
             if (MCEngine == null)
                 MCEngine = new MonteCarloEngine(request, this.neighbourStrategy);
             else
@@ -143,6 +143,7 @@ namespace EngineProject.Engines.Engines
             else
                 DRXEngine.Initialize(request, neighbourStrategy);
             panel = DRXEngine.IterateAll(panel);
+           
             return panel;
         }
 
@@ -158,6 +159,8 @@ namespace EngineProject.Engines.Engines
         public Board NextDRXIteration(decimal t)
         {
             panel = DRXEngine.NextIteration(panel, t);
+            if (DRXEngine.IsChaged())
+                return RecalculateEnergy();
             return panel;
         }
 

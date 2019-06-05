@@ -4,6 +4,8 @@ using EngineProject.DataStructures.interfaces;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace CellularAutomaton
@@ -95,7 +97,6 @@ namespace CellularAutomaton
             }
             wpfImage.Source = Convert(bitmap);
         }
-
 
         public void DrawBoard(Board board)
         {
@@ -239,10 +240,31 @@ namespace CellularAutomaton
             image.EndInit();
             return image;
         }
-
-        public Point GetPosition(int width, int height)
+        public static System.Drawing.Bitmap BitmapSourceToBitmap2(BitmapSource srs)
         {
-            var result = new Point();
+            int width = srs.PixelWidth;
+            int height = srs.PixelHeight;
+            int stride = width * ((srs.Format.BitsPerPixel + 7) / 8);
+            IntPtr ptr = IntPtr.Zero;
+            try
+            {
+                ptr = Marshal.AllocHGlobal(height * stride);
+                srs.CopyPixels(new Int32Rect(0, 0, width, height), ptr, height * stride, stride);
+                using (var btm = new System.Drawing.Bitmap(width, height, stride, System.Drawing.Imaging.PixelFormat.Format1bppIndexed, ptr))
+                {
+                    return new System.Drawing.Bitmap(btm);
+                }
+            }
+            finally
+            {
+                if (ptr != IntPtr.Zero)
+                    Marshal.FreeHGlobal(ptr);
+            }
+        }
+
+        public System.Drawing.Point GetPosition(int width, int height)
+        {
+            var result = new System.Drawing.Point();
             result.X = (int)(((double)height) / (elHeight));
             result.Y = (int)(((double)width) / (elWidth));
             return result;

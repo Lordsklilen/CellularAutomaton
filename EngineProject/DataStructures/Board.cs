@@ -91,6 +91,7 @@ namespace EngineProject.DataStructures
             maxGrainNumber += 1;
             (board[x][y] as Grain).SetGrainNumber(maxGrainNumber);
         }
+
         public void SetNewRecrystalizedNumber(int x, int y)
         {
             maxRecrystalizedNumber += 1;

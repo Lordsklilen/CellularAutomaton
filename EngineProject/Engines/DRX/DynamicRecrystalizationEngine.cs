@@ -17,6 +17,7 @@ namespace EngineProject.Engines.DRX
         private List<Point> borderCoordinates;
         private ConcurrentBag<Grain> PreviousChanges;
         private List<Point> nonBorderCoordinates;
+        private ConcurrentBag<Grain> Changes;
         private Random rand = new Random();
         private decimal dt;
         private decimal tMax;
@@ -29,6 +30,8 @@ namespace EngineProject.Engines.DRX
         private const decimal randomPackagePercentage = 0.05m;
         private INeighbourStrategy strategy;
 
+
+        public bool IsChaged() => !Changes.IsEmpty;
         public DynamicRecrystalizationEngine(DRXRequest request, INeighbourStrategy strategy)
         {
             PreviousChanges = new ConcurrentBag<Grain>();
@@ -59,21 +62,73 @@ namespace EngineProject.Engines.DRX
 
         public Board NextIteration(Board board, decimal t)
         {
+            Changes = new ConcurrentBag<Grain>();
+            decimal dRo = CalculateRo(t);
+            board = DistributeValues(board, dRo);
+            board = Recrystalize(board);
+            board = Growth(board);
+            return board;
+        }
+
+        private decimal CalculateRo(decimal t)
+        {
             decimal ro = CalculateTotalro(t);
             decimal previousRo;
             if (TotalDensityList.Any() == false)
                 previousRo = 0;
             else
                 previousRo = TotalDensityList.Last().TotalDensity;
-            decimal dRo = ro - previousRo;
-            board = DistributeValues(board, dRo);
             TotalDensityList.Add(new DensitySnapshot { T = t, TotalDensity = ro });
+            return ro - previousRo;
+        }
+
+        private Board Recrystalize(Board board)
+        {
+            Parallel.For(0, board.Y, i =>
+            {
+                for (int j = 0; j < board.X; j++)
+                {
+                    var el = (board.board[i][j] as Grain);
+                    if (el.DyslocationDensity > pCritical)
+                    {
+                        el.DyslocationDensity = 0;
+                        el.IsRecrystallized = true;
+                        board.SetNewRecrystalizedNumber(el.X(), el.Y());
+                        Changes.Add(el);
+                    }
+                }
+            });
+            return board;
+        }
+
+        private Board Growth(Board board)
+        {
+            if (PreviousChanges.Any())
+            {
+                strategy.Initialize(board, null, board.Y, board.X, false);
+                for (int i = 0; i < board.Y; i++)
+                {
+                    for (int j = 0; j < board.X; j++)
+                    {
+                        var el = (board.board[i][j] as Grain);
+                        var neighbours = strategy.NeighboursGrainCells(el);
+                        var recrystalizedGrain = RecrystalizedGrain(neighbours);
+                        if (recrystalizedGrain != null && MaxNeighboursValue(neighbours) < el.DyslocationDensity)
+                        {
+                            el.DyslocationDensity = 0;
+                            el.IsRecrystallized = true;
+                            (board.board[el.X()][el.Y()] as Grain).RecrystalizedNumber = recrystalizedGrain.RecrystalizedNumber;
+                            Changes.Add(el);
+                        }
+                    }
+                }
+            }
+            PreviousChanges = Changes;
             return board;
         }
 
         private Board DistributeValues(Board board, decimal dRo)
         {
-            ConcurrentBag<Grain> Changes = new ConcurrentBag<Grain>();
             decimal roPerCell = dRo / (decimal)(board.X * board.Y);
             decimal equalDistribution = roPerCell * equalDistributionpercentage;
             decimal randomDistribution = roPerCell * randomPackagePercentage;
@@ -81,7 +136,6 @@ namespace EngineProject.Engines.DRX
             int bcount = borderCoordinates.Count();
             nonBorderCoordinates = board.GetNonBorderGrainsCoordinates();
             int nbcount = nonBorderCoordinates.Count();
-
 
             //Distribute equaly
             Parallel.For(0, board.Y, i =>
@@ -92,7 +146,6 @@ namespace EngineProject.Engines.DRX
                 }
             });
 
-
             dRo *= 1.0m - equalDistributionpercentage;
 
             //Distribute randomly
@@ -100,18 +153,11 @@ namespace EngineProject.Engines.DRX
             for (int i = 0; i < iterationCount; i++)
             {
                 double p = rand.NextDouble();
-                if (p <= borderPropability)
+                if (p <= borderPropability && bcount > 0)
                 {
                     var point = borderCoordinates[rand.Next(0, bcount)];
                     var el = (board.board[point.X][point.Y] as Grain);
                     el.DyslocationDensity += randomDistribution;
-                    if (el.DyslocationDensity > pCritical)
-                    {
-                        el.DyslocationDensity = 0;
-                        el.IsRecrystallized = true;
-                        board.SetNewRecrystalizedNumber(el.X(), el.Y());
-                        Changes.Add(el);
-                    }
                 }
                 else
                 {
@@ -120,31 +166,6 @@ namespace EngineProject.Engines.DRX
                 }
                 dRo -= randomDistribution;
             }
-
-            //Growth
-            if (PreviousChanges.Any())
-            {
-                strategy.Initialize(board, null, board.Y, board.X, false);
-                for (int i = 0; i < board.Y; i++)
-                {
-                    for (int j = 0; j < board.X; j++)
-                    {
-                        var el = (board.board[i][j] as Grain);
-                        el.DyslocationDensity += randomDistribution;
-                        var neighbours = strategy.NeighboursGrainCells(el);
-                        var recrystalizedGrain = RecrystalizedGrain(neighbours);
-                        if (recrystalizedGrain!= null && MaxNeighboursValue(neighbours) < el.DyslocationDensity)
-                        {
-                            el.DyslocationDensity = 0;
-                            el.IsRecrystallized = true;
-                            (board.board[el.X()][el.Y()] as Grain).RecrystalizedNumber = recrystalizedGrain.RecrystalizedNumber;
-                            Changes.Add(el);
-                        }
-
-                    }
-                }
-            }
-            PreviousChanges = Changes;
             return board;
         }
 
@@ -155,7 +176,7 @@ namespace EngineProject.Engines.DRX
 
         private Grain RecrystalizedNeighbour(List<Grain> grains)
         {
-            return grains.FirstOrDefault(x => x.RecrystalizedNumber>0);
+            return grains.FirstOrDefault(x => x.RecrystalizedNumber > 0);
         }
 
         private Grain RecrystalizedGrain(List<Grain> grains)

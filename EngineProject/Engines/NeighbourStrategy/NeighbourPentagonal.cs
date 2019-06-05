@@ -42,38 +42,24 @@ namespace EngineProject.Engines.NeighbourStrategy
 
         public List<int> NeighboursGrainNumbers(Grain cell)
         {
-            List<int> neighbours = new List<int>();
-            int[,] pairs = GeneratePairs();
-            for (int i = 0; i <= 4; i++)
-            {
-                int x = pairs[i, 0];
-                int y = pairs[i, 1];
-                int widthId = 0;
-                int heightId = 0;
-                int number = 0;
-                if (OpenBorderCondition)
-                {
-                    widthId = (x + cell.x) >= 0 ? (x + cell.x) % (_maxRow) : _maxRow - 1;
-                    heightId = (y + cell.y) >= 0 ? (y + cell.y) % (_maxColumn) : _maxColumn - 1;
-                    number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
-                }
-                else
-                {
-                    widthId = (x + cell.x);
-                    heightId = (y + cell.y);
-
-                    if (widthId < 0 || heightId < 0 || widthId >= _maxRow || heightId >= _maxColumn)
-                        number = 0;
-                    else
-                        number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
-                }
-
-                if (number > 0)
-                    neighbours.Add(number);
-            }
-            return neighbours;
+            return GetOnlyGrainNumbers(NeighboursGrainCells(cell));
         }
 
+        public List<int> GetOnlyGrainNumbers(List<Grain> cells)
+        {
+            return cells.Select(x => x.GetGrainNumber()).ToList<int>();
+        }
+
+        public List<int> GetOnlyRecrystalizationNumbers(List<Grain> cells)
+        {
+            return cells.Select(x => x.RecrystalizedNumber).ToList<int>();
+        }
+
+        public int GetRecrystalizedAndGrainGrains(List<Grain> grains, int recrystalizationNumber, int grainNumber)
+        {
+            return grains.Count(x => (x.GetGrainNumber() != 0 && x.GetGrainNumber() != grainNumber) ||
+                (x.RecrystalizedNumber != 0 && x.RecrystalizedNumber != recrystalizationNumber));
+        }
 
         public List<Grain> NeighboursGrainCells(Grain cell)
         {

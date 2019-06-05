@@ -44,7 +44,7 @@ namespace CellularAutomaton
         int numberOfGrains = 0;
         decimal t;
         decimal tMax;
-        bool DRXSkipToAction=true;
+
         public GrainGrowthPage()
         {
             InitializeComponent();
@@ -52,6 +52,7 @@ namespace CellularAutomaton
             Loaded += DrawInitial;
             Loaded += InitEvents;
         }
+
         void Initializevariables()
         {
             width = 100;
@@ -66,6 +67,7 @@ namespace CellularAutomaton
             timer.Tick += Start_Ticking_timer;
             Recrystalizationtimer.Tick += StartRecrystalization_Ticking_timer;
         }
+
         void SetTime()
         {
             var result = 1.0;
@@ -75,6 +77,7 @@ namespace CellularAutomaton
             timer.Interval = (int)(1000.0 / result);
             Recrystalizationtimer.Interval = TimeSpan.FromMilliseconds((int)(1000.0 / result));
         }
+
         void InitBoard()
         {
             t = 0;
@@ -94,6 +97,7 @@ namespace CellularAutomaton
         {
             SetTime();
         }
+
         void DrawInitial(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height, true);
@@ -135,14 +139,12 @@ namespace CellularAutomaton
             if (t >= tMax)
             {
                 StopRecrystalization_Click(null, null);
-                DRXSkipToAction = false;
             }
         }
 
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
             engine.GetNextIteration();
-
             drawingHelper.DrawBoard(engine.Board);
             if (engine.IsFinished)
                 Stop_Click(null, null);

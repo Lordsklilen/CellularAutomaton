@@ -43,52 +43,23 @@ namespace EngineProject.Engines.NeighbourStrategy
 
         public List<int> NeighboursGrainNumbers(Grain cell)
         {
-            List<int> neighbours = new List<int>();
-            int RadiusTop = (int)radius + 1;
-            Point centerOfMass = cell.GetMassCenter();
-            for (int i = -RadiusTop; i <= RadiusTop; i++)
-            {
-                for (int j = -RadiusTop; j <= RadiusTop; j++)
-                {
-                    if (i == 0 && j == 0)
-                        continue;
+            return GetOnlyGrainNumbers(NeighboursGrainCells(cell));
+        }
 
-                    int number = 0;
-                    int widthId;
-                    int heightId;
-                    if (OpenBorderCondition)
-                    {
-                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x) + maxRow;
-                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (maxColumn) : (j + cell.y) + maxColumn;
-                    }
-                    else
-                    {
-                        widthId = (i + cell.x);
-                        heightId = (j + cell.y);
-                        if (widthId < 0 || heightId < 0 || widthId >= maxRow || heightId >= maxColumn)
-                            continue;
-                    }
+        public List<int> GetOnlyGrainNumbers(List<Grain> cells)
+        {
+            return cells.Select(x => x.GetGrainNumber()).ToList<int>();
+        }
 
-                    Grain colleague = (Grain)panel.board[widthId][heightId];
-                    number = colleague.GetGrainNumber();
-                    if (number == 0)
-                        continue;
-                    Point NeighbourMassCenter = colleague.GetInsideMassCenter();
-                    NeighbourMassCenter.X += (j + cell.y);
-                    NeighbourMassCenter.Y += (i + cell.x);
+        public List<int> GetOnlyRecrystalizationNumbers(List<Grain> cells)
+        {
+            return cells.Select(x => x.RecrystalizedNumber).ToList<int>();
+        }
 
-                    //Point NeighbourMassCenter = colleague.GetMassCenter();
-
-                    double r = Math.Sqrt((Math.Pow(NeighbourMassCenter.X - centerOfMass.X, 2) + Math.Pow(NeighbourMassCenter.Y - centerOfMass.Y, 2)));
-                    if (r <= radius)
-                    {
-                        number = colleague.GetGrainNumber();
-                        if (number > 0)
-                            neighbours.Add(number);
-                    }
-                }
-            }
-            return neighbours;
+        public int GetRecrystalizedAndGrainGrains(List<Grain> grains, int recrystalizationNumber, int grainNumber)
+        {
+            return grains.Count(x => (x.GetGrainNumber() != 0 && x.GetGrainNumber() != grainNumber) ||
+                (x.RecrystalizedNumber != 0 && x.RecrystalizedNumber != recrystalizationNumber));
         }
 
         public List<Grain> NeighboursGrainCells(Grain cell)

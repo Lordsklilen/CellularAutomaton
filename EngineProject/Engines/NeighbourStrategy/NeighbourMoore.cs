@@ -41,39 +41,23 @@ namespace EngineProject.Engines.NeighbourStrategy
 
         public List<int> NeighboursGrainNumbers(Grain cell)
         {
-            List<int> neighbours = new List<int>();
+            return GetOnlyGrainNumbers(NeighboursGrainCells(cell));
+        }
 
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -1; j <= 1; j++)
-                {
-                    if (i == 0 && j == 0)
-                        continue;
-                    int number = 0;
-                    int widthId;
-                    int heightId;
-                    if (OpenBorderCondition)
-                    {
-                        widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x)+ maxRow;
-                        heightId = (j + cell.y) >= 0 ? (j + cell.y) % (maxColumn) : (j + cell.y) + maxColumn;
-                        number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
-                    }
-                    else
-                    {
-                        widthId = (i + cell.x);
-                        heightId = (j + cell.y);
+        public List<int> GetOnlyGrainNumbers(List<Grain> cells)
+        {
+            return cells.Select(x => x.GetGrainNumber()).ToList<int>();
+        }
 
-                        if (widthId < 0 || heightId < 0 || widthId >= maxRow || heightId >= maxColumn)
-                            number = 0;
-                        else
-                            number = ((Grain)panel.board[widthId][heightId]).GetGrainNumber();
-                    }
+        public List<int> GetOnlyRecrystalizationNumbers(List<Grain> cells)
+        {
+            return cells.Select(x => x.RecrystalizedNumber).ToList<int>();
+        }
 
-                    if (number > 0)
-                        neighbours.Add(number);
-                }
-            }
-            return neighbours;
+        public int GetRecrystalizedAndGrainGrains(List<Grain> grains, int recrystalizationNumber, int grainNumber)
+        {
+            return grains.Count(x => (x.GetGrainNumber() != 0 && x.GetGrainNumber() != grainNumber) ||
+                (x.RecrystalizedNumber != 0 && x.RecrystalizedNumber != recrystalizationNumber));
         }
 
         public List<Grain> NeighboursGrainCells(Grain cell)
