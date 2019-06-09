@@ -71,7 +71,11 @@ namespace EngineProject.DataStructures
                 board[i] = new ICell[width];
                 for (int j = 0; j < width; j++)
                 {
-                    board[i][j] = cellFactory.CreateCell(main.board[i][j] as Grain);
+                    var el = main.board[i][j] as Grain ?? main.board[i][j] as Cell;
+                    if(el.GetType() == typeof(Grain))
+                        board[i][j] = cellFactory.CreateGrain(el as Grain);
+                    else 
+                        board[i][j] = cellFactory.CreateCell(el);
                 }
             }
             maxGrainNumber = main.maxGrainNumber;

@@ -25,12 +25,19 @@ namespace EngineProject.DataStructures
             }
         }
 
-        public Grain CreateCell(Grain grain)
+        public Grain CreateGrain(Grain grain)
         {
             var newGrain = new Grain(grain.x, grain.y);
             newGrain.CenterOfX = grain.CenterOfX;
             newGrain.CenterOfY = grain.CenterOfY;
             return newGrain;
+        }
+
+        public Cell CreateCell(Cell cell)
+        {
+            var newCell = new Cell(cell.x, cell.y);
+            newCell.state = cell.state;
+            return newCell;
         }
     }
 }
