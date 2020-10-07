@@ -1,15 +1,11 @@
-﻿using EngineProject;
+﻿using CellularAutomaton.Drawing;
+using EngineProject;
 using EngineProject.DataStructures;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Drawing;
 using System.Windows.Threading;
-using CellularAutomaton.Drawing;
 
 namespace CellularAutomaton
 {
@@ -32,7 +28,7 @@ namespace CellularAutomaton
         }
         void DrawInitial(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, width, height,true,false);
+            drawingHelper = new DrawingHelper(img, width, height, true, false);
             var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }
@@ -49,8 +45,7 @@ namespace CellularAutomaton
 
         void SetTime()
         {
-            var result = 1.0;
-            double.TryParse(FpsCounter.Text, out result);
+            double.TryParse(FpsCounter.Text, out double result);
             if (result < 1)
                 result = 1;
             timer.Interval = TimeSpan.FromMilliseconds(1000.0 / result);

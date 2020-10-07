@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EngineProject.DataStructures;
+﻿using EngineProject.DataStructures;
 using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
+using System;
+using System.Threading.Tasks;
 
 namespace EngineProject.Engines.Engines
 {
@@ -13,11 +11,11 @@ namespace EngineProject.Engines.Engines
     {
         public Board panel { get; private set; }
         public EngineType type;
-        private int maxRow;
-        private int maxColumn;
+        private readonly int maxRow;
+        private readonly int maxColumn;
         private bool OpenBorderCondition = true;
         private readonly bool MCIterateAllCells = true;
-        private NeighbourFactory neighbourFactory;
+        private readonly NeighbourFactory neighbourFactory;
         private MonteCarloEngine MCEngine;
         private readonly CellType cellType;
         private NeighbooorhoodType neighboursType;
@@ -44,8 +42,10 @@ namespace EngineProject.Engines.Engines
         {
             if (panel.finished)
                 return;
-            var copyPanel = new Board(panel);
-            copyPanel.finished = true;
+            var copyPanel = new Board(panel)
+            {
+                finished = true
+            };
             neighbourStrategy.Initialize(panel, copyPanel, maxRow, maxColumn, OpenBorderCondition);
             Parallel.For(0, panel.Y, i =>
             {
@@ -143,7 +143,7 @@ namespace EngineProject.Engines.Engines
             else
                 DRXEngine.Initialize(request, neighbourStrategy);
             panel = DRXEngine.IterateAll(panel);
-           
+
             return panel;
         }
 

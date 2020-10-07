@@ -1,9 +1,5 @@
 ﻿using EngineProject.DataStructures;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineProject.Engines
 {
@@ -11,8 +7,8 @@ namespace EngineProject.Engines
     {
         public Board panel { get; private set; }
         public EngineType type;
-        private int _maxRow;
-        private int _maxColumn;
+        private readonly int _maxRow;
+        private readonly int _maxColumn;
 
         public GameOfLifeEngine(int width, int height)
         {

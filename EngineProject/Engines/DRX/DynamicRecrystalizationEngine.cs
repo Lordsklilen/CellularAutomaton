@@ -18,12 +18,12 @@ namespace EngineProject.Engines.DRX
         private ConcurrentBag<Grain> PreviousChanges;
         private List<Point> nonBorderCoordinates;
         private ConcurrentBag<Grain> Changes;
-        private Random rand = new Random();
+        private readonly Random rand = new Random();
         private decimal dt;
         private decimal tMax;
         private decimal A;
         private decimal B;
-        private decimal pCritical = 46842668.25m;
+        private readonly decimal pCritical = 46842668.25m;
         //private const double totalCriticalValue = 46842668.25 * 100 * 75;//4215840142323.42;
         private const double borderPropability = 0.8;
         private const decimal equalDistributionpercentage = 0.3m;
@@ -174,21 +174,9 @@ namespace EngineProject.Engines.DRX
             return grains.Max(x => x.DyslocationDensity);
         }
 
-        private Grain RecrystalizedNeighbour(List<Grain> grains)
-        {
-            return grains.FirstOrDefault(x => x.RecrystalizedNumber > 0);
-        }
-
         private Grain RecrystalizedGrain(List<Grain> grains)
         {
             return grains.FirstOrDefault(x => PreviousChanges.Any(y => x.x == y.x && x.y == y.y));
-        }
-
-        private Grain GetHighestDensity(List<Grain> grains)
-        {
-            return grains.Select(x => x)
-                 .OrderByDescending(y => y.DyslocationDensity)
-                 .First();
         }
 
         private decimal CalculateTotalro(decimal t)
