@@ -10,7 +10,6 @@ namespace EngineProject.Engines.MonteCarlo
 {
     internal class MonteCarloEngine
     {
-        private int iterations;
         private double Kt;
         private NeighbourStrategyRequest strategyRequest;
         private readonly NeighbourFactory factory;
@@ -19,24 +18,21 @@ namespace EngineProject.Engines.MonteCarlo
         private int maxColumn;
         private int maxRow;
         private Board board;
-        private Board copyBorad;
         readonly Random rand = new Random();
         internal MonteCarloEngine(MonteCarloRequest request, INeighbourStrategy strategy)
         {
             factory = new NeighbourFactory();
             Reinstate(request, strategy);
         }
-        
+
         internal void Reinstate(MonteCarloRequest r, INeighbourStrategy strategy)
         {
             neighbourStrategy = strategy;
-            iterations = r.numberOfIterations;
             Kt = r.Kt;
             strategyRequest = r.strategyRequest;
             maxColumn = r.maxColumn;
             maxRow = r.maxRow;
             board = r.board;
-            copyBorad = r.CopyBoard;
             border = r.border;
             neighbourStrategy = factory.CreateNeighbourComputing(strategyRequest);
             neighbourStrategy.Initialize(r.board, r.CopyBoard, r.maxRow, r.maxColumn, r.border);
@@ -146,5 +142,5 @@ namespace EngineProject.Engines.MonteCarlo
             }
             return list;
         }
-    } 
+    }
 }

@@ -14,20 +14,18 @@
         </Border>
 
         <Grid x:Name="MainControlsGrid">
-            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="221" Margin="825,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="193" Margin="825,11,0,0" Stroke="Black" VerticalAlignment="Top" Width="198"/>
             <Button x:Name="start_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="832,41,0,0" VerticalAlignment="Top" Width="75" Click="Start_CLick"/>
-            <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="942,41,0,0" VerticalAlignment="Top" Width="75" Click="Stop_Click"/>
+            <Button x:Name="stopBtn" IsEnabled="False" Content="Stop" HorizontalAlignment="Left" Margin="942,41,0,0" VerticalAlignment="Top" Width="75" />
             <Label Content="Width:" HorizontalAlignment="Left" Margin="832,110,0,0" VerticalAlignment="Top"/>
             <Label Content="Height:" HorizontalAlignment="Left" Margin="832,136,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="widthNumber" HorizontalAlignment="Left" Height="23" Margin="941,113,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" />
             <TextBox x:Name="iterationNumber"  HorizontalAlignment="Left" Height="21" Margin="941,141,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="75"/>
-            <Label Content="Number FPS" HorizontalAlignment="Left" Margin="833,162,0,0" VerticalAlignment="Top" Width="81"/>
-            <TextBox x:Name="FpsCounter"  HorizontalAlignment="Left" Height="23" Margin="941,167,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75"/>
             <Button x:Name="generateAll" Content="Generate" HorizontalAlignment="Left" Margin="832,66,0,0" VerticalAlignment="Top" Width="75" Click="Generate_Click"/>
             <Label Content="Main Options" HorizontalAlignment="Left" Margin="882,10,0,0" VerticalAlignment="Top"/>
-            <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="831,188,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
-            <RadioButton  x:Name="Closed_RadioBtn" Click="SetBorderCondition" Content="Closed" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="832,215,0,0" VerticalAlignment="Top" Width="62"/>
-            <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="941,215,0,0" VerticalAlignment="Top" Width="62"/>
+            <Label Content="Border Conditions:" HorizontalAlignment="Left" Margin="832,157,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
+            <RadioButton  x:Name="Closed_RadioBtn" Click="SetBorderCondition" Content="Closed" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="833,184,0,0" VerticalAlignment="Top" Width="62"/>
+            <RadioButton  x:Name="Open_Radiobtn" Click="SetBorderCondition" IsChecked="True"  Content="Open" GroupName="BorderCondition" HorizontalAlignment="Left" Margin="942,184,0,0" VerticalAlignment="Top" Width="62"/>
             <Button x:Name="Borders" Content="On/Off Net" HorizontalAlignment="Left" Margin="832,91,0,0" VerticalAlignment="Top" Width="75" Click="OnOffborder_Click"/>
             <Button x:Name="Squares" Content="Squares" HorizontalAlignment="Left" Margin="941,91,0,0" VerticalAlignment="Top" Width="75" Click="Squares_Click"/>
             <Button x:Name="centerPoints_btn" Content="Center points" HorizontalAlignment="Left" Margin="942,66,0,0" VerticalAlignment="Top" Width="75" Click="CenterPoints_Click"/>
@@ -92,7 +90,7 @@
             <Button x:Name="Recrystalization_btn" Content="View Reclystalization" HorizontalAlignment="Left" Margin="1036,407,0,0" VerticalAlignment="Top" Width="115" Click="ViewReclystalization"/>
             <Button x:Name="Density_btn" Content="View Density" HorizontalAlignment="Left" Margin="1036,382,0,0" VerticalAlignment="Top" Width="84" Click="ViewDensity"/>
             <Button x:Name="startRecrystalization_btn" Content="Start iterate" HorizontalAlignment="Left" Margin="1036,354,0,0" VerticalAlignment="Top" Width="84" Click="StartRecrystalization_CLick"/>
-            <Button x:Name="stopRecrystalization_btn" IsEnabled="False" Content="Stop"  HorizontalAlignment="Left" Margin="1139,354,0,0" VerticalAlignment="Top" Width="84"  Click="StopRecrystalization_Click" RenderTransformOrigin="0.329,-1.233"/>
+            <Button x:Name="stopRecrystalization_btn"  IsEnabled="False" Content="Stop"  HorizontalAlignment="Left" Margin="1139,354,0,0" VerticalAlignment="Top" Width="84" RenderTransformOrigin="0.329,-1.233"/>
             <Label x:Name="time_label" Content="Czas: 0" HorizontalAlignment="Left" Margin="1036,301,0,0" VerticalAlignment="Top"/>
             <Label x:Name="maxRecVal_label" Content="Max val: " HorizontalAlignment="Left" Margin="1036,323,0,0" VerticalAlignment="Top"/>
             <Button x:Name="Save_btn" Content="Save results" HorizontalAlignment="Left" Margin="1139,382,0,0" VerticalAlignment="Top" Width="84" Click="Save_Click"/>

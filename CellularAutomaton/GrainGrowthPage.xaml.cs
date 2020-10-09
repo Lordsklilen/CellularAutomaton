@@ -8,10 +8,10 @@ using EngineProject.Templates.GrainTemplates;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace CellularAutomaton
 {
@@ -28,26 +28,12 @@ namespace CellularAutomaton
         GrainGrowthEngine engine = new GrainGrowthEngine(100, 75);
         readonly GrainTemplateFactory templateFactory = new GrainTemplateFactory();
         DrawingHelper drawingHelper;
-        readonly DispatcherTimer timer = new DispatcherTimer();
-        readonly DispatcherTimer Recrystalizationtimer = new DispatcherTimer();
 
         public GrainGrowthPage()
         {
             InitializeComponent();
             Loaded += DrawInitial;
             Loaded += InitEvents;
-            SetTime();
-            timer.Tick += Start_Ticking_timer;
-            Recrystalizationtimer.Tick += StartRecrystalization_Ticking_timer;
-        }
-
-        void SetTime()
-        {
-            double.TryParse(FpsCounter.Text, out double result);
-            if (result < 1 || result > 999)
-                result = 1;
-            timer.Interval = TimeSpan.FromMilliseconds((int)(1000.0 / result));
-            Recrystalizationtimer.Interval = TimeSpan.FromMilliseconds((int)(1000.0 / result));
         }
 
         void InitBoard()
@@ -65,11 +51,6 @@ namespace CellularAutomaton
             engine = new GrainGrowthEngine(width, height);
         }
 
-        private void SetTime_timer(object sender, EventArgs e)
-        {
-            SetTime();
-        }
-
         void DrawInitial(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height, true);
@@ -80,7 +61,6 @@ namespace CellularAutomaton
         {
             widthNumber.TextChanged += DrawAndReload;
             iterationNumber.TextChanged += DrawAndReload;
-            FpsCounter.TextChanged += SetTime_timer;
         }
 
         void DrawAndReload(object sender, RoutedEventArgs e)
@@ -89,36 +69,22 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Panel);
         }
 
-        private void Start_CLick(object sender, RoutedEventArgs e)
+        private async void Start_CLick(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
             engine.CreateMCEngine(request);
-            timer.Start();
             start_btn.IsEnabled = false;
-            stopBtn.IsEnabled = true;
-        }
-
-        private void StartRecrystalization_Ticking_timer(object sender, EventArgs e)
-        {
-            decimal.TryParse(dt_DRX_textbox.Text, out decimal dt);
-            t += dt;
-            var board = engine.NextDRXIteration(t);
-            drawingHelper.DrawBoard(board);
-            time_label.Content = "Czas: " + t;
-            decimal max = board.MaxDensity();
-            maxRecVal_label.Content = "MaxVal: " + max.ToString("0.###E+0");
-            if (t >= tMax)
+            //stopBtn.IsEnabled = true;
+            while (!engine.IsFinished)
             {
-                StopRecrystalization_Click(null, null);
+                await Task.Run(() =>
+                {
+                    engine.NextIteration();
+                });
+                drawingHelper.DrawBoard(engine.Panel);
             }
-        }
-
-        private void Start_Ticking_timer(object sender, EventArgs e)
-        {
-            engine.NextIteration();
-            drawingHelper.DrawBoard(engine.Panel);
-            if (engine.IsFinished)
-                Stop_Click(null, null);
+            start_btn.IsEnabled = true;
+            stopBtn.IsEnabled = false;
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
@@ -130,13 +96,6 @@ namespace CellularAutomaton
                 engine.NextIteration();
             }
             drawingHelper.DrawBoard(engine.Panel);
-        }
-
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            start_btn.IsEnabled = true;
-            stopBtn.IsEnabled = false;
-            timer.Stop();
         }
 
         private void Img_MouseDown(object sender, MouseButtonEventArgs e)
@@ -258,22 +217,30 @@ namespace CellularAutomaton
             drawingHelper.DrawBoard(engine.Panel);
         }
 
-        private void StartRecrystalization_CLick(object sender, RoutedEventArgs e)
+        private async void StartRecrystalization_CLick(object sender, RoutedEventArgs e)
         {
             startRecrystalization_btn.IsEnabled = false;
-            stopRecrystalization_btn.IsEnabled = true;
+            //stopRecrystalization_btn.IsEnabled = true;
             var r = CreateDRXRequest();
             engine.InitializeDRX(r);
             decimal.TryParse(tEntire_DRX_textbox.Text, out decimal tmp);
             tMax += tmp;
-            Recrystalizationtimer.Start();
-        }
-
-        private void StopRecrystalization_Click(object sender, RoutedEventArgs e)
-        {
+            decimal.TryParse(dt_DRX_textbox.Text, out decimal dt);
+            do
+            {
+                Board panel = new Board(1, 1);
+                await Task.Run(() =>
+                {
+                    t += dt;
+                    panel = engine.NextDRXIteration(t);
+                });
+                drawingHelper.DrawBoard(panel);
+                time_label.Content = "Czas: " + t;
+                decimal max = panel.MaxDensity();
+                maxRecVal_label.Content = "MaxVal: " + max.ToString("0.###E+0");
+            } while (t >= tMax);
             startRecrystalization_btn.IsEnabled = true;
             stopRecrystalization_btn.IsEnabled = false;
-            Recrystalizationtimer.Stop();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
