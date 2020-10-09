@@ -1,9 +1,8 @@
 ﻿using EngineProject;
-using System.Windows;
-using System.Windows.Input;
-using System.Drawing;
 using EngineProject.DataStructures;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CellularAutomaton
 {
@@ -53,22 +52,21 @@ namespace CellularAutomaton
         }
         void DrawInitialRow(object sender, RoutedEventArgs e)
         {
-            drawingHelper = new DrawingHelper(img, width, height,true, false);
-            var result = _engineFacade.Board;
+            drawingHelper = new DrawingHelper(img, width, height, true, false);
+            var result = _engineFacade.Panel;
             drawingHelper.DrawFirstRow(result);
         }
 
         // Event Handling
         private void Iterate_CLick(object sender, RoutedEventArgs e)
         {
-            int rule;
-            int.TryParse(ruleNumber.Text, out rule);
+            int.TryParse(ruleNumber.Text, out int rule);
             _engineFacade.SetRule(rule);
             for (int i = 1; i <= height; i++)
             {
                 _engineFacade.GetNextIteration();
             }
-            var result = _engineFacade.Board;
+            var result = _engineFacade.Panel;
             drawingHelper.DrawBoard(result);
         }
 
@@ -79,7 +77,7 @@ namespace CellularAutomaton
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.ChangeCellState(position.X, position.Y);
-            var result = _engineFacade.Board;
+            var result = _engineFacade.Panel;
             drawingHelper.DrawFirstRow(result);
         }
 

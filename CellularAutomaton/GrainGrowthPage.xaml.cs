@@ -1,7 +1,7 @@
 ﻿using CellularAutomaton.Drawing;
-using EngineProject;
 using EngineProject.DataStructures;
 using EngineProject.Engines.DRX;
+using EngineProject.Engines.Engines;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
@@ -25,22 +25,18 @@ namespace CellularAutomaton
         int numberOfGrains = 0;
         decimal t = 0;
         decimal tMax = 0;
-        readonly IEngineComponent engine;
-        readonly EngineType engineType = EngineType.GrainGrowth;
+        GrainGrowthEngine engine = new GrainGrowthEngine(100, 75);
+        readonly GrainTemplateFactory templateFactory = new GrainTemplateFactory();
         DrawingHelper drawingHelper;
-        static DispatcherTimer timer;
-        static DispatcherTimer Recrystalizationtimer;
+        readonly DispatcherTimer timer = new DispatcherTimer();
+        readonly DispatcherTimer Recrystalizationtimer = new DispatcherTimer();
 
         public GrainGrowthPage()
         {
             InitializeComponent();
             Loaded += DrawInitial;
             Loaded += InitEvents;
-            engine = new EngineComponent();
-            timer = new DispatcherTimer();
-            Recrystalizationtimer = new DispatcherTimer();
             SetTime();
-            engine.CreateEngine(engineType, width, height);
             timer.Tick += Start_Ticking_timer;
             Recrystalizationtimer.Tick += StartRecrystalization_Ticking_timer;
         }
@@ -66,7 +62,7 @@ namespace CellularAutomaton
                 height = 3;
 
             drawingHelper.PrepareToDraw(width, height);
-            engine.CreateEngine(engineType, width, height);
+            engine = new GrainGrowthEngine(width, height);
         }
 
         private void SetTime_timer(object sender, EventArgs e)
@@ -77,7 +73,7 @@ namespace CellularAutomaton
         void DrawInitial(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height, true);
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         void InitEvents(object sender, RoutedEventArgs e)
@@ -90,13 +86,13 @@ namespace CellularAutomaton
         void DrawAndReload(object sender, RoutedEventArgs e)
         {
             InitBoard();
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void Start_CLick(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
-            engine.CalculateEnergy(request);
+            engine.CreateMCEngine(request);
             timer.Start();
             start_btn.IsEnabled = false;
             stopBtn.IsEnabled = true;
@@ -119,8 +115,8 @@ namespace CellularAutomaton
 
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
-            engine.GetNextIteration();
-            drawingHelper.DrawBoard(engine.Board);
+            engine.NextIteration();
+            drawingHelper.DrawBoard(engine.Panel);
             if (engine.IsFinished)
                 Stop_Click(null, null);
         }
@@ -128,12 +124,12 @@ namespace CellularAutomaton
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
-            engine.CalculateEnergy(request);
+            engine.CreateMCEngine(request);
             while (!engine.IsFinished)
             {
-                engine.GetNextIteration();
+                engine.NextIteration();
             }
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
@@ -150,12 +146,12 @@ namespace CellularAutomaton
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            if (engine.Board.GetGrainNumber(position.X, position.Y) == 0)
+            if (engine.Panel.GetGrainNumber(position.X, position.Y) == 0)
             {
                 ++numberOfGrains;
                 engine.SetGrainNumber(numberOfGrains, position.X, position.Y);
 
-                drawingHelper.DrawBoard(engine.Board);
+                drawingHelper.DrawBoard(engine.Panel);
             }
         }
 
@@ -166,12 +162,15 @@ namespace CellularAutomaton
             try
             {
                 var request = BuildTemplateRequest();
-                engine.GenerateGrainTemplate(request);
-                drawingHelper.DrawBoard(engine.Board);
+                var template = templateFactory.CreateTemplate(request.type);
+                template.GenerateTemplate(request);
+
+                engine.RecalculateEnergy();
+                drawingHelper.DrawBoard(engine.Panel);
             }
             catch (Exception ex)
             {
-                drawingHelper.DrawBoard(engine.Board);
+                drawingHelper.DrawBoard(engine.Panel);
                 MessageBox.Show(ex.Message);
             }
         }
@@ -185,8 +184,8 @@ namespace CellularAutomaton
             RandomHexOptions_radioBtn.IsEnabled = false;
 
             var request = CreateNeighbourhoodRequest();
-            engine.ChangeNeighboroodType(request);
-            drawingHelper.DrawBoard(engine.Board);
+            engine.ChangeStrategyType(request);
+            drawingHelper.DrawBoard(engine.Panel);
 
         }
 
@@ -199,20 +198,21 @@ namespace CellularAutomaton
         private void OnOffborder_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.net = !drawingHelper.net;
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void Squares_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.SetSquareAndReload(!drawingHelper.Squares);
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void GenrateMonteCarlo(object sender, RoutedEventArgs e)
         {
             var request = CreateMonteCarloRequest();
-            engine.CalculateMonteCarlo(request);
-            drawingHelper.DrawBoard(engine.Board);
+            engine.CreateMCEngine(request);
+            engine.IterateMonteCarlo(request.numberOfIterations);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void ViewEnergy(object sender, RoutedEventArgs e)
@@ -223,14 +223,15 @@ namespace CellularAutomaton
                 drawingHelper.drawingType = DrawingType.DrawEnergy;
             var request = CreateMonteCarloRequest();
             request.numberOfIterations = 0;
-            engine.CalculateMonteCarlo(request);
-            drawingHelper.DrawBoard(engine.Board);
+            engine.CreateMCEngine(request);
+            engine.IterateMonteCarlo(request.numberOfIterations);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void CenterPoints_Click(object sender, RoutedEventArgs e)
         {
             drawingHelper.centerPoints = !drawingHelper.centerPoints;
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void GenrateDRX(object sender, RoutedEventArgs e)
@@ -245,7 +246,7 @@ namespace CellularAutomaton
                 drawingHelper.drawingType = DrawingType.DrawBoard;
             else
                 drawingHelper.drawingType = DrawingType.DrawRecrystalization;
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void ViewDensity(object sender, RoutedEventArgs e)
@@ -254,7 +255,7 @@ namespace CellularAutomaton
                 drawingHelper.drawingType = DrawingType.DrawBoard;
             else
                 drawingHelper.drawingType = DrawingType.DrawDensity;
-            drawingHelper.DrawBoard(engine.Board);
+            drawingHelper.DrawBoard(engine.Panel);
         }
 
         private void StartRecrystalization_CLick(object sender, RoutedEventArgs e)
@@ -376,7 +377,7 @@ namespace CellularAutomaton
         {
             var request = new TemplateRequest
             {
-                board = engine.Board
+                board = engine.Panel
             };
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
             int.TryParse(Radius_textBox.Text, out request.radius);

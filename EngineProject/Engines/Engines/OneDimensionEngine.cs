@@ -24,18 +24,19 @@ namespace EngineProject.Engines
             SetRule(_rule);
         }
 
-        public void NextIteration()
+        public Board NextIteration()
         {
             if (_maxRow <= _createdRows + 1)
             {
                 _createdRows = 0;
-                return;
+                return Panel;
             }
             for (int i = 0; i < _maxColumn; i++)
             {
                 CheckNeighbours(i);
             }
             _createdRows++;
+            return Panel;
         }
 
         public void ChangeCellState(int x, int y)
@@ -75,16 +76,6 @@ namespace EngineProject.Engines
                 weights[i] = rule % 2;
                 rule /= 2;
             }
-        }
-
-        public void SetGrainNumber(int number, int x, int y)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeBorderConditions(bool state)
-        {
-            throw new NotImplementedException();
         }
     }
 }

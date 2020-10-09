@@ -1,10 +1,6 @@
 ﻿using EngineProject.DataStructures;
 using EngineProject.Engines;
-using EngineProject.Engines.DRX;
 using EngineProject.Engines.Engines;
-using EngineProject.Engines.MonteCarlo;
-using EngineProject.Engines.NeighbourStrategy;
-using EngineProject.Templates.GrainTemplates;
 using System;
 
 namespace EngineProject
@@ -12,12 +8,9 @@ namespace EngineProject
     public class EngineComponent : IEngineComponent
     {
         private IEngine engine;
-        private GrainTemplateFactory templateFactory;
-
         public int MaxNumber => engine.Panel.MaxNumber();
-        public bool IsFinished => (engine as GrainGrowthEngine).IsFinished() || MaxNumber == 0;
-
-        public Board Board => engine.Panel;
+        public bool IsFinished => (engine as GrainGrowthEngine).IsFinished || MaxNumber == 0;
+        public Board Panel => engine.Panel;
 
         public void CreateEngine(EngineType type, int width, int height)
         {
@@ -28,10 +21,6 @@ namespace EngineProject
                     break;
                 case EngineType.GameOfLife:
                     engine = new GameOfLifeEngine(width, height);
-                    break;
-                case EngineType.GrainGrowth:
-                    engine = new GrainGrowthEngine(width, height);
-                    templateFactory = new GrainTemplateFactory();
                     break;
                 default:
                     throw new NotSupportedException("Unrecognized Engine type");
@@ -56,60 +45,7 @@ namespace EngineProject
 
         public void SetRule(int rule)
         {
-            (engine as GameOfLifeEngine).SetRule(rule);
-        }
-
-        public void SetGrainNumber(int grainNumber, int x, int y)
-        {
-            engine.SetGrainNumber(grainNumber, x, y);
-        }
-
-        public void GenerateGrainTemplate(TemplateRequest request)
-        {
-            var template = templateFactory.CreateTemplate(request.type);
-            template.GenerateTemplate(request);
-            (engine as GrainGrowthEngine).RecalculateEnergy();
-        }
-
-        public void ChangeBorderConditions(bool state)
-        {
-            engine.ChangeBorderConditions(state);
-        }
-
-        public void ChangeNeighboroodType(NeighbourStrategyRequest request)
-        {
-            (engine as GrainGrowthEngine).ChangeStrategyType(request);
-        }
-
-        public void CalculateMonteCarlo(MonteCarloRequest request)
-        {
-            (engine as GrainGrowthEngine).CreateMCEngine(request);
-            (engine as GrainGrowthEngine).IterateMonteCarlo(request.numberOfIterations);
-        }
-
-        public void CalculateEnergy(MonteCarloRequest request)
-        {
-            (engine as GrainGrowthEngine).CreateMCEngine(request);
-        }
-
-        public Board CalculateDRX(DRXRequest request)
-        {
-            return (engine as GrainGrowthEngine).CalculateDRX(request);
-        }
-
-        public Board InitializeDRX(DRXRequest request)
-        {
-            return (engine as GrainGrowthEngine).InitializeDRX(request);
-        }
-
-        public Board NextDRXIteration(decimal t)
-        {
-            return (engine as GrainGrowthEngine).NextDRXIteration(t);
-        }
-
-        public string GetSaveText()
-        {
-            return (engine as GrainGrowthEngine).GetSaveText();
+            (engine as OneDimensionEngine).SetRule(rule);
         }
     }
 }

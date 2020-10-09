@@ -2,29 +2,29 @@
 using EngineProject.Engines.DRX;
 using EngineProject.Engines.MonteCarlo;
 using EngineProject.Engines.NeighbourStrategy;
-using System;
-using System.Threading.Tasks;
 
 namespace EngineProject.Engines.Engines
 {
-    public class GrainGrowthEngine : IEngine
+    public class GrainGrowthEngine
     {
         public Board Panel { get; private set; }
-        public EngineType type;
         private readonly int maxRow;
         private readonly int maxColumn;
         private bool OpenBorderCondition = true;
         private readonly bool MCIterateAllCells = true;
         private readonly NeighbourFactory neighbourFactory;
-        private MonteCarloEngine MCEngine;
+        private MonteCarloEngine MCEngine
+        {
+            get;
+            set;
+        }
         private readonly CellType cellType;
         private INeighbourStrategy neighbourStrategy;
         private IDynamicRecrystalizationEngine DRXEngine;
 
-        public bool IsFinished() => Panel.finished;
+        public bool IsFinished => Panel.finished || Panel.MaxNumber() == 0;
         public GrainGrowthEngine(int width, int height, NeighborhoodType nType = NeighborhoodType.VonNeumann)
         {
-            type = EngineType.GrainGrowth;
             cellType = CellType.Grain;
             Panel = new Board(width, height, cellType);
             maxRow = height;
@@ -34,34 +34,25 @@ namespace EngineProject.Engines.Engines
             neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
         }
 
-        public void NextIteration()
+        public Board NextIteration()
         {
             if (Panel.finished)
-                return;
+                return Panel;
             var copyPanel = new Board(Panel)
             {
                 finished = true
             };
             neighbourStrategy.Initialize(Panel, copyPanel, maxRow, maxColumn, OpenBorderCondition);
-            Parallel.For(0, Panel.Y, i =>
+            for (int i = 0; i < Panel.Y; i++)
             {
                 var row = Panel.BoardContainer[i];
                 foreach (var cell in row)
                 {
                     neighbourStrategy.ComputeCell((Grain)cell);
                 }
-            });
+            }
             Panel = MCEngine.ReCalculateAllEnergy(copyPanel);
-        }
-
-        public void ChangeCellState(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetCellState(int x, int y, bool state)
-        {
-            throw new NotImplementedException();
+            return Panel;
         }
 
         public void SetGrainNumber(int number, int x, int y)
@@ -69,7 +60,6 @@ namespace EngineProject.Engines.Engines
             Panel.SetGrainNumber(number, x, y);
             if (MCEngine != null)
                 RecalculateEnergy();
-
         }
 
         public void ChangeStrategyType(NeighbourStrategyRequest request)
@@ -94,7 +84,7 @@ namespace EngineProject.Engines.Engines
                 (neighbourStrategy as NeighbourHexagonal).type = type;
         }
 
-        internal void CreateMCEngine(MonteCarloRequest request)
+        public void CreateMCEngine(MonteCarloRequest request)
         {
             OpenBorderCondition = request.border;
             request.board = Panel;
@@ -108,14 +98,14 @@ namespace EngineProject.Engines.Engines
             RecalculateEnergy();
         }
 
-        internal Board RecalculateEnergy()
+        public Board RecalculateEnergy()
         {
             if (MCEngine != null)
                 Panel = MCEngine.ReCalculateAllEnergy(Panel);
             return Panel;
         }
 
-        internal void IterateMonteCarlo(int iterations)
+        public void IterateMonteCarlo(int iterations)
         {
             if (MCIterateAllCells)
                 MCEngine.NextIterationsEveryCell(Panel, iterations);

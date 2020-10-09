@@ -1,5 +1,4 @@
-﻿using EngineProject.DataStructures;
-using System;
+using EngineProject.DataStructures;
 
 namespace EngineProject.Engines
 {
@@ -18,7 +17,7 @@ namespace EngineProject.Engines
             _maxColumn = width;
         }
 
-        public void NextIteration()
+        public Board NextIteration()
         {
             var copyPanel = new Board(Panel);
             foreach (var row in Panel.BoardContainer)
@@ -30,6 +29,7 @@ namespace EngineProject.Engines
 
             }
             Panel = copyPanel;
+            return Panel;
         }
 
         private void ComputeCell(Cell cell, Board copyPanel)
@@ -75,21 +75,6 @@ namespace EngineProject.Engines
                 }
             }
             return counter;
-        }
-
-        public void SetRule(int rule)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetGrainNumber(int number, int x, int y)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeBorderConditions(bool state)
-        {
-            throw new NotImplementedException();
         }
     }
 }

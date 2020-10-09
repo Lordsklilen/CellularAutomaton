@@ -9,7 +9,7 @@ namespace EngineProject.DataStructures
 
         public ICell[][] BoardContainer { get; private set; }
         public CellType CellType { get; set; }
-        public NeighborhoodType neighbooorhoodType { get; set; }
+        public NeighborhoodType NeighborType { get; set; }
         private readonly ICellFactory cellFactory;
         private int maxGrainNumber;
         public int X { get; }
@@ -70,9 +70,9 @@ namespace EngineProject.DataStructures
                 for (int j = 0; j < X; j++)
                 {
                     var el = main.BoardContainer[i][j] as Grain ?? main.BoardContainer[i][j] as Cell;
-                    if(el.GetType() == typeof(Grain))
+                    if (el.GetType() == typeof(Grain))
                         BoardContainer[i][j] = cellFactory.CreateGrain(el as Grain);
-                    else 
+                    else
                         BoardContainer[i][j] = cellFactory.CreateCell(el);
                 }
             }
@@ -100,7 +100,8 @@ namespace EngineProject.DataStructures
             (BoardContainer[x][y] as Grain).RecrystalizedNumber = maxRecrystalizedNumber;
         }
 
-        public List<Point> GetBorderGrainsCoordinates(){
+        public List<Point> GetBorderGrainsCoordinates()
+        {
             List<Point> result = new List<Point>();
             for (int i = 0; i < Y; i++)
             {

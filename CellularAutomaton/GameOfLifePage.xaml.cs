@@ -29,7 +29,7 @@ namespace CellularAutomaton
         void DrawInitial(object sender, RoutedEventArgs e)
         {
             drawingHelper = new DrawingHelper(img, width, height, true, false);
-            var result = _engineFacade.Board;
+            var result = _engineFacade.Panel;
             drawingHelper.DrawBoard(result);
         }
         void Initializevariables()
@@ -78,7 +78,7 @@ namespace CellularAutomaton
         void DrawAndReload(object sender, RoutedEventArgs e)
         {
             InitBoard();
-            var result = _engineFacade.Board;
+            var result = _engineFacade.Panel;
             drawingHelper.DrawBoard(result);
         }
         private void Start_CLick(object sender, RoutedEventArgs e)
@@ -91,7 +91,7 @@ namespace CellularAutomaton
         private void Start_Ticking_timer(object sender, EventArgs e)
         {
             _engineFacade.GetNextIteration();
-            var result = _engineFacade.Board;
+            var result = _engineFacade.Panel;
             drawingHelper.DrawBoard(result);
         }
 
@@ -109,7 +109,7 @@ namespace CellularAutomaton
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
             _engineFacade.ChangeCellState(position.X, position.Y);
-            var result = _engineFacade.Board;
+            var result = _engineFacade.Panel;
             drawingHelper.DrawBoard(result);
         }
 
@@ -117,8 +117,8 @@ namespace CellularAutomaton
         {
             string content = ((ComboBoxItem)sender).Content.ToString();
             var EnumValue = (GOLTemplatesEnum)Enum.Parse(typeof(GOLTemplatesEnum), content);
-            drawingHelper.PrepareTemplate(EnumValue, _engineFacade.Board);
-            var result = _engineFacade.Board;
+            drawingHelper.PrepareTemplate(EnumValue, _engineFacade.Panel);
+            var result = _engineFacade.Panel;
             drawingHelper.DrawBoard(result);
         }
     }
