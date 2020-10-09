@@ -4,7 +4,7 @@ namespace EngineProject.Engines
 {
     public interface IEngine
     {
-        Board panel { get; }
+        Board Panel { get; }
         void NextIteration();
         Board GetBoard();
         void SetRule(int rule);

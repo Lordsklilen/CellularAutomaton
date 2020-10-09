@@ -129,7 +129,7 @@ namespace EngineProject.Engines.DRX
 
         private Board DistributeValues(Board board, decimal dRo)
         {
-            decimal roPerCell = dRo / (decimal)(board.X * board.Y);
+            decimal roPerCell = dRo / (board.X * board.Y);
             decimal equalDistribution = roPerCell * equalDistributionpercentage;
             decimal randomDistribution = roPerCell * randomPackagePercentage;
             borderCoordinates = board.GetBorderGrainsCoordinates();

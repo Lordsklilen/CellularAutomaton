@@ -9,7 +9,7 @@ namespace CellularAutomaton.Drawing
 {
     public class BoardTemplateBuilder
     {
-        Random rand = new Random();
+        readonly Random rand = new Random();
         public void BuildClear(Board panel)
         {
             panel.Clear();

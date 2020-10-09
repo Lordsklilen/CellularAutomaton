@@ -9,7 +9,7 @@ namespace EngineProject.Engines.Engines
 {
     public class GrainGrowthEngine : IEngine
     {
-        public Board panel { get; private set; }
+        public Board Panel { get; private set; }
         public EngineType type;
         private readonly int maxRow;
         private readonly int maxColumn;
@@ -18,21 +18,18 @@ namespace EngineProject.Engines.Engines
         private readonly NeighbourFactory neighbourFactory;
         private MonteCarloEngine MCEngine;
         private readonly CellType cellType;
-        private NeighbooorhoodType neighboursType;
         private INeighbourStrategy neighbourStrategy;
-        private HexType hexType;
         private IDynamicRecrystalizationEngine DRXEngine;
 
-        public Board GetBoard() => panel;
-        public bool IsFinished() => panel.finished;
+        public Board GetBoard() => Panel;
+        public bool IsFinished() => Panel.finished;
         public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.VonNeumann)
         {
             type = EngineType.GrainGrowth;
             cellType = CellType.Grain;
-            panel = new Board(width, height, cellType);
+            Panel = new Board(width, height, cellType);
             maxRow = height;
             maxColumn = width;
-            neighboursType = nType;
             neighbourFactory = new NeighbourFactory();
             NeighbourStrategyRequest request = new NeighbourStrategyRequest() { neighbooorhoodType = nType };
             neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
@@ -40,22 +37,22 @@ namespace EngineProject.Engines.Engines
 
         public void NextIteration()
         {
-            if (panel.finished)
+            if (Panel.finished)
                 return;
-            var copyPanel = new Board(panel)
+            var copyPanel = new Board(Panel)
             {
                 finished = true
             };
-            neighbourStrategy.Initialize(panel, copyPanel, maxRow, maxColumn, OpenBorderCondition);
-            Parallel.For(0, panel.Y, i =>
+            neighbourStrategy.Initialize(Panel, copyPanel, maxRow, maxColumn, OpenBorderCondition);
+            Parallel.For(0, Panel.Y, i =>
             {
-                var row = panel.board[i];
+                var row = Panel.board[i];
                 foreach (var cell in row)
                 {
                     neighbourStrategy.ComputeCell((Grain)cell);
                 }
             });
-            panel = MCEngine.ReCalculateAllEnergy(copyPanel);
+            Panel = MCEngine.ReCalculateAllEnergy(copyPanel);
         }
 
         public void ChangeCellState(int x, int y)
@@ -75,7 +72,7 @@ namespace EngineProject.Engines.Engines
 
         public void SetGrainNumber(int number, int x, int y)
         {
-            panel.SetGrainNumber(number, x, y);
+            Panel.SetGrainNumber(number, x, y);
             if (MCEngine != null)
                 RecalculateEnergy();
 
@@ -84,8 +81,6 @@ namespace EngineProject.Engines.Engines
         public void ChangeStrategyType(NeighbourStrategyRequest request)
         {
             OpenBorderCondition = request.border;
-            neighboursType = request.neighbooorhoodType;
-            this.hexType = request.hexType;
             neighbourStrategy = neighbourFactory.CreateNeighbourComputing(request);
             if (MCEngine != null)
             {
@@ -101,7 +96,6 @@ namespace EngineProject.Engines.Engines
 
         public void ChangeHexType(HexType type)
         {
-            hexType = type;
             if ((neighbourStrategy as NeighbourHexagonal) != null)
                 (neighbourStrategy as NeighbourHexagonal).type = type;
         }
@@ -109,8 +103,8 @@ namespace EngineProject.Engines.Engines
         internal void CreateMCEngine(MonteCarloRequest request)
         {
             OpenBorderCondition = request.border;
-            request.board = panel;
-            request.CopyBoard = new Board(panel);
+            request.board = Panel;
+            request.CopyBoard = new Board(Panel);
             request.maxColumn = maxColumn;
             request.maxRow = maxRow;
             if (MCEngine == null)
@@ -123,16 +117,16 @@ namespace EngineProject.Engines.Engines
         internal Board RecalculateEnergy()
         {
             if (MCEngine != null)
-                panel = MCEngine.ReCalculateAllEnergy(panel);
-            return panel;
+                Panel = MCEngine.ReCalculateAllEnergy(Panel);
+            return Panel;
         }
 
         internal void IterateMonteCarlo(int iterations)
         {
             if (MCIterateAllCells)
-                MCEngine.NextIterationsEveryCell(panel, iterations);
+                MCEngine.NextIterationsEveryCell(Panel, iterations);
             else
-                MCEngine.NextIterations(panel, iterations);
+                MCEngine.NextIterations(Panel, iterations);
             RecalculateEnergy();
         }
 
@@ -142,9 +136,9 @@ namespace EngineProject.Engines.Engines
                 DRXEngine = new DynamicRecrystalizationEngine(request, neighbourStrategy);
             else
                 DRXEngine.Initialize(request, neighbourStrategy);
-            panel = DRXEngine.IterateAll(panel);
+            Panel = DRXEngine.IterateAll(Panel);
 
-            return panel;
+            return Panel;
         }
 
         public Board InitializeDRX(DRXRequest request)
@@ -153,15 +147,15 @@ namespace EngineProject.Engines.Engines
                 DRXEngine = new DynamicRecrystalizationEngine(request, neighbourStrategy);
             else
                 DRXEngine.Initialize(request, neighbourStrategy);
-            return panel;
+            return Panel;
         }
 
         public Board NextDRXIteration(decimal t)
         {
-            panel = DRXEngine.NextIteration(panel, t);
+            Panel = DRXEngine.NextIteration(Panel, t);
             if (DRXEngine.IsChaged())
                 return RecalculateEnergy();
-            return panel;
+            return Panel;
         }
 
         public string GetSaveText()

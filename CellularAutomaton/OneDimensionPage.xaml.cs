@@ -61,7 +61,7 @@ namespace CellularAutomaton
         // Event Handling
         private void Iterate_CLick(object sender, RoutedEventArgs e)
         {
-            int rule = 90;
+            int rule;
             int.TryParse(ruleNumber.Text, out rule);
             _engineFacade.SetRule(rule);
             for (int i = 1; i <= height; i++)
@@ -78,7 +78,7 @@ namespace CellularAutomaton
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
+            _engineFacade.ChangeCellState(position.X, position.Y);
             var result = _engineFacade.Board;
             drawingHelper.DrawFirstRow(result);
         }

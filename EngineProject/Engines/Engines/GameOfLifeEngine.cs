@@ -5,14 +5,14 @@ namespace EngineProject.Engines
 {
     public class GameOfLifeEngine : IEngine
     {
-        public Board panel { get; private set; }
+        public Board Panel { get; private set; }
         public EngineType type;
         private readonly int _maxRow;
         private readonly int _maxColumn;
 
         public GameOfLifeEngine(int width, int height)
         {
-            panel = new Board(width, height);
+            Panel = new Board(width, height);
             type = EngineType.GameOfLife;
             _maxRow = height;
             _maxColumn = width;
@@ -20,13 +20,13 @@ namespace EngineProject.Engines
 
         public Board GetBoard()
         {
-            return panel;
+            return Panel;
         }
 
         public void NextIteration()
         {
-            var copyPanel = new Board(panel);
-            foreach (var row in panel.board)
+            var copyPanel = new Board(Panel);
+            foreach (var row in Panel.board)
             {
                 foreach (var cell in row)
                 {
@@ -34,7 +34,7 @@ namespace EngineProject.Engines
                 }
 
             }
-            panel = copyPanel;
+            Panel = copyPanel;
         }
 
         private void ComputeCell(Cell cell, Board copyPanel)
@@ -57,12 +57,12 @@ namespace EngineProject.Engines
         }
         public void ChangeCellState(int x, int y)
         {
-            panel.SetCellState(x, y, !panel.board[x][y].GetState());
+            Panel.SetCellState(x, y, !Panel.board[x][y].GetState());
         }
 
         public void SetCellState(int x, int y, bool state)
         {
-            panel.SetCellState(x, y, state);
+            Panel.SetCellState(x, y, state);
         }
 
         private int CheckNeighbours(Cell cell)
@@ -75,7 +75,7 @@ namespace EngineProject.Engines
                     int widthId = (i + cell.x) >= 0 ? (i + cell.x) % (_maxRow) : _maxRow - 1;
                     int heightId = (j + cell.y) >= 0 ? (j + cell.y) % (_maxColumn) : _maxColumn - 1;
 
-                    if (panel.board[widthId][heightId].GetState() && !(i == 0 && j == 0))
+                    if (Panel.board[widthId][heightId].GetState() && !(i == 0 && j == 0))
                         counter++;
                 }
             }

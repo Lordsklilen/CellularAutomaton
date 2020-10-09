@@ -31,7 +31,7 @@ namespace EngineProject.Engines.NeighbourStrategy
         {
             if (cell.GetGrainNumber() == 0)
             {
-                var neighbours = NeighboursGrainNumbers(cell as Grain);
+                var neighbours = NeighboursGrainNumbers(cell);
                 copyPanel.SetGrainNumber(NeighbourHelper.MostCommonNeighbour(neighbours), cell.x, cell.y);
                 copyPanel.finished = false;
             }
@@ -46,12 +46,12 @@ namespace EngineProject.Engines.NeighbourStrategy
 
         public List<int> GetOnlyGrainNumbers(List<Grain> cells)
         {
-            return cells.Select(x => x.GetGrainNumber()).ToList<int>();
+            return cells.Select(x => x.GetGrainNumber()).ToList();
         }
 
         public List<int> GetOnlyRecrystalizationNumbers(List<Grain> cells)
         {
-            return cells.Select(x => x.RecrystalizedNumber).ToList<int>();
+            return cells.Select(x => x.RecrystalizedNumber).ToList();
         }
 
         public int GetRecrystalizedAndGrainGrains(List<Grain> grains, int recrystalizationNumber, int grainNumber)
@@ -70,9 +70,9 @@ namespace EngineProject.Engines.NeighbourStrategy
                 {
                     if (i == 0 && j == 0)
                         continue;
-                    int number = 0;
                     int widthId;
                     int heightId;
+                    int number;
                     if (OpenBorderCondition)
                     {
                         widthId = (i + cell.x) >= 0 ? (i + cell.x) % (maxRow) : (i + cell.x) + maxRow;

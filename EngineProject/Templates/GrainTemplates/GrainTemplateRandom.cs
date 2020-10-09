@@ -5,7 +5,7 @@ namespace EngineProject.Templates.GrainTemplates
 {
     public class GrainTemplateRandom : IGrainTemplateStrategy
     {
-        Random rand = new Random();
+        readonly Random rand = new Random();
         public void GenerateTemplate(TemplateRequest request)
         {
             var numberOfPoints = request.numberOfPoints;

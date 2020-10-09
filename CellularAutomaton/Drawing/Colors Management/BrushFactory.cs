@@ -1,34 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace CellularAutomaton.Drawing
 {
     public class BrushFactory
     {
-        ColorTool colorTool = new ColorTool();
+        readonly ColorTool colorTool = new ColorTool();
 
         public Brush CreateBinaryBrush(bool state)
         {
-            switch (state)
+            return state switch
             {
-                case true:
-                    return new SolidBrush(Color.Black);
-                case false:
-                    return new SolidBrush(Color.White);
-                default:
-                    throw new NotSupportedException("This type of binary brush is not supprted");
-            }
+                true => new SolidBrush(Color.Black),
+                false => new SolidBrush(Color.White)
+            };
         }
 
         public Brush CreateColorBrush(int number, int max)
         {
-            if(number ==0 || max <=0)
+            if (number == 0 || max <= 0)
                 return new SolidBrush(Color.White);
-            return new SolidBrush(colorTool.GetColor(number,max,0));
+            return new SolidBrush(colorTool.GetColor(number, max, 0));
         }
 
         public Brush CreateEnergyBrush(int energy)
@@ -70,12 +61,13 @@ namespace CellularAutomaton.Drawing
 
         public Brush CreateDyslocationBrush(decimal density, decimal min, decimal max)
         {
-            if (density == 0 || max <=0)
+            if (density == 0 || max <= 0)
                 return new SolidBrush(Color.White);
             return new SolidBrush(colorTool.GetDensityColors(density, max, min));
         }
 
-        public Brush CreateCenterOfMassBrush() {
+        public Brush CreateCenterOfMassBrush()
+        {
             return new SolidBrush(Color.Red);
         }
 

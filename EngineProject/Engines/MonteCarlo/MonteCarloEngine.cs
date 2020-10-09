@@ -13,14 +13,14 @@ namespace EngineProject.Engines.MonteCarlo
         private int iterations;
         private double Kt;
         private NeighbourStrategyRequest strategyRequest;
-        private NeighbourFactory factory;
+        private readonly NeighbourFactory factory;
         private INeighbourStrategy neighbourStrategy;
         private bool border;
         private int maxColumn;
         private int maxRow;
         private Board board;
         private Board copyBorad;
-        Random rand = new Random();
+        readonly Random rand = new Random();
         internal MonteCarloEngine(MonteCarloRequest request, INeighbourStrategy strategy)
         {
             factory = new NeighbourFactory();
@@ -102,7 +102,7 @@ namespace EngineProject.Engines.MonteCarlo
             if (nieghbours.Count <= 0)
                 return board;
 
-            int EBefore = nieghbours.Count(member => member != grain.grainNumber);
+            int EBefore = nieghbours.Count(member => member != grain.GrainNumber);
             int newGrainNumber = nieghbours[rand.Next(0, nieghbours.Count)];
             int EAfter = nieghbours.Count(member => member != newGrainNumber);
             int deltaE = EAfter - EBefore;

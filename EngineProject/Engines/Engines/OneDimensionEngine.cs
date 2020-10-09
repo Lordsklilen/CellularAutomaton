@@ -5,7 +5,7 @@ namespace EngineProject.Engines
 {
     public class OneDimensionEngine : IEngine
     {
-        public Board panel { get; private set; }
+        public Board Panel { get; private set; }
         public EngineType type;
         private int _createdRows;
         private readonly int _maxRow;
@@ -14,7 +14,7 @@ namespace EngineProject.Engines
         private readonly int[] weights;
         public OneDimensionEngine(int width, int height)
         {
-            panel = new Board(width, height);
+            Panel = new Board(width, height);
             type = EngineType.OneDimensionEngine;
             _createdRows = 0;
             _maxRow = height;
@@ -26,7 +26,7 @@ namespace EngineProject.Engines
 
         public Board GetBoard()
         {
-            return panel;
+            return Panel;
         }
 
         public void NextIteration()
@@ -47,7 +47,7 @@ namespace EngineProject.Engines
         {
             if (x > 0)
                 return;
-            panel.SetCellState(x, y, !panel.board[x][y].GetState());
+            Panel.SetCellState(x, y, !Panel.board[x][y].GetState());
         }
 
         public void SetRule(int rule)
@@ -62,15 +62,15 @@ namespace EngineProject.Engines
         {
             if (x > 0)
                 return;
-            panel.SetCellState(x, y, state);
+            Panel.SetCellState(x, y, state);
         }
 
         private void CheckNeighbours(int i)
         {
-            int left = panel.board[_createdRows][(i + _maxColumn - 1) % _maxColumn].GetState() ? 4 : 0;
-            int middle = panel.board[_createdRows][i].GetState() ? 2 : 0;
-            int right = panel.board[_createdRows][(i + 1 + _maxColumn) % _maxColumn].GetState() ? 1 : 0;
-            panel.SetCellState(_createdRows + 1, i, weights[left + middle + right] == 1);
+            int left = Panel.board[_createdRows][(i + _maxColumn - 1) % _maxColumn].GetState() ? 4 : 0;
+            int middle = Panel.board[_createdRows][i].GetState() ? 2 : 0;
+            int right = Panel.board[_createdRows][(i + 1 + _maxColumn) % _maxColumn].GetState() ? 1 : 0;
+            Panel.SetCellState(_createdRows + 1, i, weights[left + middle + right] == 1);
         }
 
         private void ComputeWeights(int rule)

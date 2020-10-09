@@ -108,7 +108,7 @@ namespace CellularAutomaton
             var x = (int)mousePosition.X;
             var y = (int)mousePosition.Y;
             var position = drawingHelper.GetPosition(x, y);
-            _engineFacade.ChangeCellState((int)position.X, (int)position.Y);
+            _engineFacade.ChangeCellState(position.X, position.Y);
             var result = _engineFacade.Board;
             drawingHelper.DrawBoard(result);
         }

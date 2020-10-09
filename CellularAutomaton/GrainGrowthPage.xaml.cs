@@ -7,25 +7,11 @@ using EngineProject.Engines.NeighbourStrategy;
 using EngineProject.Templates.GrainTemplates;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using static EngineProject.EngineComponent;
 
 namespace CellularAutomaton
 {
@@ -38,9 +24,9 @@ namespace CellularAutomaton
         int width;
         int height;
         DrawingHelper drawingHelper;
-        static System.Windows.Forms.Timer timer;
+        static DispatcherTimer timer;
         static DispatcherTimer Recrystalizationtimer;
-        EngineType engineType = EngineType.GrainGrowth;
+        readonly EngineType engineType = EngineType.GrainGrowth;
         int numberOfGrains = 0;
         decimal t;
         decimal tMax;
@@ -61,7 +47,7 @@ namespace CellularAutomaton
             t = 0;
             tMax = 0;
             engine.CreateEngine(engineType, width, height);
-            timer = new System.Windows.Forms.Timer();
+            timer = new DispatcherTimer();
             Recrystalizationtimer = new DispatcherTimer();
             SetTime();
             timer.Tick += Start_Ticking_timer;
@@ -70,11 +56,10 @@ namespace CellularAutomaton
 
         void SetTime()
         {
-            var result = 1.0;
-            double.TryParse(FpsCounter.Text, out result);
+            double.TryParse(FpsCounter.Text, out double result);
             if (result < 1 || result > 999)
                 result = 1;
-            timer.Interval = (int)(1000.0 / result);
+            timer.Interval = TimeSpan.FromMilliseconds((int)(1000.0 / result));
             Recrystalizationtimer.Interval = TimeSpan.FromMilliseconds((int)(1000.0 / result));
         }
 
@@ -128,14 +113,13 @@ namespace CellularAutomaton
 
         private void StartRecrystalization_Ticking_timer(object sender, EventArgs e)
         {
-            decimal dt;
-            decimal.TryParse(dt_DRX_textbox.Text, out dt);
+            decimal.TryParse(dt_DRX_textbox.Text, out decimal dt);
             t += dt;
             var board = engine.NextDRXIteration(t);
             drawingHelper.DrawBoard(board);
             time_label.Content = "Czas: " + t;
             decimal max = board.MaxDensity();
-            maxRecVal_label.Content = "MaxVal: "+ max.ToString("0.###E+0");
+            maxRecVal_label.Content = "MaxVal: " + max.ToString("0.###E+0");
             if (t >= tMax)
             {
                 StopRecrystalization_Click(null, null);
@@ -229,7 +213,7 @@ namespace CellularAutomaton
 
         private void Squares_Click(object sender, RoutedEventArgs e)
         {
-            drawingHelper.SetSquareAndReload(!drawingHelper.squares);
+            drawingHelper.SetSquareAndReload(!drawingHelper.Squares);
             drawingHelper.DrawBoard(engine.Board);
         }
 
@@ -242,7 +226,7 @@ namespace CellularAutomaton
 
         private void ViewEnergy(object sender, RoutedEventArgs e)
         {
-            if(drawingHelper.drawingType == DrawingType.DrawEnergy)
+            if (drawingHelper.drawingType == DrawingType.DrawEnergy)
                 drawingHelper.drawingType = DrawingType.DrawBoard;
             else
                 drawingHelper.drawingType = DrawingType.DrawEnergy;
@@ -288,8 +272,7 @@ namespace CellularAutomaton
             stopRecrystalization_btn.IsEnabled = true;
             var r = CreateDRXRequest();
             engine.InitializeDRX(r);
-            decimal tmp;
-            decimal.TryParse(tEntire_DRX_textbox.Text, out tmp);
+            decimal.TryParse(tEntire_DRX_textbox.Text, out decimal tmp);
             tMax += tmp;
             Recrystalizationtimer.Start();
         }
@@ -303,9 +286,12 @@ namespace CellularAutomaton
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt|All files(*)|*.*";
-            if (saveFileDialog.ShowDialog() == true) {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Text file (*.txt)|*.txt|All files(*)|*.*"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
                 string text = engine.GetSaveText();
                 File.WriteAllText(saveFileDialog.FileName, text);
             }
@@ -397,8 +383,10 @@ namespace CellularAutomaton
 
         private TemplateRequest BuildTemplateRequest()
         {
-            var request = new TemplateRequest();
-            request.board = engine.Board;
+            var request = new TemplateRequest
+            {
+                board = engine.Board
+            };
             int.TryParse(Random_textBox.Text, out request.numberOfPoints);
             int.TryParse(Radius_textBox.Text, out request.radius);
             int.TryParse(Xhomogenious_textbox.Text, out request.x);

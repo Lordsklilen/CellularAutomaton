@@ -16,12 +16,16 @@ namespace EngineProject.Engines.NeighbourStrategy
                 case NeighbooorhoodType.Pentagonal:
                     return new NeighbourPentagonal();
                 case NeighbooorhoodType.Hexagonal:
-                    var result = new NeighbourHexagonal();
-                    result.type = request.hexType;
+                    var result = new NeighbourHexagonal
+                    {
+                        type = request.hexType
+                    };
                     return result;
                 case NeighbooorhoodType.Radius:
-                    var radius = new NeighbourRadius();
-                    radius.radius = request.Radius;
+                    var radius = new NeighbourRadius
+                    {
+                        radius = request.Radius
+                    };
                     return radius;
                 default:
                     throw new System.Exception("This type of neighboorhood is not recognized");
