@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EngineProject.DataStructures
 {
-    public enum NeighbooorhoodType
+    public enum NeighborhoodType
     {
         VonNeumann=0,
         Moore=1,

@@ -1,16 +1,11 @@
 ﻿using EngineProject.DataStructures.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineProject.DataStructures
 {
     public class Cell : ICell
     {
         public int x;
-        public int y; 
+        public int y;
         public bool state;
         protected CellType type;
 
@@ -20,7 +15,7 @@ namespace EngineProject.DataStructures
         public CellType GetCellType() => type;
         public void SetState(bool _state) => state = _state;
 
-        public Cell(int _x, int _y, CellType type = CellType.Cell, bool _state = false)
+        public Cell(int _x, int _y, CellType type = CellType.Cell)
         {
             x = _x;
             y = _y;

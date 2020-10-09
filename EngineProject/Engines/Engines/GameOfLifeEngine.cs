@@ -18,15 +18,10 @@ namespace EngineProject.Engines
             _maxColumn = width;
         }
 
-        public Board GetBoard()
-        {
-            return Panel;
-        }
-
         public void NextIteration()
         {
             var copyPanel = new Board(Panel);
-            foreach (var row in Panel.board)
+            foreach (var row in Panel.BoardContainer)
             {
                 foreach (var cell in row)
                 {
@@ -43,21 +38,21 @@ namespace EngineProject.Engines
             if (cell.state)
             {
                 if (neighbours == 2 || neighbours == 3)
-                    copyPanel.board[cell.x][cell.y].SetState(true);
+                    copyPanel.BoardContainer[cell.x][cell.y].SetState(true);
                 else
-                    copyPanel.board[cell.x][cell.y].SetState(false);
+                    copyPanel.BoardContainer[cell.x][cell.y].SetState(false);
             }
             else
             {
                 if (neighbours == 3)
-                    copyPanel.board[cell.x][cell.y].SetState(true);
+                    copyPanel.BoardContainer[cell.x][cell.y].SetState(true);
                 else
-                    copyPanel.board[cell.x][cell.y].SetState(false);
+                    copyPanel.BoardContainer[cell.x][cell.y].SetState(false);
             }
         }
         public void ChangeCellState(int x, int y)
         {
-            Panel.SetCellState(x, y, !Panel.board[x][y].GetState());
+            Panel.SetCellState(x, y, !Panel.BoardContainer[x][y].GetState());
         }
 
         public void SetCellState(int x, int y, bool state)
@@ -75,7 +70,7 @@ namespace EngineProject.Engines
                     int widthId = (i + cell.x) >= 0 ? (i + cell.x) % (_maxRow) : _maxRow - 1;
                     int heightId = (j + cell.y) >= 0 ? (j + cell.y) % (_maxColumn) : _maxColumn - 1;
 
-                    if (Panel.board[widthId][heightId].GetState() && !(i == 0 && j == 0))
+                    if (Panel.BoardContainer[widthId][heightId].GetState() && !(i == 0 && j == 0))
                         counter++;
                 }
             }

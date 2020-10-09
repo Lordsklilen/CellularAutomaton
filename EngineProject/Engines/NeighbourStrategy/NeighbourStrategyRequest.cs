@@ -4,7 +4,7 @@ namespace EngineProject.Engines.NeighbourStrategy
 {
     public class NeighbourStrategyRequest
     {
-        public NeighbooorhoodType neighbooorhoodType;
+        public NeighborhoodType neighbooorhoodType;
         public HexType hexType;
         public double Radius;
         public bool border;

@@ -332,24 +332,24 @@ namespace CellularAutomaton
             switch ((neighboour_comboBox.SelectedValue as ComboBoxItem).Content.ToString())
             {
                 case "Moore":
-                    request.neighbooorhoodType = NeighbooorhoodType.Moore;
+                    request.neighbooorhoodType = NeighborhoodType.Moore;
                     break;
                 case "Pentagonal":
-                    request.neighbooorhoodType = NeighbooorhoodType.Pentagonal;
+                    request.neighbooorhoodType = NeighborhoodType.Pentagonal;
                     RandomHexOptions_radioBtn.IsChecked = true;
                     break;
                 case "Hexagonal":
-                    request.neighbooorhoodType = NeighbooorhoodType.Hexagonal;
+                    request.neighbooorhoodType = NeighborhoodType.Hexagonal;
                     LeftHexOptions_radioBtn.IsEnabled = true;
                     RightHexOptions_radioBtn.IsEnabled = true;
                     RandomHexOptions_radioBtn.IsEnabled = true;
                     break;
                 case "Radius":
-                    request.neighbooorhoodType = NeighbooorhoodType.Radius;
+                    request.neighbooorhoodType = NeighborhoodType.Radius;
                     break;
                 case "Von Neumann":
                 default:
-                    request.neighbooorhoodType = NeighbooorhoodType.VonNeumann;
+                    request.neighbooorhoodType = NeighborhoodType.VonNeumann;
                     break;
             }
 

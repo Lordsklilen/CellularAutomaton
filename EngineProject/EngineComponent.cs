@@ -14,10 +14,10 @@ namespace EngineProject
         private IEngine engine;
         private GrainTemplateFactory templateFactory;
 
-        public int MaxNumber =>engine.GetBoard().MaxNumber();
+        public int MaxNumber => engine.Panel.MaxNumber();
         public bool IsFinished => (engine as GrainGrowthEngine).IsFinished() || MaxNumber == 0;
 
-        public Board Board => engine.GetBoard();
+        public Board Board => engine.Panel;
 
         public void CreateEngine(EngineType type, int width, int height)
         {
@@ -41,7 +41,7 @@ namespace EngineProject
         public Board GetNextIteration()
         {
             engine.NextIteration();
-            return engine.GetBoard();
+            return engine.Panel;
         }
 
         public void SetCellState(int x, int y, bool state)
@@ -56,12 +56,12 @@ namespace EngineProject
 
         public void SetRule(int rule)
         {
-            engine.SetRule(rule);
+            (engine as GameOfLifeEngine).SetRule(rule);
         }
 
         public void SetGrainNumber(int grainNumber, int x, int y)
         {
-            (engine as GrainGrowthEngine).SetGrainNumber(grainNumber, x, y);
+            engine.SetGrainNumber(grainNumber, x, y);
         }
 
         public void GenerateGrainTemplate(TemplateRequest request)

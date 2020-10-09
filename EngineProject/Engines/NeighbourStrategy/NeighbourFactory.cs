@@ -9,19 +9,19 @@ namespace EngineProject.Engines.NeighbourStrategy
         {
             switch (request.neighbooorhoodType)
             {
-                case NeighbooorhoodType.VonNeumann:
+                case NeighborhoodType.VonNeumann:
                     return new NeighbourVonNeumann();
-                case NeighbooorhoodType.Moore:
+                case NeighborhoodType.Moore:
                     return new NeighbourMoore();
-                case NeighbooorhoodType.Pentagonal:
+                case NeighborhoodType.Pentagonal:
                     return new NeighbourPentagonal();
-                case NeighbooorhoodType.Hexagonal:
+                case NeighborhoodType.Hexagonal:
                     var result = new NeighbourHexagonal
                     {
                         type = request.hexType
                     };
                     return result;
-                case NeighbooorhoodType.Radius:
+                case NeighborhoodType.Radius:
                     var radius = new NeighbourRadius
                     {
                         radius = request.Radius

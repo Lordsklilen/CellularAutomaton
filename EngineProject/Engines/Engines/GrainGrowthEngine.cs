@@ -21,9 +21,8 @@ namespace EngineProject.Engines.Engines
         private INeighbourStrategy neighbourStrategy;
         private IDynamicRecrystalizationEngine DRXEngine;
 
-        public Board GetBoard() => Panel;
         public bool IsFinished() => Panel.finished;
-        public GrainGrowthEngine(int width, int height, NeighbooorhoodType nType = NeighbooorhoodType.VonNeumann)
+        public GrainGrowthEngine(int width, int height, NeighborhoodType nType = NeighborhoodType.VonNeumann)
         {
             type = EngineType.GrainGrowth;
             cellType = CellType.Grain;
@@ -46,7 +45,7 @@ namespace EngineProject.Engines.Engines
             neighbourStrategy.Initialize(Panel, copyPanel, maxRow, maxColumn, OpenBorderCondition);
             Parallel.For(0, Panel.Y, i =>
             {
-                var row = Panel.board[i];
+                var row = Panel.BoardContainer[i];
                 foreach (var cell in row)
                 {
                     neighbourStrategy.ComputeCell((Grain)cell);
@@ -61,11 +60,6 @@ namespace EngineProject.Engines.Engines
         }
 
         public void SetCellState(int x, int y, bool state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetRule(int rule)
         {
             throw new NotImplementedException();
         }
@@ -108,9 +102,9 @@ namespace EngineProject.Engines.Engines
             request.maxColumn = maxColumn;
             request.maxRow = maxRow;
             if (MCEngine == null)
-                MCEngine = new MonteCarloEngine(request, this.neighbourStrategy);
+                MCEngine = new MonteCarloEngine(request, neighbourStrategy);
             else
-                MCEngine.Reinstate(request, this.neighbourStrategy);
+                MCEngine.Reinstate(request, neighbourStrategy);
             RecalculateEnergy();
         }
 

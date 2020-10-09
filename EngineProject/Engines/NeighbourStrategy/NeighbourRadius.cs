@@ -9,21 +9,20 @@ namespace EngineProject.Engines.NeighbourStrategy
     public class NeighbourRadius : INeighbourStrategy
     {
         private Board panel;
-        private Board copyPanel;
         private int maxRow;
         private int maxColumn;
         private bool OpenBorderCondition;
         public double radius;
 
-        public Board CopyPanel => copyPanel;
+        public Board CopyPanel { get; private set; }
         public int N => (int)(radius * radius) + 1;
 
         public void Initialize(Board panel, Board copyPanel, int _maxRow, int _maxColumn, bool OpenBorderCondition)
         {
             this.panel = panel;
-            this.copyPanel = copyPanel;
-            this.maxRow = _maxRow;
-            this.maxColumn = _maxColumn;
+            CopyPanel = copyPanel;
+            maxRow = _maxRow;
+            maxColumn = _maxColumn;
             this.OpenBorderCondition = OpenBorderCondition;
         }
 
@@ -32,11 +31,11 @@ namespace EngineProject.Engines.NeighbourStrategy
             if (cell.GetGrainNumber() == 0)
             {
                 var neighbours = NeighboursGrainNumbers(cell);
-                copyPanel.SetGrainNumber(NeighbourHelper.MostCommonNeighbour(neighbours), cell.x, cell.y);
-                copyPanel.finished = false;
+                CopyPanel.SetGrainNumber(NeighbourHelper.MostCommonNeighbour(neighbours), cell.x, cell.y);
+                CopyPanel.finished = false;
             }
             else
-                copyPanel.SetGrainNumber(cell.GetGrainNumber(), cell.x, cell.y);
+                CopyPanel.SetGrainNumber(cell.GetGrainNumber(), cell.x, cell.y);
         }
 
         public List<int> NeighboursGrainNumbers(Grain cell)
@@ -88,7 +87,7 @@ namespace EngineProject.Engines.NeighbourStrategy
                             continue;
                     }
 
-                    Grain colleague = (Grain)panel.board[widthId][heightId];
+                    Grain colleague = (Grain)panel.BoardContainer[widthId][heightId];
                     number = colleague.GetGrainNumber();
                     if (number == 0)
                         continue;
@@ -103,7 +102,7 @@ namespace EngineProject.Engines.NeighbourStrategy
                     {
                         number = colleague.GetGrainNumber();
                         if (number > 0)
-                            neighbours.Add(((Grain)panel.board[widthId][heightId]));
+                            neighbours.Add(((Grain)panel.BoardContainer[widthId][heightId]));
                     }
                 }
             }

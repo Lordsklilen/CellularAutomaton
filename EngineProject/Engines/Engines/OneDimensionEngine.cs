@@ -1,4 +1,4 @@
-﻿using EngineProject.DataStructures;
+using EngineProject.DataStructures;
 using System;
 
 namespace EngineProject.Engines
@@ -24,11 +24,6 @@ namespace EngineProject.Engines
             SetRule(_rule);
         }
 
-        public Board GetBoard()
-        {
-            return Panel;
-        }
-
         public void NextIteration()
         {
             if (_maxRow <= _createdRows + 1)
@@ -47,7 +42,7 @@ namespace EngineProject.Engines
         {
             if (x > 0)
                 return;
-            Panel.SetCellState(x, y, !Panel.board[x][y].GetState());
+            Panel.SetCellState(x, y, !Panel.BoardContainer[x][y].GetState());
         }
 
         public void SetRule(int rule)
@@ -67,9 +62,9 @@ namespace EngineProject.Engines
 
         private void CheckNeighbours(int i)
         {
-            int left = Panel.board[_createdRows][(i + _maxColumn - 1) % _maxColumn].GetState() ? 4 : 0;
-            int middle = Panel.board[_createdRows][i].GetState() ? 2 : 0;
-            int right = Panel.board[_createdRows][(i + 1 + _maxColumn) % _maxColumn].GetState() ? 1 : 0;
+            int left = Panel.BoardContainer[_createdRows][(i + _maxColumn - 1) % _maxColumn].GetState() ? 4 : 0;
+            int middle = Panel.BoardContainer[_createdRows][i].GetState() ? 2 : 0;
+            int right = Panel.BoardContainer[_createdRows][(i + 1 + _maxColumn) % _maxColumn].GetState() ? 1 : 0;
             Panel.SetCellState(_createdRows + 1, i, weights[left + middle + right] == 1);
         }
 

@@ -88,7 +88,7 @@ namespace EngineProject.Engines.DRX
             {
                 for (int j = 0; j < board.X; j++)
                 {
-                    var el = (board.board[i][j] as Grain);
+                    var el = (board.BoardContainer[i][j] as Grain);
                     if (el.DyslocationDensity > pCritical)
                     {
                         el.DyslocationDensity = 0;
@@ -110,14 +110,14 @@ namespace EngineProject.Engines.DRX
                 {
                     for (int j = 0; j < board.X; j++)
                     {
-                        var el = (board.board[i][j] as Grain);
+                        var el = (board.BoardContainer[i][j] as Grain);
                         var neighbours = strategy.NeighboursGrainCells(el);
                         var recrystalizedGrain = RecrystalizedGrain(neighbours);
                         if (recrystalizedGrain != null && MaxNeighboursValue(neighbours) < el.DyslocationDensity)
                         {
                             el.DyslocationDensity = 0;
                             el.IsRecrystallized = true;
-                            (board.board[el.X()][el.Y()] as Grain).RecrystalizedNumber = recrystalizedGrain.RecrystalizedNumber;
+                            (board.BoardContainer[el.X()][el.Y()] as Grain).RecrystalizedNumber = recrystalizedGrain.RecrystalizedNumber;
                             Changes.Add(el);
                         }
                     }
@@ -142,7 +142,7 @@ namespace EngineProject.Engines.DRX
             {
                 for (int j = 0; j < board.X; j++)
                 {
-                    (board.board[i][j] as Grain).DyslocationDensity += equalDistribution;
+                    (board.BoardContainer[i][j] as Grain).DyslocationDensity += equalDistribution;
                 }
             });
 
@@ -156,13 +156,13 @@ namespace EngineProject.Engines.DRX
                 if (p <= borderPropability && bcount > 0)
                 {
                     var point = borderCoordinates[rand.Next(0, bcount)];
-                    var el = (board.board[point.X][point.Y] as Grain);
+                    var el = (board.BoardContainer[point.X][point.Y] as Grain);
                     el.DyslocationDensity += randomDistribution;
                 }
                 else
                 {
                     var el = nonBorderCoordinates[rand.Next(0, nbcount)];
-                    (board.board[el.X][el.Y] as Grain).DyslocationDensity += randomDistribution;
+                    (board.BoardContainer[el.X][el.Y] as Grain).DyslocationDensity += randomDistribution;
                 }
                 dRo -= randomDistribution;
             }

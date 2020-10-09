@@ -39,7 +39,7 @@ namespace CellularAutomaton
             brushFactory = new BrushFactory();
             this.net = net;
             PrepareToDraw(numX, numY);
-            this.Squares = squares;
+            Squares = squares;
         }
 
         public void PrepareToDraw(int numX, int numY)
@@ -71,7 +71,7 @@ namespace CellularAutomaton
         {
             bitmap = new Bitmap(ImageWidth, ImageHeight);
             g = Graphics.FromImage(bitmap);
-            foreach (var el in board.board[0])
+            foreach (var el in board.BoardContainer[0])
             {
                 DrawRectangle(el, (int)(el.Y() * (elWidth)), (int)(el.X() * (elHeight)), board);
             }
@@ -82,11 +82,11 @@ namespace CellularAutomaton
         {
             bitmap = new Bitmap(ImageWidth, ImageHeight);
             g = Graphics.FromImage(bitmap);
-            for (int i = 0; i < board.board.Length; i++)
+            for (int i = 0; i < board.BoardContainer.Length; i++)
             {
-                for (int j = 0; j < board.board[i].Length; j++)
+                for (int j = 0; j < board.BoardContainer[i].Length; j++)
                 {
-                    var center = (board.board[i][j] as Grain).GetMassCenter();
+                    var center = (board.BoardContainer[i][j] as Grain).GetMassCenter();
                     g.FillRectangle(
                            brushFactory.CreateCenterOfMassBrush(),
                            center.X,
@@ -111,11 +111,11 @@ namespace CellularAutomaton
 
             bitmap = new Bitmap(ImageWidth, ImageHeight);
             g = Graphics.FromImage(bitmap);
-            for (int i = 0; i < board.board.Length; i++)
+            for (int i = 0; i < board.BoardContainer.Length; i++)
             {
-                for (int j = 0; j < board.board[i].Length; j++)
+                for (int j = 0; j < board.BoardContainer[i].Length; j++)
                 {
-                    var el = board.board[i][j];
+                    var el = board.BoardContainer[i][j];
                     int width = (int)(el.Y() * (elWidth));
                     int height = (int)(el.X() * (elHeight));
                     Rectangle rect = Rectangle.FromLTRB(
