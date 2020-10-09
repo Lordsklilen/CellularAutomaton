@@ -20,36 +20,27 @@ namespace CellularAutomaton
     /// </summary>
     public partial class GrainGrowthPage : Page
     {
-        IEngineComponent engine;
-        int width;
-        int height;
+        int width = 100;
+        int height = 75;
+        int numberOfGrains = 0;
+        decimal t = 0;
+        decimal tMax = 0;
+        readonly IEngineComponent engine;
+        readonly EngineType engineType = EngineType.GrainGrowth;
         DrawingHelper drawingHelper;
         static DispatcherTimer timer;
         static DispatcherTimer Recrystalizationtimer;
-        readonly EngineType engineType = EngineType.GrainGrowth;
-        int numberOfGrains = 0;
-        decimal t;
-        decimal tMax;
 
         public GrainGrowthPage()
         {
             InitializeComponent();
-            Initializevariables();
             Loaded += DrawInitial;
             Loaded += InitEvents;
-        }
-
-        void Initializevariables()
-        {
-            width = 100;
-            height = 75;
             engine = new EngineComponent();
-            t = 0;
-            tMax = 0;
-            engine.CreateEngine(engineType, width, height);
             timer = new DispatcherTimer();
             Recrystalizationtimer = new DispatcherTimer();
             SetTime();
+            engine.CreateEngine(engineType, width, height);
             timer.Tick += Start_Ticking_timer;
             Recrystalizationtimer.Tick += StartRecrystalization_Ticking_timer;
         }
