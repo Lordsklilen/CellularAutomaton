@@ -10,33 +10,29 @@ namespace EngineProject.Engines.MonteCarlo
 {
     internal class MonteCarloEngine
     {
-        private int iterations;
         private double Kt;
         private NeighbourStrategyRequest strategyRequest;
-        private NeighbourFactory factory;
+        private readonly NeighbourFactory factory;
         private INeighbourStrategy neighbourStrategy;
         private bool border;
         private int maxColumn;
         private int maxRow;
         private Board board;
-        private Board copyBorad;
-        Random rand = new Random();
+        readonly Random rand = new Random();
         internal MonteCarloEngine(MonteCarloRequest request, INeighbourStrategy strategy)
         {
             factory = new NeighbourFactory();
             Reinstate(request, strategy);
         }
-        
+
         internal void Reinstate(MonteCarloRequest r, INeighbourStrategy strategy)
         {
             neighbourStrategy = strategy;
-            iterations = r.numberOfIterations;
             Kt = r.Kt;
             strategyRequest = r.strategyRequest;
             maxColumn = r.maxColumn;
             maxRow = r.maxRow;
             board = r.board;
-            copyBorad = r.CopyBoard;
             border = r.border;
             neighbourStrategy = factory.CreateNeighbourComputing(strategyRequest);
             neighbourStrategy.Initialize(r.board, r.CopyBoard, r.maxRow, r.maxColumn, r.border);
@@ -50,7 +46,7 @@ namespace EngineProject.Engines.MonteCarlo
 
         private int CalculateEnergy(Board panel, int x, int y)
         {
-            var grain = panel.board[x][y] as Grain;
+            var grain = panel.BoardContainer[x][y] as Grain;
             List<Grain> grains = neighbourStrategy.NeighboursGrainCells(grain);
             return neighbourStrategy.GetRecrystalizedAndGrainGrains(grains, grain.RecrystalizedNumber, grain.GetGrainNumber());
         }
@@ -63,7 +59,7 @@ namespace EngineProject.Engines.MonteCarlo
             {
                 for (int j = 0; j < panel.X; j++)
                 {
-                    (panel.board[i][j] as Grain).E = CalculateEnergy(panel, i, j);
+                    (panel.BoardContainer[i][j] as Grain).E = CalculateEnergy(panel, i, j);
                 }
             }
             return panel;
@@ -97,12 +93,12 @@ namespace EngineProject.Engines.MonteCarlo
 
         internal Board NextIteration(Board board, int x, int y)
         {
-            var grain = board.board[x][y] as Grain;
+            var grain = board.BoardContainer[x][y] as Grain;
             List<int> nieghbours = neighbourStrategy.NeighboursGrainNumbers(grain);
             if (nieghbours.Count <= 0)
                 return board;
 
-            int EBefore = nieghbours.Count(member => member != grain.grainNumber);
+            int EBefore = nieghbours.Count(member => member != grain.GrainNumber);
             int newGrainNumber = nieghbours[rand.Next(0, nieghbours.Count)];
             int EAfter = nieghbours.Count(member => member != newGrainNumber);
             int deltaE = EAfter - EBefore;
@@ -111,11 +107,11 @@ namespace EngineProject.Engines.MonteCarlo
 
             if (deltaE <= 0)
             {
-                (board.board[x][y] as Grain).SetGrainNumber(newGrainNumber);
+                (board.BoardContainer[x][y] as Grain).SetGrainNumber(newGrainNumber);
             }
             else if (p < Math.Exp(-((deltaE) / (Kt))))
             {
-                (board.board[x][y] as Grain).SetGrainNumber(newGrainNumber);
+                (board.BoardContainer[x][y] as Grain).SetGrainNumber(newGrainNumber);
             }
             return board;
         }
@@ -146,5 +142,5 @@ namespace EngineProject.Engines.MonteCarlo
             }
             return list;
         }
-    } 
+    }
 }

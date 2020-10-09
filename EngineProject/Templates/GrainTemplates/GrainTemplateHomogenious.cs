@@ -10,8 +10,8 @@ namespace EngineProject.Templates.GrainTemplates
             var numberX = request.x;
             var numberY = request.y;
             var panel = request.board;
-            double dx = ((double)panel.X) / ((double)numberX);
-            double dy = ((double)panel.Y) / ((double)numberY);
+            double dx = panel.X / ((double)numberX);
+            double dy = panel.Y / ((double)numberY);
             int sx = (int)(dx / 2.0);
             int sy = (int)(dy / 2.0);
 
