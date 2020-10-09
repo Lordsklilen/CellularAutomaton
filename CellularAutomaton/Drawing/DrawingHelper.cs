@@ -5,8 +5,6 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace CellularAutomaton
@@ -16,7 +14,6 @@ namespace CellularAutomaton
         Graphics g;
         readonly System.Windows.Controls.Image wpfImage;
         Bitmap bitmap;
-        readonly BoardTemplateBuilder builder;
         readonly BrushFactory brushFactory;
         readonly int ImageWidth;
         readonly int ImageHeight;
@@ -35,7 +32,6 @@ namespace CellularAutomaton
             wpfImage = _img;
             ImageHeight = (int)wpfImage.Height;
             ImageWidth = (int)wpfImage.Width;
-            builder = new BoardTemplateBuilder();
             brushFactory = new BrushFactory();
             this.net = net;
             PrepareToDraw(numX, numY);
@@ -65,38 +61,6 @@ namespace CellularAutomaton
         {
             Squares = _square;
             SquaresSize();
-        }
-
-        public void DrawFirstRow(Board board)
-        {
-            bitmap = new Bitmap(ImageWidth, ImageHeight);
-            g = Graphics.FromImage(bitmap);
-            foreach (var el in board.BoardContainer[0])
-            {
-                DrawRectangle(el, (int)(el.Y() * (elWidth)), (int)(el.X() * (elHeight)), board);
-            }
-            wpfImage.Source = Convert(bitmap);
-        }
-
-        public void DrawCenterMassBoard(Board board)
-        {
-            bitmap = new Bitmap(ImageWidth, ImageHeight);
-            g = Graphics.FromImage(bitmap);
-            for (int i = 0; i < board.BoardContainer.Length; i++)
-            {
-                for (int j = 0; j < board.BoardContainer[i].Length; j++)
-                {
-                    var center = (board.BoardContainer[i][j] as Grain).GetMassCenter();
-                    g.FillRectangle(
-                           brushFactory.CreateCenterOfMassBrush(),
-                           center.X,
-                           center.Y,
-                           center.X,
-                           (float)center.Y
-                       );
-                }
-            }
-            wpfImage.Source = Convert(bitmap);
         }
 
         public void DrawBoard(Board board)
@@ -161,23 +125,6 @@ namespace CellularAutomaton
                );
         }
 
-        private void DrawRectangle(ICell element, int x, int y, Board board)
-        {
-            Brush brush = (element.GetCellType()) switch
-            {
-                CellType.Cell => brushFactory.CreateBinaryBrush(element.GetState()),
-                CellType.Grain => brushFactory.CreateColorBrush(((Grain)element).GetGrainNumber(), board.MaxNumber()),
-                _ => throw new NotSupportedException("Cannot create brush. Cell type not supproted"),
-            };
-            g.FillRectangle(
-                brush,
-                x,
-                y,
-                (int)(net ? elWidth - 1 : elWidth),
-               (int)(net ? elHeight - 1 : elHeight)
-            );
-        }
-
         private void DrawRectangle(ICell element, Rectangle rectangle, Board board)
         {
             Brush brush;
@@ -237,25 +184,6 @@ namespace CellularAutomaton
             image.EndInit();
             return image;
         }
-        public static Bitmap BitmapSourceToBitmap2(BitmapSource srs)
-        {
-            int width = srs.PixelWidth;
-            int height = srs.PixelHeight;
-            int stride = width * ((srs.Format.BitsPerPixel + 7) / 8);
-            IntPtr ptr = IntPtr.Zero;
-            try
-            {
-                ptr = Marshal.AllocHGlobal(height * stride);
-                srs.CopyPixels(new Int32Rect(0, 0, width, height), ptr, height * stride, stride);
-                using var btm = new Bitmap(width, height, stride, PixelFormat.Format1bppIndexed, ptr);
-                return new Bitmap(btm);
-            }
-            finally
-            {
-                if (ptr != IntPtr.Zero)
-                    Marshal.FreeHGlobal(ptr);
-            }
-        }
 
         public System.Drawing.Point GetPosition(int width, int height)
         {
@@ -266,27 +194,5 @@ namespace CellularAutomaton
             };
             return result;
         }
-
-        public void PrepareTemplate(GOLTemplatesEnum type, Board board)
-        {
-            switch (type)
-            {
-                case GOLTemplatesEnum.Clear:
-                    builder.BuildClear(board);
-                    break;
-                case GOLTemplatesEnum.Oscilator:
-                    builder.BuildOscilator(board);
-                    break;
-                case GOLTemplatesEnum.Glider:
-                    builder.BuildGlider(board);
-                    break;
-                case GOLTemplatesEnum.Random:
-                    builder.BuildRandom(board);
-                    break;
-                default:
-                    throw new Exception(string.Format(@"Template {0} is not recognized", type.ToString()));
-            }
-        }
-
     }
 }

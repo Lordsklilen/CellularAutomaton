@@ -74,8 +74,8 @@ namespace CellularAutomaton
             var request = CreateMonteCarloRequest();
             engine.CreateMCEngine(request);
             start_btn.IsEnabled = false;
-            //stopBtn.IsEnabled = true;
-            while (!engine.IsFinished)
+            stopBtn.IsEnabled = true;
+            while (!engine.IsFinished && stopBtn.IsEnabled)
             {
                 await Task.Run(() =>
                 {
@@ -220,7 +220,7 @@ namespace CellularAutomaton
         private async void StartRecrystalization_CLick(object sender, RoutedEventArgs e)
         {
             startRecrystalization_btn.IsEnabled = false;
-            //stopRecrystalization_btn.IsEnabled = true;
+            stopRecrystalization_btn.IsEnabled = true;
             var r = CreateDRXRequest();
             engine.InitializeDRX(r);
             decimal.TryParse(tEntire_DRX_textbox.Text, out decimal tmp);
@@ -238,7 +238,8 @@ namespace CellularAutomaton
                 time_label.Content = "Czas: " + t;
                 decimal max = panel.MaxDensity();
                 maxRecVal_label.Content = "MaxVal: " + max.ToString("0.###E+0");
-            } while (t >= tMax);
+            }
+            while (t <= tMax && stopRecrystalization_btn.IsEnabled);
             startRecrystalization_btn.IsEnabled = true;
             stopRecrystalization_btn.IsEnabled = false;
         }
@@ -361,5 +362,14 @@ namespace CellularAutomaton
             return request;
         }
 
+        private void StopRecrystalization_btn_Click(object sender, RoutedEventArgs e)
+        {
+            stopRecrystalization_btn.IsEnabled = false;
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            stopBtn.IsEnabled = false;
+        }
     }
 }

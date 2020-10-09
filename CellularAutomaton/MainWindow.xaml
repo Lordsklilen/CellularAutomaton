@@ -13,9 +13,6 @@
         <Grid>
             <Menu IsMainMenu="true">
                 <MenuItem Header="GrainGrowthPage"  Click="MenuItem_Click_2"/>
-                <MenuItem Visibility="Hidden" Header="One dimension Automat" Click="MenuItem_Click"/>
-                <MenuItem Visibility="Hidden" Header="Game Of Life" Click="MenuItem_Click_1"/>
-
             </Menu>
         </Grid>
         <Grid Margin="0,20,0,0">
